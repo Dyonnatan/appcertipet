@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutPages/LayoutPadrao"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+<title>Certipet</title>
+</head>
+
+<section layout:fragment="conteudo">
+	<div layout:include="layoutPages/MensagemGeral"></div>
+
+	<div class="panel panel-1">
+		<div class="panel-heading">
+			<div class="clearfix">
+<!-- 				<h1 class="panel-title aw-titulo-panel">Certificados</h1> -->
+				<a class="btn btn-link aw-link-panel" href="/logout">Sair</a>
+			</div>
+		</div>
+
+		<div class="panel-body">
+			<table class="table table-bordered table-striped">
+				<tbody>
+					<tr>
+						<td class="text-center"><a class="btn btn-link"
+							th:href="@{/participante/evento/}" title="Certificados"
+							data-placement="top">Eventos <span
+								class="glyphicon glyphicon-home"></span>
+						</a></td>
+					</tr>
+					<tr>
+						<td class="text-center"><a class="btn btn-link"
+							th:href="@{/participante/certificados/}" title="Certificados"
+							rel="tooltip" data-placement="top"> Certificados <span
+								class="glyphicon glyphicon-pencil"></span>
+						</a></td>
+					</tr>
+
+					<tr th:if="${#strings.contains(#httpServletRequest.userPrincipal.authorities,'ORGANIZADOR')}">
+						<td class="text-center"><a class="btn btn-link btn-xs"
+							th:href="@{/participante/certificados/}" title="Certificados"
+							rel="tooltip" data-placement="top"> Cadastros de Eventos </a></td>
+					</tr>
+				</tbody>
+			</table>
+<!--   			<h1 th:inline="text">Olá [[${#httpServletRequest.userPrincipal.authorities }]]</h1> -->
+		</div>
+	</div>
+</section>
+</html>
+
+
+
+
+
+
+
+
+
+
+

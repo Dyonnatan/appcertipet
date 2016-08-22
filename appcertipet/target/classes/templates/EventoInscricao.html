@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutPages/LayoutPadrao">
+
+<head>
+<title>Evento</title>
+</head>
+
+<section layout:fragment="conteudo">
+	<div layout:include="layoutPages/MensagemGeral"></div>
+
+	<form class="form-horizontal" method="post"
+		th:action="@{/participante/evento/inscricao}" th:object="${part}">
+		<div class="alert alert-success"
+			th:if="${not #strings.isEmpty(mensagem)}">
+			<span th:text="${mensagem}"></span>
+		</div>
+
+		<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+			<div th:each="detailedError : ${#fields.detailedErrors()}">
+				<span th:text="${detailedError.message}"></span>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="clearfix">
+					<h1 class="panel-title aw-titulo-panel" th:text="${part.evento.nome}">Evento</h1>
+					<a class="btn btn-link aw-link-panel" href="/participante/evento">Retornar</a>
+				</div>
+			</div>
+
+			<div class="panel-body">
+				<span th:utext="${part.evento.descricao}"></span>
+			</div>
+		</div>
+
+		<!-- <div class="form-group aw-required">
+			<label for="tipo" class="col-sm-2 control-label"> </label>
+			<div class="col-sm-8">
+				<input type="hidden" class="form-control" id="tipo"
+					th:field="*{tipoParticipante.id}" maxlength="254" />
+			</div>
+		</div> -->
+		<input type="hidden" class="form-control" id="tipo"
+					th:field="*{evento}" th:value="${evento}" />
+
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-10">
+				<button type="submit" class="btn btn-primary" th:inline="text">[[${inscricao}]]</button>
+			</div>
+		</div>
+
+
+	</form>
+</section>
+</html>
+
+
+
+
+
+
+
+
+
+
+

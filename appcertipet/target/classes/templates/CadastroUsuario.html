@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutPages/LayoutPadrao">
+
+<head>
+<title>Cadastro</title>
+</head>
+<section layout:fragment="conteudo" class="conteudo">
+
+	<form class="form-horizontal" method="post" th:action="@{/cadastro}"
+		th:object="${participante}">
+		<!-- 		<div class="alert alert-success" th:text="${mensagem}" -->
+		<!-- 			th:if="${not #strings.isEmpty(mensagem)}"></div> -->
+
+		<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+			<div th:each="detailedError : ${#fields.detailedErrors()}">
+				<span th:text="${detailedError.message}"></span>
+			</div>
+		</div>
+
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="clearfix">
+					<h1 class="panel-title aw-titulo-panel">Cadastro</h1>
+				</div>
+			</div>
+
+			<div class="panel-body">
+				<div class="form-group aw-required"
+					th:classappend="${#fields.hasErrors('nome')} ? has-error">
+					<label for="nome" class="col-sm-2 control-label">Nome</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="nome"
+							th:field="*{nome}" autofocus="autofocus" />
+					</div>
+				</div>
+
+				<div class="form-group aw-required"
+					th:classappend="${#fields.hasErrors('sobrenome')} ? has-error">
+					<label for="sobrenome" class="col-sm-2 control-label">Sobrenome</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="sobrenome"
+							th:field="*{sobrenome}" />
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('sexo')} ? has-error">
+					<label for="sexo" class="col-sm-2 control-label">Sexo</label>
+					<div class="col-sm-4" id="sexo">
+						<label th:each="sexo : ${sexos}" class="radio-inline"> <input
+							type="radio" th:value="${sexo}" th:field="*{sexo}" /> <span
+							th:text="${sexo.descricao}"></span>
+						</label>
+					</div>
+				</div>
+
+				<div class="form-group aw-required"
+					th:classappend="${#fields.hasErrors('cpf')} ? has-error">
+					<label for="cpf" class="col-sm-2 control-label">CPF</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="cpf" th:field="*{cpf}" />
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('dataNascimento')} ? has-error">
+					<label for="dataNascimento" class="col-sm-2 control-label">Data
+						de nascimento</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="dataNascimento"
+							th:field="*{dataNascimento}" data-provide="datepicker"
+							data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
+							data-date-autoclose="true" data-date-today-highlight="true"
+							data-date-orientation="bottom" />
+					</div>
+				</div>
+
+				<div class="form-group aw-required"
+					th:classappend="${#fields.hasErrors('email')} ? has-error">
+					<label for="email" class="col-sm-2 control-label">E-mail</label>
+					<div class="col-sm-4">
+						<input type="email" class="form-control" id="email"
+							th:field="*{email}" />
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('telefone')} ? has-error">
+					<label for="telefone" class="col-sm-2 control-label">Telefone</label>
+					<div class="col-sm-4">
+						<input type="number" class="form-control" id="telefone"
+							th:field="*{telefone}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="instituicao" class="col-sm-2 control-label">Instituição</label>
+					<div class="col-sm-4">
+						<select class="form-control" name="instituicao">
+							<option th:each="inst : ${todasInstituicoes}"
+								th:value="${inst}" th:text="${inst}"></option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="curso" class="col-sm-2 control-label">Curso</label>
+					<div class="col-sm-4">
+						<select class="form-control" name="curso">
+							<option th:each="curso : ${todosCursos}"
+								th:value="${curso}" th:text="${curso}"></option>
+						</select>
+					</div>
+				</div>
+
+				<!-- 				<div class="form-group" -->
+				<!-- 					th:classappend="${#fields.hasErrors('curso')} ? has-error"> -->
+				<!-- 					<label for="instituicao" class="col-sm-2 control-label">Instituição</label> -->
+				<!-- 					<div class="col-sm-4"> -->
+				<!-- 						<input type="text" class="form-control" id="instituicao" -->
+				<!-- 							th:field="*{curso.instituicao.nome}" /> -->
+				<!-- 					</div> -->
+				<!-- 				</div> -->
+
+<!-- 				<div class="form-group"> -->
+<!-- 					<label for="status" class="col-sm-2 control-label">Status</label> -->
+<!-- 					<div class="col-sm-2"> -->
+<!-- 						<select class="form-control" name="status"> -->
+<!-- 							<option th:each="status : ${todosStatusTitulo}" -->
+<!-- 								th:value="${status}" th:text="${status}"></option> -->
+<!-- 						</select> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+
+<!-- 				<div class="text-center"> -->
+				<!-- <a class="btn btn-link btn-xs"
+					th:href="@{/titulos/{codigo}(codigo=${curso})}"
+					title="Editar" rel="tooltip" data-placement="top"> <span
+						class="glyphicon glyphicon-pencil"></span>
+				</a>  -->
+<!-- 				<a class="btn btn-link btn-xs" -->
+					
+<!-- 					title="Receber" rel="tooltip" -->
+<!-- 					data-placement="top" th:attr="curso=${curso}" -->
+<!-- 					th:href="@{/titulos/{codigo}/receber(codigo=${curso})}"> -->
+<!-- 						<span class="glyphicon glyphicon-check"></span> -->
+<!-- 				</a></div> -->
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-primary">Salvar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+</section>
+</html>

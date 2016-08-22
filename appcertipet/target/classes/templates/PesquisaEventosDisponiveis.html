@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutPages/LayoutPadrao">
+
+<head>
+<title>Certificados disponíveis</title>
+</head>
+
+<section layout:fragment="conteudo">
+	<div layout:include="layoutPages/MensagemGeral"></div>
+		
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="clearfix">
+				<h1 class="panel-title aw-titulo-panel">Eventos disponíveis</h1>
+				<a class="btn btn-link aw-link-panel"
+					href="/participante/certificados">Certificados</a>
+			</div>
+		</div>
+
+		<div class="panel-body">
+<div class="table-responsive">
+			<table class="table table-hover table-striped">
+				<thead>
+					<tr>
+						<th class="text-center col-md-1" style="display: none;">#</th>
+						<th> </th>
+					</tr>
+				</thead>
+				<tbody style="text-align: left;">
+					<tr th:each="ev : ${eventos}">
+						<td class="text-center" th:text="${ev.id}" style="display: none;">1</td>
+						<td><a	style="text-align: justify;"						
+							class="btn"
+							th:href="@{/participante/evento/inscricao/{id}/{nome}(id=${ev.id},nome=${ev.nome})}"
+							title="Editar" data-placement="top"> 
+							<span class="h4"><strong th:text="${ev.nome}"></strong></span>
+							<sub th:text="${#dates.format(ev.dataRealizacao, '	''('' dd ''de'' MMMM ''de'' yyyy '')''')}"></sub>
+							<br/>
+							<span style="white-space:normal;" th:text="${ev.descricaoSimplificada}"></span>
+							</a>
+							</td>
+					</tr>
+					<tr>
+						<td colspan="6" th:if="${#lists.isEmpty(eventos)}">Não há
+							eventos programados</td>
+					</tr>
+				</tbody>
+			</table>
+		</div></div>
+
+
+	</div>
+</section>
+</html>
+
+
+
+
+
+
+
+
+
+
+

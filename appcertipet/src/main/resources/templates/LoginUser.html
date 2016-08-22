@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutPages/LayoutPadrao">
+
+<head>
+<title>Login</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+	<div class="panel panel-default col-sm-4 col-sm-offset-4">
+		<div class="panel-heading ">
+			<div class="clearfix">
+				<h1 class="panel-title aw-titulo-panel">Login com CPF:</h1>
+				<a class="btn btn-link aw-link-panel" href="/cadastro">Cadastro</a>
+			</div>
+		</div>
+
+		<div class="panel-body">
+
+			<div th:if="${param.error}">Login inválido.</div>
+			<div th:if="${param.logout}">Você foi desconectado.</div>
+
+			<form method="post" class="form-horizontal" th:action="@{/login}">
+				<div class="form-group">
+					<div class="input-group">
+						<input type="text" class="form-control"
+							placeholder="Digite seu CPF" autofocus="autofocus"
+							name="username"></input> <input type="hidden" class="form-control"
+							placeholder="Digite novamente" name="password" value="pass"></input> <span
+							class="input-group-btn">
+							<button type="submit" class="btn btn-default">
+								<i class="glyphicon glyphicon-search">login</i>
+							</button>
+						</span>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>
+</html>
