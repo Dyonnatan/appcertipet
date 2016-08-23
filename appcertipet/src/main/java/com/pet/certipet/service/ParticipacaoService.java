@@ -24,6 +24,10 @@ public class ParticipacaoService {
 		return (i!=null);
 	}
 	
+	public Participacao buscar(String cpf, Long idEvento) {	 
+		return participacao.buscar(cpf, idEvento);
+	}
+	
 	public boolean salvar(Participacao p) {
 		return participacao.save(p) != null;
 	}

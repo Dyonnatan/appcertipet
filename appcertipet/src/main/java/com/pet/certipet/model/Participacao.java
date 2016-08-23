@@ -19,7 +19,7 @@ public class Participacao {
 	private Evento evento;
 	private TipoParticipante tipoParticipante;
 	private Presenca presenca;
-	private Boolean pagamento;
+	private char pagamento;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,11 +71,11 @@ public class Participacao {
 		this.presenca = Presenca.PRESENTE;
 	}
 
-	public Boolean getPagamento() {
+	public char getPagamento() {
 		return pagamento;
 	}
 
-	public void setPagamento(Boolean pagou) {
+	public void setPagamento(char pagou) {
 		this.pagamento = pagou;
 	}
 

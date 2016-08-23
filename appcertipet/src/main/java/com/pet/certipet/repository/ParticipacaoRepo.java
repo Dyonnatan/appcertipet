@@ -14,5 +14,8 @@ public interface ParticipacaoRepo extends JpaRepository<Participacao, Long> {
 	
 	@Query(value = "select distinct 1 from Participacao p where p.evento.id = ?2 and p.participante.cpf = ?1")
 	Integer verificarInscrito(String cpf, Long idEvento);
+	
+	@Query(value = "select p from Participacao p where p.evento.id = ?2 and p.participante.cpf = ?1")
+	Participacao buscar(String cpf, Long idEvento);
 
 }

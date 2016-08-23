@@ -10,15 +10,15 @@
 
 <section layout:fragment="conteudo">
 
-	<div class="panel panel-default col-sm-4 col-sm-offset-4">
-		<div class="panel-heading ">
+	<div class="panel panel-default col-sm-4 center-block" style="float: none; margin: 0 auto;">
+		<div class="panel-heading" style="background-color: none">
 			<div class="clearfix">
 				<h1 class="panel-title aw-titulo-panel">Login com CPF:</h1>
 				<a class="btn btn-link aw-link-panel" href="/cadastro">Cadastro</a>
 			</div>
 		</div>
 
-		<div class="panel-body">
+		<div class="panel-body center-block">
 
 			<div th:if="${param.error}">Login inválido.</div>
 			<div th:if="${param.logout}">Você foi desconectado.</div>

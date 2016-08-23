@@ -60,10 +60,12 @@ public class ListaEventosInscricao {
 		}
 		String inscricao = "Inscrever-me";
 		String cpf = principal.getName();
-		if (participacaoService.verificarInscrito(cpf, id)) {
+		Participacao p = participacaoService.buscar(cpf, id);
+		if (p != null) {
 			inscricao = "Desinscrever-me";
+		} else {
+			p = new Participacao();
 		}
-		Participacao p = new Participacao();
 		p.setEvento(evento);
 		ModelAndView mv = new ModelAndView(INSCREVER_EVENTO_VIEW);
 		mv.addObject("part", p);
@@ -89,18 +91,18 @@ public class ListaEventosInscricao {
 		Participante particip = participanteService.buscar(cpf);
 
 		System.out.println(particip);
-		if(particip==null){
+		if (particip == null) {
 			return listarEventosDisponiveis(principal);
 		}
 		System.out.println(4);
 		p.setParticipante(particip);
-		
-		if(participacaoService.salvar(p)){
-		ModelAndView mv = new ModelAndView("ConfirmarInscricao");
-		mv.addObject("mensagem", "Inscrito com sucesso");
-		return mv;
+
+		if (participacaoService.salvar(p)) {
+			ModelAndView mv = new ModelAndView("ConfirmarInscricao");
+			mv.addObject("mensagem", "Inscrito com sucesso");
+			return mv;
 		}
-		
+
 		return listarEventosDisponiveis(principal);
 	}
 }

@@ -27,9 +27,14 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<div class="clearfix">
-					<h1 class="panel-title aw-titulo-panel" th:text="${part.evento.nome}">Evento</h1>
-					<a class="btn btn-link aw-link-panel" href="/participante/evento">Retornar</a>
+					<h1 class="panel-title aw-titulo-panel h1"
+						th:text="${part.evento.nome}">Evento</h1>
+					<a th:if="${part.pagamento} == 'p'" class="btn btn-link btn-xs"
+						title="Pagamento Confirmado " rel="tooltip" data-placement="top">
+						<span class="glyphicon glyphicon-ok"> </span> Inscrição Validada
+					</a> <a class="btn btn-link aw-link-panel" href="/participante/evento">Retornar</a>
 				</div>
+
 			</div>
 
 			<div class="panel-body">
@@ -45,11 +50,18 @@
 			</div>
 		</div> -->
 		<input type="hidden" class="form-control" id="tipo"
-					th:field="*{evento}" th:value="${evento}" />
+			th:field="*{evento}" th:value="${evento}" />
 
 		<div class="form-group">
-			<div class="col-sm-offset-3 col-sm-10">
-				<button type="submit" class="btn btn-primary" th:inline="text">[[${inscricao}]]</button>
+			<div class="col-sm-offset-1 col-sm-11">
+				<button
+					th:unless="${part.pagamento} == 'p' or ${part.pagamento} == 'r'"
+					type="submit" class="btn btn-primary" th:inline="text">[[${inscricao}]]</button>
+				<span th:if="${part.pagamento} == 'p'"
+					class="alert-success col-sm-11 text-center">Sua inscrição foi
+					confirmada com sucesso!</span> <span th:if="${part.pagamento} == 'r'"
+					class="alert-danger col-sm-11 text-center">Sua inscrição não
+					foi validada!</span>
 			</div>
 		</div>
 

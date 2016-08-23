@@ -8,9 +8,19 @@
 	padding-bottom: 50px;
 }
 
+.navbar-inverse {
+	background: #333;
+}
+
 .panel-default {
 	margin-left: 10px;
 	margin-right: 10px;
+	
+}
+
+.panel-heading{
+	background-color: #c3cdd0;
+	
 }
 
 .alert {
@@ -35,4 +45,5 @@
 body, html{
 	min-height: 100%;
 	height: 100%;
+	background: #fafafa;
 }

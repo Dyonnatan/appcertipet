@@ -14,6 +14,6 @@ public interface EventoRepo extends JpaRepository<Evento, Long> {
 	@Query("select e from Evento e where e.nome like %?1% and e.cargaHoraria like %?2% and e.valor like %?3%")
 	List<Evento> findInEventoIgnoreCaseContaining(String nome, String ch, String valor);
 	
-	@Query("select e from Evento e where e.dataRealizacao >= CURRENT_DATE ORDER BY e.descricaoSimplificada")
+	@Query("select e from Evento e where e.encerrarInscricao = 0 and e.dataRealizacao >= CURRENT_DATE ORDER BY e.dataRealizacao desc")
 	List<Evento> findEventosDisponiveis();
 }
