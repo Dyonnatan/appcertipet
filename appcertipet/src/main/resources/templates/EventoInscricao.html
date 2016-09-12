@@ -23,7 +23,9 @@
 				<span th:text="${detailedError.message}"></span>
 			</div>
 		</div>
-
+<div th:if="${part.evento.encerrarInscricao}" class="col-sm-offset-1 col-sm-11">
+				<h4 class="h4 alert alert-warning col-sm-11 text-center">Inscrições encerradas!</h4>
+			</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<div class="clearfix">
@@ -32,31 +34,31 @@
 					<a th:if="${part.pagamento} == 'p'" class="btn btn-link btn-xs"
 						title="Pagamento Confirmado " rel="tooltip" data-placement="top">
 						<span class="glyphicon glyphicon-ok"> </span> Inscrição Validada
-					</a> <a class="btn btn-link aw-link-panel" href="/participante/evento">Retornar</a>
+					</a> <a class="btn btn-link aw-link-panel" href="/participante/evento">Voltar</a>
 				</div>
 
 			</div>
 
-			<div class="panel-body">
+			<div class="panel-body table-responsive">
 				<span th:utext="${part.evento.descricao}"></span>
 			</div>
 		</div>
 
-		<!-- <div class="form-group aw-required">
-			<label for="tipo" class="col-sm-2 control-label"> </label>
-			<div class="col-sm-8">
-				<input type="hidden" class="form-control" id="tipo"
-					th:field="*{tipoParticipante.id}" maxlength="254" />
-			</div>
-		</div> -->
 		<input type="hidden" class="form-control" id="tipo"
 			th:field="*{evento}" th:value="${evento}" />
+		<input type="hidden" class="form-control" id="tipo"
+			th:field="*{id}" th:value="${part.id}" />
 
 		<div class="form-group">
+			<div th:unless="${part.evento.encerrarInscricao}" class="col-sm-offset-1 col-sm-11">
+				<button 
+					th:unless="${part.id} ne null"
+					type="submit" class="btn btn-primary" name="action" value="inscrever">Inscrever-me</button>
+					<button 
+					th:if="(${part.id} ne null) ? (${part.pagamento} ne 'p' and ${part.pagamento} ne 'r'):false"					
+					type="submit" class="btn btn-primary" name="action" value="desinscrever">Desinscrever-me</button>
+			</div>
 			<div class="col-sm-offset-1 col-sm-11">
-				<button
-					th:unless="${part.pagamento} == 'p' or ${part.pagamento} == 'r'"
-					type="submit" class="btn btn-primary" th:inline="text">[[${inscricao}]]</button>
 				<span th:if="${part.pagamento} == 'p'"
 					class="alert-success col-sm-11 text-center">Sua inscrição foi
 					confirmada com sucesso!</span> <span th:if="${part.pagamento} == 'r'"

@@ -1,5 +1,8 @@
 package com.pet.certipet.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -7,8 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "participacoes")
@@ -20,6 +26,7 @@ public class Participacao {
 	private TipoParticipante tipoParticipante;
 	private Presenca presenca;
 	private char pagamento;
+	private List<Resposta> respostas;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,6 +84,22 @@ public class Participacao {
 
 	public void setPagamento(char pagou) {
 		this.pagamento = pagou;
+	}
+	
+	@Transient
+	public boolean isPresente() {
+		return presenca.equals(Presenca.PRESENTE);
+
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "participacao_id")
+	public List<Resposta> getRespostas() {
+		return respostas;
+	}
+
+	public void setRespostas(List<Resposta> respostas) {
+		this.respostas = respostas;
 	}
 
 	@Override

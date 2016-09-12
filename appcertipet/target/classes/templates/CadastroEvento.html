@@ -10,7 +10,7 @@
 </head>
 <section layout:fragment="conteudo" class="conteudo">
 
-	<form class="form-horizontal" method="post"
+	<form class="form-horizontal" method="post" enctype="multipart/form-data"
 		th:action="@{/dashboard/evento/manutencao}" th:object="${evento}">
 		<div class="alert alert-success"
 			th:if="${not #strings.isEmpty(mensagem)}">
@@ -118,11 +118,10 @@
 						<i>Upload</i>
 					</label>
 					<div class="col-sm-4">
-						<input type="file" accept="image/svg+xml" class="form-control"
-							id="cert"></input> <input type="text" readonly="readonly"
-							hidden="true" id="certname" th:field="*{certificado.nome}" /> <input
-							type="text" readonly="readonly" hidden="true" id="certtext"
-							th:field="*{certificado.arquivo}" />
+						<input type="file" accept="image/x-png, image/jpeg" class="form-control"
+							id="cert" name="file" th:field="*{mpf}"></input>	
+							<input type="text" readonly="readonly"
+							hidden="true" id="certname" th:field="*{certificado.nome}" />						
 					</div>
 					<label for="list_cert" class="col-sm-2 control-label"><i>ou
 							selecionar</i></label>
@@ -140,50 +139,7 @@
 							<button type="submit" class="btn btn-primary">Salvar</button>
 						</div>
 					</div>
-				
-					<div class="form-group ">
-						<div class="col-sm-offset-2 col-sm-8">
-								<h4 style="text-align:center">Visualização do Certificado (Upload):</h4>
-								<div class="col-sm-6" id="certview"  style="overflow: scroll; width: 100%; height: 300px;"></div>
-						</div>
-					</div>
-				
-
-
-				<!-- 				<div class="form-group" -->
-				<!-- 					th:classappend="${#fields.hasErrors('curso')} ? has-error"> -->
-				<!-- 					<label for="instituicao" class="col-sm-2 control-label">Instituição</label> -->
-				<!-- 					<div class="col-sm-4"> -->
-				<!-- 						<input type="text" class="form-control" id="instituicao" -->
-				<!-- 							th:field="*{curso.instituicao.nome}" /> -->
-				<!-- 					</div> -->
-				<!-- 				</div> -->
-
-				<!-- 				<div class="form-group"> -->
-				<!-- 					<label for="status" class="col-sm-2 control-label">Status</label> -->
-				<!-- 					<div class="col-sm-2"> -->
-				<!-- 						<select class="form-control" name="status"> -->
-				<!-- 							<option th:each="status : ${todosStatusTitulo}" -->
-				<!-- 								th:value="${status}" th:text="${status}"></option> -->
-				<!-- 						</select> -->
-				<!-- 					</div> -->
-				<!-- 				</div> -->
-
-				<!-- 				<div class="text-center"> -->
-				<!-- <a class="btn btn-link btn-xs"
-					th:href="@{/titulos/{codigo}(codigo=${curso})}"
-					title="Editar" rel="tooltip" data-placement="top"> <span
-						class="glyphicon glyphicon-pencil"></span>
-				</a>  -->
-				<!-- 				<a class="btn btn-link btn-xs" -->
-
-				<!-- 					title="Receber" rel="tooltip" -->
-				<!-- 					data-placement="top" th:attr="curso=${curso}" -->
-				<!-- 					th:href="@{/titulos/{codigo}/receber(codigo=${curso})}"> -->
-				<!-- 						<span class="glyphicon glyphicon-check"></span> -->
-				<!-- 				</a></div> -->
-
-				
+			
 			</div>
 		</div>
 
@@ -196,30 +152,15 @@
 		<script type="text/javascript">
 			//<![CDATA[
 			var fileInput = document.getElementById("cert");
-			var fileDisplayArea = document.getElementById("certtext");
 			var fileDisplayName = document.getElementById("certname");
-			var fileDisplayView = document.getElementById("certview");
 
 			fileInput.addEventListener("change", function(e) {
 				var file = fileInput.files[0];
-				var textType = /image.svg/;
-
-				if (file.type.match(textType)) {
 					var reader = new FileReader();
 
 					reader.onload = function(e) {
 						fileDisplayName.value = file.name;
-						fileDisplayArea.value = reader.result;
-						cert = reader.result;
-						ind = cert.indexOf("<svg");
-						cert = cert.substring(ind);
-						fileDisplayView.innerHTML = cert;
 					}
-
-					reader.readAsText(file, "UTF-8");
-				} else {
-					fileDisplayArea.value = "Arquivo não suportado!"
-				}
 			});
 			//]]>
 		</script>

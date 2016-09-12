@@ -54,7 +54,7 @@ public class CadastroUsuarioService {
 			em.persist(p);
 			em.getTransaction().commit();
 		} catch (Exception e) {
-			throw new Exception("Ocorreu um erro inesperado ao cadastrar um novo participante.");
+			throw new Exception("Ocorreu um erro inesperado ao cadastrar um novo participante. Talvez já esteja cadastrado.");
 		} finally {
 			if (em.getTransaction().isActive())
 				em.getTransaction().rollback();

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutPages/LayoutPadrao">
+
+<head>
+<title>Participações</title>
+</head>
+
+<section layout:fragment="conteudo">
+	<div layout:include="layoutPages/MensagemGeral"></div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="clearfix">
+				<h1 class="panel-title aw-titulo-panel">Inscritos</h1>
+				<a class="btn btn-link aw-link-panel" href="/dashboard">Tela
+					Inicial</a>
+			</div>
+		</div>
+
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table class="table table-hover table-striped">
+					<thead>
+						<tr>
+							<th class="text-center col-md-1" style="display: none;">#</th>
+							<th class="text-center col-md-1">Nome</th>
+							<th class="text-center col-md-1">CPF</th>
+							<th class="text-center col-md-1"></th>
+						</tr>
+					</thead>
+					<tbody style="text-align: left;">
+						<tr th:each="p : ${participacoes}">
+							<td class="text-center" th:text="${p.id}" style="display: none;">0</td>
+							<td class="text-center"
+								th:text="${p.participante.nome} +' '+ ${p.participante.sobrenome}">Nome</td>
+							<td class="text-center" th:text="${p.participante.cpf}"></td>
+
+							<td class="text-center" th:attr="data-role=${p.id}"><span
+								class="label" th:text="${p.presenca}"
+								th:classappend="${p.isPresente() ? 'label-success': 'label-danger'}"></span>
+							</td>
+
+							<td class="text-center"><a
+								class="btn btn-link btn-xs js-atualizar-status"
+								title="Confirmar" rel="tooltip" data-placement="top"
+								th:attr="data-codigo=${p.id}"
+								th:href="@{/dashboard/controle/{id}/PRESENTE/presenca(id=${p.id})}">
+									<span class="glyphicon glyphicon-check"></span>
+							</a> <a class="btn btn-link btn-xs js-atualizar-status"
+								title="Confirmar" rel="tooltip" data-placement="top"
+								th:attr="data-codigo=${p.id}"
+								th:href="@{/dashboard/controle/{id}/AUSENTE/presenca(id=${p.id})}">
+									<span class="glyphicon glyphicon-check"></span>
+							</a></td>
+
+						</tr>
+						<tr>
+							<td class="text-center" style="display: none;">
+								<!-- 							<a class="btn btn-link btn-xs" th:if="${titulo.pendente}" -->
+								<!-- 	   								title="Receber" rel="tooltip" data-placement="top" -->
+								<!-- 	   								th:attr="data-codigo=${titulo.codigo}" --> <!-- 	   								th:href="@{/titulos/{codigo}/receber(codigo=${titulo.codigo})}"> -->
+								<!-- 	   							<span class="glyphicon glyphicon-check"></span> -->
+								<!-- 	   						</a> -->
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6" th:if="${#lists.isEmpty(participacoes)}">Não
+								foram encontrado inscritos</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+</section>
+</html>
+
+
+
+
+
+
+
+
+
+
+

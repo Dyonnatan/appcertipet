@@ -1,17 +1,11 @@
 package com.pet.certipet.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -22,16 +16,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.pet.certipet.service.CertificadoService;
-import com.pet.certipet.service.EventoService;
-import com.pet.certipet.service.filter.EventoFilter;
 import com.pet.certipet.model.Certificado;
 import com.pet.certipet.model.Evento;
 import com.pet.certipet.model.TipoEvento;
+import com.pet.certipet.service.CertificadoService;
+import com.pet.certipet.service.EventoService;
+import com.pet.certipet.service.filter.EventoFilter;
 
 @Controller
 @RequestMapping(value = "/dashboard/evento")
@@ -48,7 +42,6 @@ public class CadastroEventoController {
 	private CertificadoService certificadoService;
 
 	
-//	@Secured({ "asRole('ADMINISTRADOR')" })
 	@RequestMapping(value = "/manutencao", method = RequestMethod.GET)
 	public ModelAndView goCadastro(Evento e) {
 		ModelAndView mv = new ModelAndView(MANUTENCAO_EVENTO);
@@ -60,28 +53,48 @@ public class CadastroEventoController {
 		System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 		return mv;
 	}
+//	public ModelAndView goCadastro(Evento e) {
+//		ModelAndView mv = new ModelAndView(MANUTENCAO_EVENTO);
+//		// mv.addObject("tipos", Arrays.asList(TipoEvento.values()));
+//		mv.addObject("evento", e);
+//		mv.addObject("certifSelec", new Certificado());
+//		//mv.addObject(attributeName, attributeValue)
+//		//System.out.println(a.getPrincipal());
+//		System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+//		return mv;
+//	}
 
 
 //    @PreAuthorize("hasRole('ADMINISTRADOR')")
 	@RequestMapping(value = "/manutencao", method = RequestMethod.POST)
-	public ModelAndView salvar(@Validated @ModelAttribute(value="evento") Evento p, Errors result ,
+	public ModelAndView salvar(@Validated @ModelAttribute(value="evento") Evento p, 
+			 BindingResult result,
 	 RedirectAttributes attributes // @Requestparam @pathvariable
 	) {
 		if (result.hasErrors()) {
-			return goCadastro(p);
+			System.out.println(result.getAllErrors());
+			ModelAndView mv = new ModelAndView(MANUTENCAO_EVENTO);
+			mv.addObject("evento", p);
+			mv.addObject("certifSelec", new Certificado());
+			mv.addObject("mensagem", result);
+			return mv;
 		}
-
+System.out.println("oi");
 		try {
-			if (p.getCertView().getId() != null) {
+			if (p.getCertView() != null && p.getCertView().getId() != null) {
 				System.out.println("Cert "+p.getCertView().getId()+" "+p.getCertView().getArquivo());
 				p.setCertificado(p.getCertView());
 			} else {
 				p.getCertificado().setData(new Date());
+//				p.getCertificado().setArquivo(file.getBytes());
+//				p.getCertificado().setNome(file.getName());
 				certificadoService.salvar(p.getCertificado());
 			}System.out.println(p.getId());
 			eventoService.salvar(p);
 		} catch (Exception e) {
 			// result.addError(new ObjectError("message", e.getMessage()));
+			System.out.println("sfs"+e.getMessage());
+			System.out.println(e);
 			return goCadastro(p);
 		}
 		ModelAndView mv = new ModelAndView();

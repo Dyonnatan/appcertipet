@@ -2,27 +2,30 @@ package com.pet.certipet.model;
 
 import java.util.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "certificados")
-public class Certificado //extends CertificadoDTO
-{
+@Table(name = "certificadoimgs")
+public class Certificado {
 
 	private Long id;
 	private String nome;
 	private Date data;
-	private String arquivo;
+	private byte[] arquivo;
 
 	public Certificado() {
+		// TODO Auto-generated constructor stub
 	}
 	
 	public Certificado(Long id, String nome, Date data) {
@@ -52,16 +55,6 @@ public class Certificado //extends CertificadoDTO
 		this.nome = nome;
 	}
 
-	// @Type(type="org.hibernate.type.StringClobType")
-	// @Lob
-	@Column(columnDefinition = "MEDIUMTEXT")
-	public String getArquivo() {
-		return arquivo;
-	}
-
-	public void setArquivo(String arquivo) {
-		this.arquivo = arquivo;
-	}
 
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getData() {
@@ -72,15 +65,19 @@ public class Certificado //extends CertificadoDTO
 		this.data = data;
 	}
 
-	// @ManyToOne(optional=false,fetch=FetchType.LAZY)
-	// public Evento getEvento() {
-	// return evento;
-	// }
-	//
-	// public void setEvento(Evento evento) {
-	// this.evento = evento;
-	// }
+	public void currentsetData() {
+		this.data = new Date();
+	}
 
+	@Basic(fetch = FetchType.LAZY)
+	@Lob
+	public byte[] getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(byte[] arquivo) {
+		this.arquivo = arquivo;
+	}
 
 	@Override
 	public int hashCode() {
@@ -96,7 +93,7 @@ public class Certificado //extends CertificadoDTO
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Certificado))
+		if (getClass() != obj.getClass())
 			return false;
 		Certificado other = (Certificado) obj;
 		if (id == null) {
@@ -107,13 +104,5 @@ public class Certificado //extends CertificadoDTO
 		return true;
 	}
 
-	public int hashC() {
-		final int prime = 31;
-		int result = 1;
-		System.currentTimeMillis();
-		result = prime * result + ((data == null) ? 0 : (int) data.getTime());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
+	
 }

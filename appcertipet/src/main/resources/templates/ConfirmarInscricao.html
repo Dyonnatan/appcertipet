@@ -13,12 +13,14 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<div class="clearfix">
-				<h1 class="panel-title aw-titulo-panel">Inscrição</h1>
+				<h1 class="panel-title aw-titulo-panel">Confirmação</h1>
+				<a class="btn btn-link aw-link-panel"
+					href="/participante/evento">Voltar</a>
 			</div>
 		</div>
 
 		<div class="panel-body" >
-			<div >inscrito</div>
+			<div th:inline="text">[[${mensagem}]]</div>
 		</div>
 	</div>
 </section>

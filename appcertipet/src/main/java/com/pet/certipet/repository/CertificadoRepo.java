@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.pet.certipet.model.Certificado;
-import com.pet.certipet.model.Participacao;
 
 public interface CertificadoRepo extends JpaRepository<Certificado, Long> {
 

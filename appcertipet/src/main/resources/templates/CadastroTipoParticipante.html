@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutPages/LayoutPadrao"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+<title>Evento</title>
+</head>
+<section layout:fragment="conteudo" class="conteudo">
+
+	<form class="form-horizontal" method="post"
+		th:action="@{/dashboard/tipoparticipante/manutencao}"
+		th:object="${tipPart}">
+		<div class="alert alert-success"
+			th:if="${not #strings.isEmpty(mensagem)}">
+			<span th:text="${mensagem}"></span>
+		</div>
+
+		<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+			<div th:each="detailedError : ${#fields.detailedErrors()}">
+				<span th:text="${detailedError.message}"></span>
+			</div>
+		</div>
+
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="clearfix">
+					<h1 class="panel-title aw-titulo-panel">Manutenção</h1>
+				</div>
+			</div>
+
+			<div class="panel-body">
+
+				<input type="hidden" th:field="*{id}" />
+				<div class="form-group aw-required"
+					th:classappend="${#fields.hasErrors('nome')} ? has-error">
+					<label for="nome" class="col-sm-2 control-label">Tipo de
+						Participante</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="nome"
+							th:field="*{nome}" autofocus="autofocus" required="required" />
+					</div>
+				</div>
+
+				<div class="form-group aw-required">
+					<label for="final_insc" class="col-sm-2 control-label">Exibir
+						como opção ao participante?</label>
+					<div class="col-sm-8">
+						<input type="checkbox" class="form-control" id="final_insc"
+							th:field="*{exibir}" th:checked="${tipPart.exibir}" />
+					</div>
+				</div>
+
+				<div class="form-group aw-required"
+					th:classappend="${#fields.hasErrors('cargaHoraria')} ? has-error">
+					<label for="ch" class="col-sm-2 control-label">Carga
+						Horária</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="ch"
+							th:field="*{cargaHoraria}" />
+					</div>
+				</div>
+
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('valor')} ? has-error">
+					<label for="valor" class="col-sm-2 control-label">Valor</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="valor"
+							th:field="*{valor}" />
+					</div>
+				</div>
+
+				<div class="form-group aw-required"
+					th:classappend="${#fields.hasErrors('textoCertificado')} ? has-error">
+					<label for="texto" class="col-sm-2 control-label">Texto do
+						Certificado </label>
+					<div class="col-sm-8" id="texto">
+						<textarea rows="5" cols="40" maxlength="2500" class="form-control"
+							name="texto" id="textoc" th:field="*{textoCertificado}"></textarea>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-10">
+						<button type="submit" class="btn btn-primary">Salvar</button>
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<label for="list_cert" class="col-sm-2 control-label"><a
+						id="preview"
+						th:href="@{preview(certif=${certif.id},texto=${textoCertificado})}"
+						target="_blank">(Visualizar)</a></label>
+					<div class="col-sm-6">
+						<select class="form-control" name="list_cert" id="certif">
+							<option th:each="tc : ${todosCertificados}" th:value="${tc.id}"
+								th:text="${tc.nome}"></option>
+						</select>
+					</div>
+				</div>
+				<div class="col-sm-10">
+					<p id="ajuda" th:inline="text">
+						Para escrever o texto que irá no certificado algumas notações
+						devem ser seguidas.<br /> Os campos disponíveis para serem usados
+						no "texto corpo" do certificado são:<br />
+					<ul>
+						<li><b>@nome@</b> - Nome e sobrenome do participante</li>
+						<li><b>@evento@</b> - Nome do evento</li>
+						<li><b>@data@</b> - Data do evento</li>
+						<li><b>@date@</b> - Data do evento em inglês, data gerada e
+							autenticação do certificado também ficarão em inglês</li>
+						<li><b>@ch@</b> - Carga horária deste tipo de participante</li>
+						<li><b>@matricula@</b> - Número de matrícula do participante</li>
+						<li><b>@cpf@</b> - Cpf do participante</li>
+					</ul>
+					Para modificações adicionais insira no final do texto @@ em seguida
+					especifique o que for de seu interesse, sendo todos números dados
+					em pt*:
+					<ul>
+						<li><b>@gerar_data@{X,Y}</b> - Substitua X e Y pela posição
+							desejada da data que o certificado foi gerado.<br />
+							@gerar_data@{-1,-1} - Oculta esse campo</li>
+						<li><b>@autent@{X,Y}</b> - Substitua X e Y pela posição
+							desejada da autenticação.<br /> @autent@{-1,-1} - Oculta esse
+							campo</li>
+						<li><b>@parag@{X,Y}</b> - Substitua X e Y pela posição
+							desejada deste parágrafo principal (texto do certificado).</li>
+						<li><b>@width@{X,Y}</b> - Substitua X pela largura do
+							parágrafo e substitua Y pela largura da data gerada. Se colocar 0
+							(zero) não alterará o original<br /> @autent@{-1,-1} - Oculta
+							esse campo</li>
+						<li><b>@fonte{X,Y}</b> - Substitua X pela fonte desejada e Y
+							pelo tamanho da fonte em pt*.<br /> Fontes disponíveis: Courier,
+							Helvetica, Symbol, Times-Roman</li>
+					</ul>
+					*pt - Unidade de medida para "pontos" (point).
+					</p>
+				</div>
+
+
+			</div>
+		</div>
+		<script src="/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript">
+			//<![CDATA[
+			$("#preview").on("click", function() {
+				var param = "preview?certif=" + $("#certif").val();
+				param = param + "&texto=" + $("#textoc").val();
+				$("#preview").attr("href", param);
+			});
+			//]]>
+		</script>
+	</form>
+
+</section>
+</html>

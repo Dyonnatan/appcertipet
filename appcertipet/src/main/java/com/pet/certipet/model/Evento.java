@@ -1,9 +1,10 @@
 package com.pet.certipet.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,7 +13,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,9 +23,9 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.apache.commons.httpclient.util.DateParseException;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "eventos")
@@ -39,6 +42,7 @@ public class Evento {
 	private String valor;
 	private boolean encerrarInscricao;
 	private Certificado certificado;
+	private List<Questionario> questoes;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -139,6 +143,16 @@ public class Evento {
 		this.certificado = certificado;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "questionario_id")
+	public List<Questionario> getQuestoes() {
+		return questoes;
+	}
+
+	public void setQuestoes(List<Questionario> questoes) {
+		this.questoes = questoes;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -165,7 +179,6 @@ public class Evento {
 	}
 
 	private Certificado certView;
-	
 	@Transient
 	public Certificado getCertView() {
 		return certView;
@@ -173,5 +186,19 @@ public class Evento {
 	
 	public void setCertView(Certificado certView) {
 		this.certView = certView;
+	}
+	
+	private MultipartFile mpf;
+	@Transient
+	public MultipartFile getMpf() {
+		return mpf;
+	}
+	
+	public void setMpf(MultipartFile mpf) throws IOException {
+		this.mpf = mpf;
+		this.certificado = new Certificado();
+		this.certificado.setNome(mpf.getOriginalFilename());
+		this.certificado.setArquivo(mpf.getBytes());
+		this.certificado.currentsetData();
 	}
 }

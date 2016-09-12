@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pet.certipet.model.Participacao;
+import com.pet.certipet.model.Presenca;
 import com.pet.certipet.repository.ParticipacaoRepo;
 
 @Service
@@ -20,7 +21,6 @@ public class ParticipacaoService {
 	
 	public boolean verificarInscrito(String cpf, Long idEvento) {
 		Integer i = participacao.verificarInscrito(cpf, idEvento);
-		System.out.println(i);
 		return (i!=null);
 	}
 	
@@ -28,8 +28,25 @@ public class ParticipacaoService {
 		return participacao.buscar(cpf, idEvento);
 	}
 	
+	public List<Participacao> todasParticipacoesConfirmadas(Long idEvento) {	 
+		return participacao.findarByEventoParticipantesValidos(idEvento);
+	}
+	
 	public boolean salvar(Participacao p) {
 		return participacao.save(p) != null;
+	}
+
+	public void remover(Participacao p) {
+		participacao.delete(p);
+	}
+	
+	public void remover(Long idPartipacao) {
+		participacao.delete(idPartipacao);
+	}
+
+	public Participacao setPresenca(Participacao p) {
+		
+		return participacao.save(p);
 	}
 
 }

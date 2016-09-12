@@ -16,7 +16,10 @@ public class TipoParticipante {
 
 	private Long id;
 	private String nome;
-	private String carga_horaria;
+	private String cargaHoraria;
+	private String valor;
+	private String textoCertificado;
+	private boolean exibir;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,12 +44,40 @@ public class TipoParticipante {
 
 	@Size(max = 45, message = "A carga horaria não pode conter mais de 45 caracteres")
 	@Column(length = 45)
-	public String getCarga_horaria() {
-		return carga_horaria;
+	public String getCargaHoraria() {
+		return cargaHoraria;
 	}
 
-	public void setCarga_horaria(String carga_horaria) {
-		this.carga_horaria = carga_horaria;
+	public void setCargaHoraria(String cargaHoraria) {
+		this.cargaHoraria = cargaHoraria;
+	}
+	
+	@Size(max = 45, message = "O valor não pode conter mais de 45 caracteres")
+	@Column(length = 45)
+	public String getValor() {
+		return valor;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+
+	@Size(max = 500, message = "O texto do certificado não pode conter mais de 500 caracteres")
+	@Column(length = 500)
+	public String getTextoCertificado() {
+		return textoCertificado;
+	}
+	
+	public void setTextoCertificado(String textoCertificado) {
+		this.textoCertificado = textoCertificado;
+	}
+	
+	public boolean isExibir() {
+		return exibir;
+	}
+
+	public void setExibir(boolean exibir) {
+		this.exibir = exibir;
 	}
 
 	@Override
@@ -76,7 +107,7 @@ public class TipoParticipante {
 
 	@Override
 	public String toString() {
-		return "TipoParticipante " + nome + ", " + carga_horaria;
+		return "TipoParticipante " + nome + ", " + cargaHoraria;
 	}
 
 }

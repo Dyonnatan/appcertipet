@@ -2,13 +2,13 @@ package com.pet.certipet.service;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pet.certipet.model.Evento;
+import com.pet.certipet.model.Presenca;
 import com.pet.certipet.repository.EventoRepo;
 import com.pet.certipet.service.filter.EventoFilter;
 
@@ -39,6 +39,10 @@ public class EventoService {
 		return eventoR.findEventosDisponiveis();
 	}
 	
+	public List<Evento> buscarNaoRealizados() {
+		return eventoR.findEventosNaoRealizados();
+	}
+	
 	public List<Evento> buscarTodos() {
 		return eventoR.findAll();
 	}
@@ -63,4 +67,5 @@ public class EventoService {
 		return eventoR.findInEventoIgnoreCaseContaining(nome, ch, valor);
 	}
 
+	
 }
