@@ -10,35 +10,42 @@
 
 <section layout:fragment="conteudo">
 
-	<div class="panel panel-default col-sm-4 center-block" style="float: none; margin: 0 auto;">
-		<div class="panel-heading" style="background-color: none">
-			<div class="clearfix">
-				<h1 class="panel-title aw-titulo-panel">Login com CPF:</h1>
-				<a class="btn btn-link aw-link-panel" href="/cadastro">Cadastro</a>
+	<div class="alert alert-success" th:text="${mensagem}" 
+	th:if="${not #strings.isEmpty(mensagem)}"></div>
+
+	<div class="wrapper panel panel-default col-sm-10 col-md-4 center-block" style="float:none; margin:35px auto; background:#333">
+	<div class="panel-body center-block" style="float:none; margin:0 auto;">
+		<a href="/"> <img id="certipet1" src="images/logo-certipet.png"
+			alt="Logo Certipet" />
+		</a>
+		<h4 class="h4 text-center" style="color:white;">Sistema de Gerenciamento de Certificados do PET-EMC</h4>
+		<p>Se você participou de algum evento do PET-EMC, resgate seu
+			certificado no campo abaixo.<br />Não possui cadastro? <a href="/cadastro">Inscreva-se.</a></p>
+			
+			<p style="color: red" th:if="${param.error}">CPF inválido ou não
+					cadastrado! Tente novamente.</p>
+			<p style="color: green" th:if="${param.logout}">Você foi
+					desconectado.</p>
+
+		<form method="post" class="form-horizontal" th:action="@{/login}">
+			
+		
+			<div class="row center-block">
+			<input type="text" class="cpf form-control" placeholder="CPF"
+				name="username"></input> <input type="hidden" class="cpf"
+				placeholder="Digite novamente" name="password" value="pass"></input>
+			
+				<p class="cpf-help">
+					Digite seu CPF.
+				</p>
+				
 			</div>
-		</div>
-
-		<div class="panel-body center-block">
-
-			<div th:if="${param.error}">Login inválido.</div>
-			<div th:if="${param.logout}">Você foi desconectado.</div>
-
-			<form method="post" class="form-horizontal" th:action="@{/login}">
-				<div class="form-group">
-					<div class="input-group">
-						<input type="text" class="form-control"
-							placeholder="Digite seu CPF" autofocus="autofocus"
-							name="username"></input> <input type="hidden" class="form-control"
-							placeholder="Digite novamente" name="password" value="pass"></input> <span
-							class="input-group-btn">
-							<button type="submit" class="btn btn-default">
-								<i class="glyphicon glyphicon-search">login</i>
-							</button>
-						</span>
-					</div>
-				</div>
-			</form>
-		</div>
+			<div style="margin-top:2%">
+			<input type="submit" class="submit" value="Acesso"></input>
+			</div>
+			
+		</form>
 	</div>
+</div>
 </section>
 </html>

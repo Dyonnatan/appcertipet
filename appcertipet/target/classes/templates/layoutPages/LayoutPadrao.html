@@ -5,24 +5,25 @@
     
 <head>
 	<meta charset="UTF-8"/>
-  	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<title>CertiPET</title>
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/style.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap-datepicker.standalone.min.css"/>
 </head>
 <body>
-	<header layout:include="layoutPages/Cabecalho"></header>
+	
 
 	<section layout:fragment="conteudo">
 		<p>Conteúdo principal</p>
 	</section>
 	
-	<footer layout:include="layoutPages/Footer"></footer>
+	<footer layout:include="/layoutPages/Footer"></footer>
   	<script src="/js/jquery-2.1.4.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/bootstrap-datepicker.min.js"></script>
 	<script src="/js/bootstrap-datepicker.pt-BR.min.js"></script>
-  	<script src="/js/evento.js"></script>
+	<script src="/js/vendor/jquery.min.js"></script>
+	<script src="/js/foundation.min.js"></script>
+	<script src="/js/hawthorne.js"></script>
 </body>
 </html>

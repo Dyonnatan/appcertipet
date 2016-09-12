@@ -26,6 +26,7 @@ import com.pet.certipet.service.InstituicaoService;
 public class CadastroParticipanteController {
 
 	private static final String CADASTRO_USUARIO = "CadastroUsuario";
+	private static final String REDIRECIONA = "LoginUser";
 
 	@Autowired
 	private CadastroUsuarioService cadUserService;
@@ -54,8 +55,8 @@ public class CadastroParticipanteController {
 			result.addError(new ObjectError("message", e.getMessage()));
 			return goCadastro(p);
 		}
-		ModelAndView mv = new ModelAndView(CADASTRO_USUARIO);// "redirect:/home");
-		attributes.addFlashAttribute("mensagem", "Cliente salvo com sucesso.");
+		ModelAndView mv = new ModelAndView(REDIRECIONA);// "redirect:/home");
+		mv.addObject("mensagem", "Cliente cadastrado com sucesso.");
 		return mv;
 	}
 

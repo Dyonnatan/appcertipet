@@ -45,7 +45,7 @@ public class Curso {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return id + "";
+		return nome;
 	}
 
 	@Override

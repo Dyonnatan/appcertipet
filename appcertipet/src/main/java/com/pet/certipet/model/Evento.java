@@ -40,6 +40,7 @@ public class Evento {
 	private String descricaoSimplificada;
 	private String descricao;
 	private String valor;
+	private String thumbnailURL;
 	private boolean encerrarInscricao;
 	private Certificado certificado;
 	private List<Questionario> questoes;
@@ -126,6 +127,14 @@ public class Evento {
 		this.valor = valor;
 	}
 
+	public String getThumbnailURL() {
+		return thumbnailURL;
+	}
+	
+	public void setThumbnailURL(String thumbnailURL) {
+		this.thumbnailURL = thumbnailURL;
+	}
+	
 	public boolean isEncerrarInscricao() {
 		return encerrarInscricao;
 	}

@@ -84,7 +84,7 @@ public class Instituicao {
 
 	@Override
 	public String toString() {
-		return sigla.concat(" ".concat(nome));
+		return sigla+" "+nome;
 	}
 
 }

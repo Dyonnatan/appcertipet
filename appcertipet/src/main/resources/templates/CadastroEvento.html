@@ -91,6 +91,15 @@
 							th:field="*{valor}" />
 					</div>
 				</div>
+				
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('thumbnailURL')} ? has-error">
+					<label for="thumbnailURL" class="col-sm-2 control-label">Url do thumbnail</label>
+					<div class="col-sm-3">
+						<input type="url" class="form-control" id="thumbnailURL"
+							th:field="*{thumbnailURL}" />
+					</div>
+				</div>
 
 				<div class="form-group"
 					th:classappend="${#fields.hasErrors('descricao')} ? has-error">

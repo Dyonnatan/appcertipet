@@ -2,14 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorator="layoutPages/LayoutPadrao">
+    layout:decorator="/layoutPages/LayoutPadrao">
     
 <head>
-	<title>Certificados disponíveis</title>
+	<title>Certificados Disponíveis</title>
 </head>
 
 <section layout:fragment="conteudo">
-	<div layout:include="layoutPages/MensagemGeral"></div>
+	<div layout:include="/layoutPages/MensagemGeral"></div>
+	<div class="wrapper panel panel-default col-sm-10 col-md-4 center-block" style="float:none; margin:35px auto; background:#333">
+		<div class="panel-body center-block" style="float:none; margin:0 auto;">
+		<a href="/"> <img id="certipet1" src="/images/logo-certipet.png"
+			alt="Logo Certipet" />
+		</a>
+		<h4 class="h4 text-center" style="color:white;">Eventos Disponíveis</h4>
+	
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -66,6 +73,8 @@
 	   	</div>
 	   	
 	   	
+	</div>
+	</div>
 	</div>
 </section>
 </html>
