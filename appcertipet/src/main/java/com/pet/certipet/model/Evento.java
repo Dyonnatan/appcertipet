@@ -173,7 +173,7 @@ public class Evento {
 		this.tiposParticipantes = tiposParticipantes;
 	}
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "questionario_id")
 	public List<Questionario> getQuestoes() {
 		return questoes;
