@@ -1,5 +1,6 @@
 package com.pet.certipet.controller;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class CadastroParticipanteController {
 	private CursoService cursoService;
 
 	@RequestMapping(value = "/cadastro", method = RequestMethod.GET)
-	public ModelAndView goCadastro(Participante p,  BindingResult result, RedirectAttributes attributes) {
+	public ModelAndView goCadastro(Participante p, BindingResult result, RedirectAttributes attributes) {
 		ModelAndView mv = new ModelAndView(CADASTRO_USUARIO);
 		mv.addObject("sexos", Arrays.asList(Sexo.values()));
 		mv.addObject(p);
@@ -51,7 +52,7 @@ public class CadastroParticipanteController {
 		if (result.hasErrors()) {
 			return goCadastro(p, result, attributes);
 		}
-		
+
 		try {
 			p.getUsuario().setEnabled(false);
 			p.getUsuario().setCpf(p.getCpf());
@@ -61,29 +62,21 @@ public class CadastroParticipanteController {
 			cadUserService.salvar(p);
 		} catch (Exception e) {
 			System.out.println(e);
-			result.addError(new ObjectError("message", "Não foi possível cadastrar. Verifique se já não está cadastrado."));
+			result.addError(
+					new ObjectError("message", "Não foi possível cadastrar. Verifique se já não está cadastrado."));
 			return goCadastro(p, result, attributes);
 		}
 		ModelAndView mv = new ModelAndView(REDIRECIONA);// "redirect:/home");
 		mv.addObject("mensagem", "Usuário cadastrado com sucesso.");
 		return mv;
 	}
-	
-	@RequestMapping(value = "/participante/conta", method = RequestMethod.POST)
-	public ModelAndView alterar(@Validated Participante p, BindingResult result, RedirectAttributes attributes) {
-		if (result.hasErrors()) {
-			ModelAndView mv = new ModelAndView(CONTA_USUARIO);
-			mv.addObject(p);
-			return mv;
-		}
 
-		try {
-			cadUserService.salvar(p);
-		} catch (Exception e) {
-			result.addError(new ObjectError("message", "Não foi possível fazer a alteração"));
-			return alterar(p, result, attributes);
-		}
-		ModelAndView mv = new ModelAndView(CONTA_USUARIO);// "redirect:/home");
+	@RequestMapping(value = "/participante/conta", method = RequestMethod.GET)
+	public ModelAndView alterar(Principal p) {
+
+		Participante pa = cadUserService.buscar(p.getName());
+		ModelAndView mv = new ModelAndView(CONTA_USUARIO);
+		mv.addObject("p", pa);
 		mv.addObject("mensagem", "Dados alterados com sucesso.");
 		return mv;
 	}
@@ -98,7 +91,7 @@ public class CadastroParticipanteController {
 	@ModelAttribute("todosCursos")
 	public List<Curso> todosCursos() {
 		List<Curso> l = cursoService.buscarTodos();
-		
+
 		return l;
 		// return Arrays.asList(TipoEvento.values());
 	}

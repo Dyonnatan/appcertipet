@@ -43,6 +43,10 @@ public class CadastroUsuarioService {
 		return participante.findAll();
 	}
 
+	public Participante buscar(String cpf) {
+		return participante.findByCpf(cpf);
+	}
+	
 	public String salvarParticipanteUsuario(Participante p) throws Exception {
 
 		EntityManager em = emf.createEntityManager();

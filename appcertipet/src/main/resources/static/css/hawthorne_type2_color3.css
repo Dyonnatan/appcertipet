@@ -1,5 +1,5 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,700,700italic);
-@import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700);
+/* @import url(http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,700,700italic); */
+/* @import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,300,700); */
 /*==================================================================================================
 Foundation Variables
 ==================================================================================================*/
@@ -762,69 +762,69 @@ a.back-to-top:hover {
 Footer
 ==================================================================================================*/
 /* line 449, ../scss/_custom.scss */
-footer {
-  border-top: 1px solid #9d9995;
-  margin-top: 3em;
-  padding-top: 4em;
-  padding-bottom: 5em;
-}
+/* footer { */
+/*   border-top: 1px solid #9d9995; */
+/*   margin-top: 3em; */
+/*   padding-top: 4em; */
+/*   padding-bottom: 5em; */
+/* } */
 
-/* line 456, ../scss/_custom.scss */
-footer ul {
-  text-align: center;
-  margin-top: 2em;
-  margin-left: 0;
-}
+/* /* line 456, ../scss/_custom.scss */ */
+/* footer ul { */
+/*   text-align: center; */
+/*   margin-top: 2em; */
+/*   margin-left: 0; */
+/* } */
 
-/* line 462, ../scss/_custom.scss */
-footer li {
-  font-family: "Roboto", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  font-size: 0.8125rem;
-  line-height: 1.6;
-  letter-spacing: 0;
-  text-transform: none;
-  display: inline-block;
-  padding-left: 1em;
-  margin-right: 1em;
-  color: #283a49;
-}
+/* /* line 462, ../scss/_custom.scss */ */
+/* footer li { */
+/*   font-family: "Roboto", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; */
+/*   font-weight: normal; */
+/*   font-style: normal; */
+/*   font-size: 0.8125rem; */
+/*   line-height: 1.6; */
+/*   letter-spacing: 0; */
+/*   text-transform: none; */
+/*   display: inline-block; */
+/*   padding-left: 1em; */
+/*   margin-right: 1em; */
+/*   color: #283a49; */
+/* } */
 
-/* line 476, ../scss/_custom.scss */
-footer li a {
-  color: #283a49;
-  -webkit-transition: color 0.2s ease-out;
-  -moz-transition: color 0.2s ease-out;
-  transition: color 0.2s ease-out;
-}
+/* /* line 476, ../scss/_custom.scss */ */
+/* footer li a { */
+/*   color: #283a49; */
+/*   -webkit-transition: color 0.2s ease-out; */
+/*   -moz-transition: color 0.2s ease-out; */
+/*   transition: color 0.2s ease-out; */
+/* } */
 
-/* line 481, ../scss/_custom.scss */
-footer div.social-icons {
-  text-align: center;
-}
+/* /* line 481, ../scss/_custom.scss */ */
+/* footer div.social-icons { */
+/*   text-align: center; */
+/* } */
 
-/* line 485, ../scss/_custom.scss */
-footer div.social-icons i {
-  padding-left: 0.25em;
-  padding-right: 0.25em;
-  color: #283a49;
-}
+/* /* line 485, ../scss/_custom.scss */ */
+/* footer div.social-icons i { */
+/*   padding-left: 0.25em; */
+/*   padding-right: 0.25em; */
+/*   color: #283a49; */
+/* } */
 
-/* line 491, ../scss/_custom.scss */
-footer div.social-icons a:hover i {
-  color: #1a5f99;
-  -webkit-transition: color 0.2s ease-out;
-  -moz-transition: color 0.2s ease-out;
-  transition: color 0.2s ease-out;
-}
+/* /* line 491, ../scss/_custom.scss */ */
+/* footer div.social-icons a:hover i { */
+/*   color: #1a5f99; */
+/*   -webkit-transition: color 0.2s ease-out; */
+/*   -moz-transition: color 0.2s ease-out; */
+/*   transition: color 0.2s ease-out; */
+/* } */
 
-/* line 496, ../scss/_custom.scss */
-footer div.social-icons a i {
-  -webkit-transition: color 0.2s ease-out;
-  -moz-transition: color 0.2s ease-out;
-  transition: color 0.2s ease-out;
-}
+/* /* line 496, ../scss/_custom.scss */ */
+/* footer div.social-icons a i { */
+/*   -webkit-transition: color 0.2s ease-out; */
+/*   -moz-transition: color 0.2s ease-out; */
+/*   transition: color 0.2s ease-out; */
+/* } */
 
 /*==================================================================================================
 Media Queries

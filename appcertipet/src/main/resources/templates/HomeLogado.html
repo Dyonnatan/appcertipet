@@ -3,52 +3,65 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="layoutPages/LayoutPadrao"
-    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
 <title>Certipet</title>
 </head>
 
-<section layout:fragment="conteudo" >
+<section layout:fragment="conteudo">
 	<div layout:include="layoutPages/MensagemGeral"></div>
 
-		<div class="wrapper panel panel-default col-sm-10 col-md-4 center-block" style="float:none; margin:35px auto; background:#333">
-		<div class="panel-body center-block" style="float:none; margin:0 auto;">
-		<a href="/"> <img id="certipet1" src="images/logo-certipet.png"
-			alt="Logo Certipet" />
-		</a>
-		<h4 class="h4 text-center" style="color:white;">Página inicial do usuário</h4>
-		
+	<div
+		class="wrapper panel panel-default col-sm-10 col-md-4 center-block"
+		style="float: none; margin: 35px auto; background: #333">
+		<div class="panel-body center-block"
+			style="float: none; margin: 0 auto;">
+			<a href="/"> <img id="certipet1" src="images/logo-certipet.png"
+				alt="Logo Certipet" />
+			</a>
+			<h4 class="h4 text-center" style="color: white;">Página inicial
+				do usuário</h4>
+
 			<div class="clearfix" style="margin: 0 auto;">
-<!-- 				<h1 class="panel-title aw-titulo-panel">Certificados</h1> -->
-				<a class="btn btn-link aw-link-panel" href="/logout" style="display: block;">Sair</a>
+				<a class="btn btn-link aw-link-panel" href="/participante/conta"
+					style="display: block;">Dados Pessoais</a>
 			</div>
-		
 
-		<div class="panel-body">
-			<table style="margin: 0 auto;" >
-				<tbody>
-					<tr>
-						<td class="text-center" style="width:50%"><form action="/participante/evento/">
-    						<input type="submit" value="Eventos" class="submit"/>
-						</form></td>
-    						
-						<td class="text-center" style="width:50%"><form action="/participante/certificados/">
-    						<input type="submit" value="Certificados" class="submit"/>
-    					</form></td>
-					</tr>
+			<div class="clearfix" style="margin: 0 auto;">
+				<!-- 				<h1 class="panel-title aw-titulo-panel">Certificados</h1> -->
+				<a class="btn btn-link aw-link-panel" href="/logout"
+					style="display: block;">Sair</a>
+			</div>
 
-					<tr th:if="${#strings.contains(#httpServletRequest.userPrincipal.authorities,'ORGANIZADOR')}">
-						<td class="text-center"><a class="btn btn-link btn-xs"
-							th:href="@{/participante/certificados/}" title="Certificados"
-							rel="tooltip" data-placement="top"> Cadastros de Eventos </a></td>
-					</tr>
-				</tbody>
-			</table>
-<!--   			<h1 th:inline="text">Olá [[${#httpServletRequest.userPrincipal.authorities }]]</h1> -->
+
+			<div class="panel-body">
+				<table style="margin: 0 auto;">
+					<tbody>
+						<tr>
+							<td class="text-center" style="width: 50%"><form
+									action="/participante/evento/">
+									<input type="submit" value="Eventos" class="submit" />
+								</form></td>
+
+							<td class="text-center" style="width: 50%"><form
+									action="/participante/certificados/">
+									<input type="submit" value="Certificados" class="submit" />
+								</form></td>
+						</tr>
+
+						<tr
+							th:if="${#strings.contains(#httpServletRequest.userPrincipal.authorities,'ORGANIZADOR')}">
+							<td class="text-center"><a class="btn btn-link btn-xs"
+								th:href="@{/participante/certificados/}" title="Certificados"
+								rel="tooltip" data-placement="top"> Cadastros de Eventos </a></td>
+						</tr>
+					</tbody>
+				</table>
+				<!--   			<h1 th:inline="text">Olá [[${#httpServletRequest.userPrincipal.authorities }]]</h1> -->
+			</div>
 		</div>
-		</div>
-		</div>
-	
+	</div>
+
 </section>
 </html>
