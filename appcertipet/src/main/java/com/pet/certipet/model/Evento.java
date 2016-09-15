@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -43,7 +44,9 @@ public class Evento {
 	private String thumbnailURL;
 	private boolean encerrarInscricao;
 	private Certificado certificado;
+	private List<TipoParticipante> tiposParticipantes;
 	private List<Questionario> questoes;
+	private String organizadorCPF;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -142,6 +145,15 @@ public class Evento {
 	public void setEncerrarInscricao(boolean encerrarInscricao) {
 		this.encerrarInscricao = encerrarInscricao;
 	}
+	
+	@Column(length = 21)
+	public String getOrganizadorCPF() {
+		return organizadorCPF;
+	}
+	
+	public void setOrganizadorCPF(String organizadorCPF) {
+		this.organizadorCPF = organizadorCPF;
+	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	public Certificado getCertificado() {
@@ -152,7 +164,16 @@ public class Evento {
 		this.certificado = certificado;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY)
+	public List<TipoParticipante> getTiposParticipantes() {
+		return tiposParticipantes;
+	}
+	
+	public void setTiposParticipantes(List<TipoParticipante> tiposParticipantes) {
+		this.tiposParticipantes = tiposParticipantes;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name = "questionario_id")
 	public List<Questionario> getQuestoes() {
 		return questoes;

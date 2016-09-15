@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pet.certipet.model.Nivel;
@@ -19,6 +20,11 @@ public class CadastroUsuarioService {
 
 	@Autowired
 	private ParticipanteRepo participante;
+	@Autowired
+	private UsuarioRepo user;
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
 	// @Autowired
 	// private UsuarioRepo usuarioRepo;
 
@@ -49,12 +55,12 @@ public class CadastroUsuarioService {
 			user.setCpf(p.getCpf());
 			user.setEnabled(true);
 			user.setNivel(Nivel.ROLE_PARTICIPANTE);
-			user.setSenha("pass");
 			em.persist(user);
 			em.persist(p);
 			em.getTransaction().commit();
 		} catch (Exception e) {
-			throw new Exception("Ocorreu um erro inesperado ao cadastrar um novo participante. Talvez já esteja cadastrado.");
+			throw new Exception(
+					"Ocorreu um erro inesperado ao cadastrar um novo participante. Talvez já esteja cadastrado.");
 		} finally {
 			if (em.getTransaction().isActive())
 				em.getTransaction().rollback();
@@ -62,6 +68,16 @@ public class CadastroUsuarioService {
 		}
 		return p.getNome();
 	}
+
+	public Participante salvar(Participante p) throws Exception {
+		System.out.println(p.getUsuario().getSenha());
+		Usuario u = p.getUsuario();
+		u.setSenha(passwordEncoder.encode(p.getUsuario().getSenha()));
+		u = user.save(u);
+		p.setUsuario(u);
+		return participante.save(p);
+	}
+	
 
 	// @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 

@@ -10,8 +10,8 @@
 
 <section layout:fragment="conteudo">
 	<div layout:include="/layoutPages/MensagemGeral"></div>
-	<div class="wrapper panel panel-default col-sm-10 col-md-4 center-block" style="float:none; margin:35px auto; background:#333">
-		<div class="panel-body center-block" style="float:none; margin:0 auto;">
+	<div class="panel panel-default col-sm-10 col-md-4 center-block">
+		<div class="panel-body center-block">
 		<a href="/"> <img id="certipet1" src="/images/logo-certipet.png"
 			alt="Logo Certipet" />
 		</a>
@@ -60,7 +60,7 @@
 	   					<td class="text-center" th:text="${{part.evento.dataRealizacao}}"></td>
 	   					<td class="text-center">
 	   						<a class="btn btn-link btn-xs" th:href="@{/participante/certificado/{id}(id=${part.id})}" 
-	   								title="Editar" rel="tooltip" data-placement="top">
+	   								title="Baixar" rel="tooltip" data-placement="top">
 	   							<span class="glyphicon glyphicon-pencil"></span>
 	   						</a>
 	   					</td>

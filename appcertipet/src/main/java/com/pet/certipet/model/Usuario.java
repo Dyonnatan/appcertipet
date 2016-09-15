@@ -2,6 +2,8 @@ package com.pet.certipet.model;
 
 import javax.persistence.*;
 
+import org.hibernate.validator.constraints.Email;
+
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
@@ -14,6 +16,7 @@ public class Usuario {
 	@Column(name = "cpf", nullable = false, unique = true)
 	private String cpf;
 
+	@Email(message = "E-mail inválido")
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 

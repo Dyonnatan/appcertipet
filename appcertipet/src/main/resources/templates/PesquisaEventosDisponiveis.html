@@ -28,7 +28,7 @@
 		
 		
 	<div class="panel panel-default">
-		<div class="panel-heading" style="background-image: linear-gradient(#333333 0%, #666666 100%); border-radius:1%;">
+		<div class="panel-heading" style="background: #666666 100%); border-radius:1%;">
 			<div class="clearfix">
 				<div style="position: center;">
 					<div style="width:100%; text-align:center;">
@@ -42,7 +42,6 @@
 						<a class="btn btn-link aw-link-panel" href="/logout" style="display: inline;">Sair</a>
 					</div>
 					</div>
-					<p style="line-height: normal;margin-bottom: 0;">Eventos Disponíveis</p>
 				</div>
 			</div>
 		</div>
@@ -55,7 +54,7 @@
 
 	<div class="small-12 medium-12 large-12 small-centered columns"></div>
 
-<div class="row" style="background-image: linear-gradient(#28D2DE 0%, #1A878F 100%); border-radius:1%;">
+<div class="row" style="background-image: linear-gradient(#fff 0%, #e4e4e4 100%); border-radius:1%;">
 	<div class="small-12 medium-12 large-12 columns">
 		<ul class="small-block-grid-1 medium-block-grid-3 large-block-grid-3 inline-list-custom">
 			
@@ -65,7 +64,7 @@
 					<div class="thumbnail-img">
 						<div class="thumbnail-hover"><a th:href="@{/participante/evento/inscricao/{id}/{nome}(id=${ev.id},nome=${ev.nome})}"></a></div>
 						<a th:href="@{/participante/evento/inscricao/{id}/{nome}(id=${ev.id},nome=${ev.nome})}">
-						<img th:src="${ev.thumbnailURL}" th:alt="${ev.descricao}" /></a>
+						<img th:src="${ev.thumbnailURL}" th:alt="${ev.descricaoSimplificada}" /></a>
 					</div>
 					<div class="thumbnail-caption"><a class="caption-link" th:href="@{/participante/evento/inscricao/{id}/{nome}(id=${ev.id},nome=${ev.nome})}" th:text="${ev.nome}">Evento</a></div>
 				</div>

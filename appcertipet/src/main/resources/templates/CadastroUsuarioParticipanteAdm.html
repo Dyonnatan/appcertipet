@@ -59,19 +59,34 @@
 				</div>
 
 				<div class="form-group aw-required"
+					th:classappend="${#fields.hasErrors('sexo')} ? has-error">
+					<label for="sexo" class="col-sm-2 control-label"><span>Sexo</span></label>
+					<div class="col-sm-4" id="sexo">
+						<label th:each="sexo : ${sexos}" class="radio-inline"> <input
+							type="radio" th:value="${sexo}" th:field="*{sexo}"
+							class="custom-control-input" /> <span
+							th:text="${sexo.descricao}"></span>
+						</label>
+					</div>
+				</div>
+
+				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('cpf')} ? has-error">
 					<label for="cpf" class="col-sm-2 control-label"><span>CPF</span></label>
 					<div class="col-sm-3">
-						<input type="text" class="form-control" id="cpf" th:field="*{cpf}" maxlength="14"/>
+						<input type="text" class="form-control" id="cpf" th:field="*{cpf}"
+							maxlength="14" />
 					</div>
 				</div>
-				
+
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('cpf')} ? has-error">
-					<label for="cpfrepetido" class="col-sm-2 control-label"><span>Repita o CPF</span></label>
+					<label for="cpfrepetido" class="col-sm-2 control-label"><span>Repita
+							o CPF</span></label>
 					<div class="form-inline col-sm-6 ">
-						<input type="text" class="form-control col-sm-4" id="cpfrepetido" aria-describedby="check"/>
-						<small id="check" class="text-muted"> </small>
+						<input type="text" class="form-control col-sm-4" id="cpfrepetido"
+							aria-describedby="check" /> <small id="check" class="text-muted">
+						</small>
 					</div>
 				</div>
 
@@ -96,13 +111,14 @@
 							th:field="*{usuario.email}" />
 					</div>
 				</div>
-				
+
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('email')} ? has-error">
-					<label for="emailrepetir" class="col-sm-2 control-label"><span>Repita o E-mail</span></label>
+					<label for="emailrepetir" class="col-sm-2 control-label"><span>Repita
+							o E-mail</span></label>
 					<div class="col-sm-8" aria-describedby="check">
-						<input type="email" class="form-control" id="emailrepetir"/>
-						<small id="check" class="text-muted"> </small>
+						<input type="email" class="form-control" id="emailrepetir" /> <small
+							id="check" class="text-muted"> </small>
 					</div>
 				</div>
 
@@ -152,26 +168,48 @@
 					</div>
 				</fieldset>
 
-<!-- 				<fieldset> -->
-<!-- 					<legend class="col-sm-offset-1 col-sm-10 small text-center"></legend> -->
-<!-- 					<div class="form-group aw-required" -->
-<!-- 						th:classappend="${#fields.hasErrors('usuario.senha')} ? has-error"> -->
-<!-- 						<label for="senhapet" class="col-sm-2 control-label"><span>Senha -->
-<!-- 								de Acesso</span></label> -->
-<!-- 						<div class="col-sm-8"> -->
-<!-- 							<input type="password" class="form-control" id="senhapet" -->
-<!-- 								th:field="*{usuario.senha}" /> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 					<div class="form-group aw-required"> -->
-<!-- 						<label for="senhapet" class="col-sm-2 control-label"><span>Confirme -->
-<!-- 								a senha</span></label> -->
-<!-- 						<div class="col-sm-8"> -->
-<!-- 							<input type="password" class="form-control" id="Confirmsenhapet" /> -->
-<!-- 							<small id="checkPasswordMatch" class="text-muted"> </small> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</fieldset> -->
+				<div class="form-group aw-required"
+					th:classappend="${#fields.hasErrors('sexo')} ? has-error">
+					<label for="sexo" class="col-sm-2 control-label"><span>Enabled</span></label>
+					<div class="col-sm-4" id="sexo">
+						<input type="checkbox" th:value="${enabled}" th:field="*{enabled}"
+							class="custom-control-input" /> <span>Habilitar conta</span>
+
+					</div>
+				</div>
+
+				<div class="form-group aw-required"
+					th:classappend="${#fields.hasErrors('instituicao')} ? has-error">
+					<label for="role" class="col-sm-2 control-label"><span>Nível de acesso</span></label>
+					<div class="col-sm-8">
+						<select class="form-control" id="role"
+							th:field="*{usuario.nivel}">
+							<option th:each="niv : ${niveis}" th:value="${niv}"
+								th:text="${niv}"></option>
+						</select>
+					</div>
+				</div>
+
+				<fieldset>
+					<legend class="col-sm-offset-1 col-sm-10 small text-center"></legend>
+					<div class="form-group aw-required"
+						th:classappend="${#fields.hasErrors('usuario.senha')} ? has-error">
+						<label for="senhapet" class="col-sm-2 control-label"><span>Senha
+								de Acesso</span></label>
+						<div class="col-sm-8">
+							<input type="password" class="form-control" id="senhapet"
+								th:field="*{usuario.senha}" />
+						</div>
+					</div>
+					<div class="form-group aw-required">
+						<label for="senhapet" class="col-sm-2 control-label"><span>Confirme
+								a senha</span></label>
+						<div class="col-sm-8">
+							<input type="password" class="form-control" id="confirmsenhapet" />
+							<small id="checkPasswordMatch" class="text-muted"> </small>
+						</div>
+					</div>
+				</fieldset>
 
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-4">
@@ -182,11 +220,13 @@
 			</div>
 		</div>
 	</form>
-	
+
 	<script src="/js/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript">
 		//<![CDATA[
 		function checkMatch() {
+			var sen = $("#senhapet").val();
+			var sen1 = $("#confirmsenhapet").val();
 			var cpf = $("#cpf").val();
 			var cpf1 = $("#cpfrepetido").val();
 			var em = $("#email").val();
@@ -196,7 +236,7 @@
 			if (cpf == cpf1 && em == em1) {
 				$("#check").text("Ok!");
 				submit.attr("type", "submit");
-			} else{
+			} else {
 				$("#check").text("");
 				submit.attr("type", "button");
 			}

@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,18 +42,21 @@ public class ListaEventosCertificadoParticipante {
 	private AutenticacaoCertificadoService autenticServ;
 
 	@RequestMapping
-	public ResponseEntity<byte[]> pesquisar(HttpServletRequest request, Principal principal) {
+	public ModelAndView pesquisar(HttpServletRequest request, Principal principal) {
 		String cpf = principal.getName();
 		List<Participacao> todasParticipacoes = participacaoService.filtrar(cpf);
 
 		System.out.println(Arrays.asList(todasParticipacoes.toArray()));
 		if (todasParticipacoes.size() == 1) {
-			return emissaoPDF(request, todasParticipacoes.get(0), principal);
+			ModelAndView m = new ModelAndView();
+			return m.addObject(emissaoPDF(request, todasParticipacoes.get(0), principal));
 		}
 		ModelAndView mv = new ModelAndView(PESQUISA_CERTIFICADOS__VIEW);
 		mv.addObject("participacao", todasParticipacoes);
-		return null;
+		return mv;
 	}
+	
+
 
 	// @RequestMapping(value = "/certificados/emissao", method =
 	// RequestMethod.POST)

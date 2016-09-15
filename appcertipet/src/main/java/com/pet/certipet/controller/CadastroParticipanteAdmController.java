@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -15,21 +16,22 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pet.certipet.model.Curso;
+import com.pet.certipet.model.Evento;
 import com.pet.certipet.model.Instituicao;
 import com.pet.certipet.model.Nivel;
 import com.pet.certipet.model.Participante;
 import com.pet.certipet.model.Sexo;
-import com.pet.certipet.model.Usuario;
 import com.pet.certipet.service.CadastroUsuarioService;
 import com.pet.certipet.service.CursoService;
 import com.pet.certipet.service.InstituicaoService;
 
 @Controller
-public class CadastroParticipanteController {
+@RequestMapping(value = "/dashboard/usuario")
+@PreAuthorize("hasRole('ADMINISTRADOR')")
+public class CadastroParticipanteAdmController {
 
 	private static final String CONTA_USUARIO = "ContaUsuario";
 	private static final String CADASTRO_USUARIO = "CadastroUsuario";
-	private static final String REDIRECIONA = "LoginUser";
 
 	@Autowired
 	private CadastroUsuarioService cadUserService;
@@ -42,6 +44,7 @@ public class CadastroParticipanteController {
 	public ModelAndView goCadastro(Participante p,  BindingResult result, RedirectAttributes attributes) {
 		ModelAndView mv = new ModelAndView(CADASTRO_USUARIO);
 		mv.addObject("sexos", Arrays.asList(Sexo.values()));
+		mv.addObject("niveis", Arrays.asList(Nivel.values()));
 		mv.addObject(p);
 		return mv;
 	}
@@ -53,19 +56,16 @@ public class CadastroParticipanteController {
 		}
 		
 		try {
-			p.getUsuario().setEnabled(false);
 			p.getUsuario().setCpf(p.getCpf());
 			p.setEmail(p.getUsuario().getEmail());
-			p.getUsuario().setNivel(Nivel.ROLE_PARTICIPANTE);
-			p.getUsuario().setSenha("pass");
 			cadUserService.salvar(p);
 		} catch (Exception e) {
 			System.out.println(e);
 			result.addError(new ObjectError("message", "Não foi possível cadastrar. Verifique se já não está cadastrado."));
 			return goCadastro(p, result, attributes);
 		}
-		ModelAndView mv = new ModelAndView(REDIRECIONA);// "redirect:/home");
-		mv.addObject("mensagem", "Usuário cadastrado com sucesso.");
+		ModelAndView mv = new ModelAndView(CADASTRO_USUARIO);// "redirect:/home");
+		mv.addObject("mensagem", "Cliente cadastrado com sucesso.");
 		return mv;
 	}
 	
@@ -103,6 +103,12 @@ public class CadastroParticipanteController {
 		// return Arrays.asList(TipoEvento.values());
 	}
 
+	@ModelAttribute("participantes")
+	public List<Participante> listarEventos() {
+		List<Participante> lista = cadUserService.buscarTodos();
+		return lista;
+	}
+	
 	// @RequestMapping(value = "/{codigo}/receber", method = RequestMethod.PUT)
 	// public @ResponseBody String receber(@PathVariable Long codigo) {
 	// return "ola recebe";

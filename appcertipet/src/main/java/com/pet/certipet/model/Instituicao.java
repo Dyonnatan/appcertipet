@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Instituicao {
@@ -82,9 +83,14 @@ public class Instituicao {
 		return true;
 	}
 
+	@Transient
+	public String inString() {
+		return sigla+" "+nome;
+	}
+	
 	@Override
 	public String toString() {
-		return sigla+" "+nome;
+		return id+"";
 	}
 
 }

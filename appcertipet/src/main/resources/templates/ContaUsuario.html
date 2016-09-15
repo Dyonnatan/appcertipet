@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutPages/LayoutPadrao">
+
+<head>
+<title>Cadastro</title>
+</head>
+<section layout:fragment="conteudo" class="conteudo">
+
+	<div th:object="${participante}">
+
+		<div class="cadastro" style="background-color: #fafafa">
+			<a href="/">
+  				<img id="certipet1" src="images/logo-certipet.png" alt="Logo Certipet" />
+  			</a>
+  			<h4 class="h4 text-center">Cadastro</h4>
+			<div class="panel-body">
+				
+				
+				<div class="form-group ">
+					<label for="nome" class="col-sm-2 control-label"><span>Nome</span></label>
+					<div class="col-sm-10">
+						<input type="text" readonly="readonly" class="form-control" id="nome"
+							th:field="*{nome}" autofocus="autofocus" />
+					</div>
+				</div>
+
+				<div class="form-group ">
+					<label for="sobrenome" class="col-sm-2 control-label"><span>Sobrenome</span></label>
+					<div class="col-sm-10">
+						<input type="text" readonly="readonly" class="form-control" id="sobrenome"
+							th:field="*{sobrenome}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="sexo" class="col-sm-2 control-label"><span>Sexo</span></label>
+					<div class="col-sm-4" id="sexo">
+						<label style="color:#FFF; font:14px Oswald;" th:each="sexo : ${sexos}" class="radio-inline"> <input
+							type="radio" th:value="${sexo}" th:field="*{sexo}" />
+							<span th:text="${sexo.descricao}"></span>
+						</label>
+					</div>
+				</div>
+
+				<div class="form-group ">
+					<label for="cpf" class="col-sm-2 control-label"><span>CPF</span></label>
+					<div class="col-sm-10">
+						<input type="text" readonly="readonly" class="form-control" id="cpf" th:field="*{cpf}" />
+					</div>
+				</div>
+
+				<div class="form-group ">
+					<label for="dataNascimento" class="col-sm-2 control-label"><span>Data
+						de nascimento</span></label>
+					<div class="col-sm-6">
+						<input type="text" readonly="readonly" class="form-control" id="dataNascimento"
+							th:field="*{dataNascimento}" data-provide="datepicker"
+							data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
+							data-date-autoclose="true" data-date-today-highlight="true"
+							data-date-orientation="bottom" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="email" class="col-sm-2 control-label"><span>E-mail</span></label>
+					<div class="col-sm-10">
+						<input type="email" readonly="readonly" class="form-control" id="email"
+							th:field="*{email}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="telefone" class="col-sm-2 control-label"><span>Telefone</span></label>
+					<div class="col-sm-10">
+						<input type="number" readonly="readonly" class="form-control" id="telefone"
+							th:field="*{telefone}" />
+					</div>
+				</div>
+				
+				<div class="form-group ">
+					<label for="instituicao" class="col-sm-2 control-label"><span>Instituicao</span></label>
+					<div class="col-sm-10">
+						<select class="form-control" id="instituicao" th:field="*{instituicao.id}">
+							<option th:each="inst : ${todasInstituicoes}"
+								th:value="${inst}" th:text="${inst}"></option></select>
+					</div>
+				</div>
+				
+				<div class="form-group ">
+					<label for="curso" class="col-sm-2 control-label"><span>Curso</span></label>
+					<div class="col-sm-10">
+						<select class="form-control" id="curso" th:field="*{curso.id}">
+							<option th:each="curso : ${todosCursos}"
+								th:value="${curso}" th:text="${curso}"></option></select>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+</section>
+</html>
