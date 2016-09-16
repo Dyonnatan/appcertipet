@@ -1,8 +1,10 @@
 package com.pet.certipet.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "usuarios")
@@ -42,6 +44,10 @@ public class Usuario {
 		this.cpf = cpf;
 	}
 
+	@NotEmpty(message = "E-mail é obrigatório!")
+	@Size(max = 70, message = "O sobrenome não pode conter mais de 70 caracteres")
+	@Email(message = "E-mail inválido!")
+	@Column(length = 70, unique = true)
 	public String getEmail() {
 		return email;
 	}

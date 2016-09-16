@@ -51,7 +51,7 @@ public class Participante {
 		this.id = id;
 	}
 
-	@NotBlank(message = "Nome é obrigatório")
+	@NotBlank(message = "Nome é obrigatório!")
 	@Size(max = 45, message = "O nome não pode conter mais de 45 caracteres")
 	@Column(length = 45, nullable = false)
 	public String getNome() {
@@ -62,8 +62,10 @@ public class Participante {
 		this.nome = nome;
 	}
 
-	// @CPF(message="CPF inválido")
-	@Column(length = 15, unique = true// , columnDefinition= ",ADD CONSTRAINT
+	
+	@NotBlank(message = "CPF é obrigatório!")
+	@Size(max = 11, message = "O CPF não pode conter mais de 11 caracteres")
+	@Column(length = 11, unique = true// , columnDefinition= ",ADD CONSTRAINT
 										// FK_participantes_usuarios FOREIGN KEY
 										// (cpf) REFERENCES usuarios(cpf);"
 	)
@@ -72,7 +74,8 @@ public class Participante {
 	// foreignKey = @ForeignKey(name="FK_COMPANY__ROUTE")
 	// //columnDefinition= "REFERENCES usuarios ( cpf ); "
 	// )
-
+	
+	
 	public String getCpf() {
 		return cpf;
 	}
@@ -81,7 +84,9 @@ public class Participante {
 		this.cpf = cpf;
 	}
 
-	@NotEmpty(message = "Sobrenome é obrigatório")
+	@NotBlank(message = "Sobrenome é obrigatório!")
+	@Size(max = 80, message = "O sobrenome não pode conter mais de 45 caracteres")
+	@Column(length = 80, nullable = false)
 	public String getSobrenome() {
 		return sobrenome;
 	}
@@ -89,9 +94,9 @@ public class Participante {
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
 	}
-
-	@Email(message = "E-mail inválido")
-	@Column(length = 100, unique = true)
+	
+	@Email(message = "E-mail inválido!")
+	@Column(length = 70, unique = true)
 	public String getEmail() {
 		return email;
 	}
@@ -136,6 +141,7 @@ public class Participante {
 		this.sexo = sexo;
 	}
 
+	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	public Date getDataNascimento() {
@@ -146,6 +152,8 @@ public class Participante {
 		this.dataNascimento = dataNascimento;
 	}
 	
+	@Size(max = 50, message = "A matrícula não pode conter mais de 50 caracteres")
+	@Column(length = 50, unique = false)
 	public String getMatricula() {
 		return matricula;
 	}

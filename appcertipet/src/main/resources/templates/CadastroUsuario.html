@@ -6,6 +6,11 @@
 
 <head>
 <title>Cadastro</title>
+
+<style>
+.green{color: green;}
+.red{color: red;}
+</style>
 </head>
 <section layout:fragment="conteudo" class="conteudo">
 
@@ -21,7 +26,7 @@
 		</div>
 
 
-		<div class="cadastro" style="background-color: #fafafa">
+		<div class="cadastro" style="background-color: #ededed">
 			<a href="/"> <img id="certipet1" src="images/logo-certipet.png"
 				alt="Logo Certipet" />
 			</a>
@@ -32,18 +37,18 @@
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('nome')} ? has-error">
 					<label for="nome" class="col-sm-2 control-label"><span>Nome</span></label>
-					<div class="col-sm-8">
+					<div class="col-sm-6">
 						<input type="text" class="form-control" id="nome"
-							th:field="*{nome}" autofocus="autofocus" />
+							th:field="*{nome}" autofocus="autofocus" maxlength="45" required="required"/>
 					</div>
 				</div>
 
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('sobrenome')} ? has-error">
 					<label for="sobrenome" class="col-sm-2 control-label"><span>Sobrenome</span></label>
-					<div class="col-sm-8">
+					<div class="col-sm-6">
 						<input type="text" class="form-control" id="sobrenome"
-							th:field="*{sobrenome}" />
+							th:field="*{sobrenome}" maxlength="80" required="required" />
 					</div>
 				</div>
 
@@ -62,16 +67,16 @@
 					th:classappend="${#fields.hasErrors('cpf')} ? has-error">
 					<label for="cpf" class="col-sm-2 control-label"><span>CPF</span></label>
 					<div class="col-sm-3">
-						<input type="text" class="form-control" id="cpf" th:field="*{cpf}" maxlength="14"/>
+						<input type="text" class="form-control" id="cpf" th:field="*{cpf}" maxlength="11" required="required" onkeyup="checkcpf()"/>
 					</div>
 				</div>
 				
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('cpf')} ? has-error">
 					<label for="cpfrepetido" class="col-sm-2 control-label"><span>Repita o CPF</span></label>
-					<div class="form-inline col-sm-6 ">
-						<input type="text" class="form-control col-sm-4" id="cpfrepetido" aria-describedby="check"/>
-						<small id="check" class="text-muted"> </small>
+					<div class="form-inline col-sm-3">
+						<input type="text" class="form-control col-sm-4" id="cpfrepetido" aria-describedby="check" maxlength="11" required="required" onkeyup="checkcpf()"/>
+						<span id="check"> </span>
 					</div>
 				</div>
 
@@ -79,37 +84,37 @@
 					th:classappend="${#fields.hasErrors('dataNascimento')} ? has-error">
 					<label for="dataNascimento" class="col-sm-2 control-label"><span>Data
 							de nascimento</span></label>
-					<div class="col-sm-6">
+					<div class="col-sm-3">
 						<input type="text" class="form-control" id="dataNascimento"
 							th:field="*{dataNascimento}" data-provide="datepicker"
 							data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
 							data-date-autoclose="true" data-date-today-highlight="true"
-							data-date-orientation="bottom" />
+							data-date-orientation="bottom" required="required"/>
 					</div>
 				</div>
 
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('email')} ? has-error">
 					<label for="email" class="col-sm-2 control-label"><span>E-mail</span></label>
-					<div class="col-sm-8">
+					<div class="col-sm-4">
 						<input type="email" class="form-control" id="email"
-							th:field="*{usuario.email}" />
+							th:field="*{usuario.email}" maxlength="70" required="required" onkeyup="checkem()"/>
 					</div>
 				</div>
 				
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('email')} ? has-error">
 					<label for="emailrepetir" class="col-sm-2 control-label"><span>Repita o E-mail</span></label>
-					<div class="col-sm-8" aria-describedby="check">
-						<input type="email" class="form-control" id="emailrepetir"/>
-						<small id="check" class="text-muted"> </small>
+					<div class="col-sm-4 form-inline" aria-describedby="checkem">
+						<input type="email" class="form-control" id="emailrepetir" maxlength="70" required="required" onkeyup="checkem()"/>
+						<p id="checkem"> </p>
 					</div>
 				</div>
 
 				<div class="form-group"
 					th:classappend="${#fields.hasErrors('telefone')} ? has-error">
 					<label for="telefone" class="col-sm-2 control-label"><span>Telefone</span></label>
-					<div class="col-sm-6">
+					<div class="col-sm-3">
 						<input type="number" class="form-control" id="telefone"
 							th:field="*{telefone}" />
 					</div>
@@ -120,9 +125,9 @@
 					<div class="form-group"
 						th:classappend="${#fields.hasErrors('matricula')} ? has-error">
 						<label for="matricula" class="col-sm-2 control-label"><span>Matrícula</span></label>
-						<div class="col-sm-6">
+						<div class="col-sm-3">
 							<input type="text" class="form-control" id="matricula"
-								th:field="*{matricula}" />
+								th:field="*{matricula}" maxlength="50"/>
 						</div>
 					</div>
 
@@ -174,38 +179,15 @@
 <!-- 				</fieldset> -->
 
 				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-4">
-						<input id="cadastro" type="submit" class="btn btn-primary"
-							value="Cadastrar"></input>
+					<div class="col-sm-offset-2 col-sm-10">
+						<input type="submit" class="btn btn-primary" value="Cadastrar"></input>
 					</div>
 				</div>
 			</div>
 		</div>
 	</form>
-	
-	<script src="/js/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript">
-		//<![CDATA[
-		function checkMatch() {
-			var cpf = $("#cpf").val();
-			var cpf1 = $("#cpfrepetido").val();
-			var em = $("#email").val();
-			var em1 = $("#emailrepetir").val();
-			var submit = $("#cadastro");
-
-			if (cpf == cpf1 && em == em1) {
-				$("#check").text("Ok!");
-				submit.attr("type", "submit");
-			} else{
-				$("#check").text("");
-				submit.attr("type", "button");
-			}
-		}
-
-		$(document).ready(function() {
-			$("#cpf, #cpfrepetido, #email, #emailrepetir").keyup(checkMatch);
-		});
-		//]]>
-	</script>
+ 	
+ 	<script src="/js/usuario.js"></script>
+ 	
 </section>
 </html>
