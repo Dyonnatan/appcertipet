@@ -22,4 +22,8 @@ public class TipoParticipanteService {
 		return tpRepo.save(tp);
 	}
 
+	public void excluir(Long id) {
+		tpRepo.delete(id);
+	}
+
 }

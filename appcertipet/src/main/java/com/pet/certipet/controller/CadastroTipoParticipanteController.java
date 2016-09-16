@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pet.certipet.model.AutenticacaoCertificado;
 import com.pet.certipet.model.Certificado;
@@ -28,7 +29,6 @@ import com.pet.certipet.model.Evento;
 import com.pet.certipet.model.Participacao;
 import com.pet.certipet.model.Participante;
 import com.pet.certipet.model.TipoParticipante;
-import com.pet.certipet.service.AutenticacaoCertificadoService;
 import com.pet.certipet.service.CertificadoPdf;
 import com.pet.certipet.service.CertificadoService;
 import com.pet.certipet.service.TipoParticipanteService;
@@ -39,6 +39,7 @@ import com.pet.certipet.service.TipoParticipanteService;
 public class CadastroTipoParticipanteController {
 
 	private final String CADASTRO_TIPO_PARTICIPANTE = "CadastroTipoParticipante";
+	private final String PESQUISA_TIPO_PARTICIPANTE = "PesquisaTipoParticipante";
 
 	@Autowired
 	private TipoParticipanteService tpService;
@@ -46,12 +47,34 @@ public class CadastroTipoParticipanteController {
 	@Autowired
 	private CertificadoService certificadoService;
 
-	@RequestMapping(value = "/cadastro", method = RequestMethod.GET)
-	public ModelAndView goCadastro(TipoParticipante t) {
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView goLista() {
+		ModelAndView mv = new ModelAndView(PESQUISA_TIPO_PARTICIPANTE);
+		List<TipoParticipante> tp = tpService.buscarTodos();
+		mv.addObject("tipParts", tp);
+		return mv;
+	}
+	
+	@RequestMapping(value = "/manutencao", method = RequestMethod.GET)
+	public ModelAndView goCadastrar(TipoParticipante t) {
 		ModelAndView mv = new ModelAndView(CADASTRO_TIPO_PARTICIPANTE);
 		mv.addObject("tipPart", t);
 		mv.addObject("certif", new Certificado());
 		return mv;
+	}
+	
+	@RequestMapping(value = "/manutencao", method = RequestMethod.POST)
+	public ModelAndView goCadastro(TipoParticipante t) {
+		if(tpService.salvar(t)!=null){
+			ModelAndView mv = new ModelAndView("redirect:/dashboard/tipoparticipante");
+			return mv;
+		}else{
+		ModelAndView mv = new ModelAndView(CADASTRO_TIPO_PARTICIPANTE);
+		mv.addObject("tipPart", t);
+		mv.addObject("certif", new Certificado());
+		return mv;
+		}
 	}
 
 	@RequestMapping(value = "/preview", method = RequestMethod.GET)
@@ -76,7 +99,7 @@ public class CadastroTipoParticipanteController {
 		part.setParticipante(p);
 		part.setTipoParticipante(tp);
 
-		String urlHash = "http://www.certipet.ufg.com/autentica/7cf5f1c5962e75133eee71e21954bfe1";
+		String urlHash = "http://www.certipet.emc.ufg.com/autentica/7cf5f1c5962e75133eee71e21954bfe1";
 
 		java.io.ByteArrayOutputStream b = new java.io.ByteArrayOutputStream();
 
@@ -99,11 +122,19 @@ public class CadastroTipoParticipanteController {
 	@ModelAttribute("todosCertificados")
 	public List<Certificado> todosCertificados() {
 		List<Certificado> lista = certificadoService.buscaTodosSimple();
-		Certificado ce = new Certificado();
-		ce.setId(null);
-		ce.setNome("Fazer upload");
-		lista.add(0, ce);
 		return lista;
 
+	}
+	
+	@RequestMapping(value = "/{codigo}", method = RequestMethod.GET)
+	public ModelAndView edicao(@PathVariable("codigo") TipoParticipante t) {
+		return goCadastrar(t);
+	}
+	
+	@RequestMapping(value="/del", method = RequestMethod.POST)
+	public String exclui(@RequestParam Long id, RedirectAttributes attributes) {
+		tpService.excluir(id);
+		attributes.addFlashAttribute("mensage", "Tipo participante "+id+" excluído com sucesso!");
+		return "redirect:/dashboard/tipoparticipante";
 	}
 }

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutPages/LayoutPadrao">
+
+<head>
+<title>Pesquisa de Eventos</title>
+</head>
+
+<section layout:fragment="conteudo">
+	<div layout:include="layoutPages/MensagemGeral"></div>
+
+	<div class="alert alert-success" th:text="${mensagem}"
+		th:if="${not #strings.isEmpty(mensagem)}"></div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="clearfix">
+				<h1 class="panel-title aw-titulo-panel">Pesquisa de eventos</h1>
+				<a class="btn btn-link aw-link-panel"
+					href="/dashboard/tipoparticipante/manutencao">Novo Tipo</a>
+			</div>
+		</div>
+
+		<div class="panel-body">
+
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th class="text-center col-md-1">#</th>
+						<th class="text-center col-md-2">Tipo</th>
+						<th class="text-center col-md-2">Carga Horária</th>
+						<th class="text-center col-md-2">Valor</th>
+						<th class="text-center col-md-2">Texto do certificado</th>
+						<th class="text-center col-md-1" title="Exibir como opção para o usuário">Exibir</th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="t : ${tipParts}">
+						<td class="text-center" th:text="${t.id}">1</td>
+						<td th:text="${t.nome}"></td>
+						<td class="text-right" th:text="${t.cargaHoraria}"></td>
+						<td class="text-right" th:text="${t.valor}"></td>
+						<td class="text-right" th:text="${t.textoCertificado}"></td>						
+						<td class="text-right" th:text="${t.exibir}"></td>
+						<td class="text-center"><a class="btn btn-link btn-xs"
+							th:href="@{/dashboard/tipoparticipante/{codigo}(codigo=${t.id})}"
+							title="Editar" rel="tooltip" data-placement="top"> <span
+								class="glyphicon glyphicon-pencil"></span>
+						</a>
+							<form action="#" th:action="@{/dashboard/tipoparticipante/del/}"
+								method="POST">
+								<input type="hidden" name="id" th:value="${t.id}" />
+								<button type="submit" id="submitButton"
+									class="btn btn-link btn-xs"
+									onclick="return confirm('Tem certeza que deseja deletar?')">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+							</form></td>
+					</tr>
+					<tr>
+						<td colspan="6" th:if="${#lists.isEmpty(tipParts)}">Nenhum
+							tipo de participante foi encontrado</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- 	   	<div layout:include="layoutPages/DialogoConfirmacaoExclusao"></div> -->
+
+	</div>
+</section>
+</html>
