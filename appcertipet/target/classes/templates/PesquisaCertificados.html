@@ -19,7 +19,7 @@
 	<div layout:include="/layoutPages/MensagemGeral"></div>
 	<div class="wrapper panel panel-default col-sm-10 col-md-4 center-block" style="float:none; margin:35px auto; background:#ededed; width: 70%;">
 		<div class="panel-body center-block" style="float:none; margin:0 auto;">
-		<a href="/"> <img id="certipet1" src="/images/logo-certipet.png"
+		<a href="/"> <img id="certipet1" src="/images/logo_certipet_color.svg"
 			alt="Logo Certipet" />
 		</a>
 		<h4 class="h4 text-center" style="color:#333;">Meus Certificados</h4>
@@ -27,7 +27,7 @@
 
 	
 	<div class="panel panel-default">
-		<div class="panel-heading" style="background: #ededed 100%); border-radius:1%;">
+		<div class="panel-heading" style="background-color: #333; border-radius:1%;">
 			<div class="clearfix">
 				<div style="position: center;">
 					<div style="width:100%; text-align:center;">
@@ -45,7 +45,7 @@
 			</div>
 		</div>
 	   	
-	   	<div class="panel-body">
+	   	<div class="panel-body" style="background-image: linear-gradient(#28D2DE 0%, #1A878F 100%); border-radius:1%;">
 	   		<!-- <form method="GET" class="form-horizontal" action="/participante/certificados" th:object="${filtro}">
 	   			<div class="form-group">
 	   				<div class="col-sm-4">
@@ -66,14 +66,14 @@
 	   			<thead>
 	   				<tr>
 	   					<th class="text-center col-md-1">#</th>
-	   					<th>Evento</th>
+	   					<th class="text-center col-md-2">Evento</th>
 	   					<th class="text-center col-md-2">Data</th>
-	   					<th class="text-right col-md-2">Gerar</th>
+	   					<th class="text-center col-md-2">Gerar</th>
 	   					<th class="col-md-1"></th>
 	   				</tr>
 	   			</thead>
 	   			<tbody>
-	   				<tr th:each="part : ${participacao}">
+	   				<tr th:each="part : ${participacao}" style="color: ededed;">
 	   					<td class="text-center" th:text="${part.id}">1</td>
 	   					<td th:text="${part.evento.nome}"></td>
 	   					<td class="text-center" th:text="${{part.evento.dataRealizacao}}"></td>
@@ -85,7 +85,7 @@
 	   					</td>
 	   				</tr>
 	   				<tr>
-	   					<td colspan="6" th:if="${#lists.isEmpty(participacao)}">Nenhum certificado foi encontrado</td>
+	   					<td colspan="6" th:if="${#lists.isEmpty(participacao)}">Você ainda não possui nenhum certificado.</td>
 	   				</tr>
 	   			</tbody>
 	   		</table>

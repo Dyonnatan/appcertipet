@@ -5,11 +5,21 @@
 	layout:decorator="layoutPages/LayoutPadrao">
 
 <head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Evento</title>
 </head>
 
 <section layout:fragment="conteudo">
 	<div layout:include="layoutPages/MensagemGeral"></div>
+
+
+<div class="wrapper panel panel-default col-sm-10 col-md-4 center-block" style="float:none; margin:35px auto; background:#ededed; width: 70%;">
+		<div class="panel-body center-block" style="float:none; margin:0 auto;">
+		<a href="/"> <img id="certipet1" src="/images/logo_certipet_color.svg"
+			alt="Logo Certipet" />
+		</a>
+		<h4 class="h4 text-center" style="color:#333;">Evento</h4>
 
 	<form class="form-horizontal" method="post"
 		th:action="@{/participante/evento/inscricao}" th:object="${part}">
@@ -26,15 +36,28 @@
 <div th:if="${part.evento.encerrarInscricao}" class="col-sm-offset-1 col-sm-11">
 				<h4 class="h4 alert alert-warning col-sm-11 text-center">Inscrições encerradas!</h4>
 			</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<div class="clearfix">
-					<h1 class="panel-title aw-titulo-panel h1"
-						th:text="${part.evento.nome}">Evento</h1>
-					<a th:if="${part.pagamento} == 'p'" class="btn btn-link btn-xs"
+			<a th:if="${part.pagamento} == 'p'" class="btn btn-link btn-xs"
 						title="Pagamento Confirmado " rel="tooltip" data-placement="top">
 						<span class="glyphicon glyphicon-ok"> </span> Inscrição Validada
-					</a> <a class="btn btn-link aw-link-panel" href="/participante/evento">Voltar</a>
+			</a>
+		<div class="panel panel-default">
+			<div class="panel-heading"  style="background-color:#333; color:#ffffff;">
+				<div class="clearfix">
+					<div style="position: center;">
+						<div style="width:100%; text-align:center;">
+							<div style="float:left;">
+								<a class="btn btn-link aw-link-panel" href="/participante/evento" style="display: inline;">Voltar</a>
+							</div>
+							
+							<div style="display: inline-block; margin:0 auto;">
+								<h3 th:text="${part.evento.nome}">Evento</h3>
+							</div>
+							
+							<div style="float:right;">
+								<a class="btn btn-link aw-link-panel" href="/logout" style="display: inline;">Sair</a>
+							</div>
+						</div>
+					</div>
 				</div>
 
 			</div>
@@ -49,14 +72,14 @@
 		<input type="hidden" class="form-control" id="tipo"
 			th:field="*{id}" th:value="${part.id}" />
 
-		<div class="form-group">
-			<div th:unless="${part.evento.encerrarInscricao}" class="col-sm-offset-1 col-sm-11">
-				<button 
+		
+			<div th:unless="${part.evento.encerrarInscricao}">
+				<button
 					th:unless="${part.id} ne null"
-					type="submit" class="btn btn-primary" name="action" value="inscrever">Inscrever-me</button>
-					<button 
+					type="submit" class="submit" name="action" value="inscrever">Inscrever</button>
+				<button 
 					th:if="(${part.id} ne null) ? (${part.pagamento} ne 'p' and ${part.pagamento} ne 'r'):false"					
-					type="submit" class="btn btn-primary" name="action" value="desinscrever">Desinscrever-me</button>
+					type="submit" class="submit" name="action" value="desinscrever">Cancelar Inscrição</button>
 			</div>
 			<div class="col-sm-offset-1 col-sm-11">
 				<span th:if="${part.pagamento} == 'p'"
@@ -65,10 +88,12 @@
 					class="alert-danger col-sm-11 text-center">Sua inscrição não
 					foi validada!</span>
 			</div>
-		</div>
-
-
+		
 	</form>
+	
+	</div>
+	</div>
+	
 </section>
 </html>
 

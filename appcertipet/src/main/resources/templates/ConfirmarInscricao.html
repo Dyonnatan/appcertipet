@@ -5,23 +5,47 @@
 	layout:decorator="layoutPages/LayoutPadrao">
 
 <head>
+
 <title>Inscrição</title>
 </head>
 
 <section layout:fragment="conteudo">
 
+<div class="wrapper panel panel-default col-sm-10 col-md-4 center-block" style="float:none; margin:35px auto; background:#ededed; width: 70%;">
+		<div class="panel-body center-block" style="float:none; margin:0 auto;">
+		<a href="/"> <img id="certipet1" src="/images/logo_certipet_color.svg"
+			alt="Logo Certipet" />
+		</a>
+	
+		
 	<div class="panel panel-default">
-		<div class="panel-heading">
+		<div class="panel-heading" style="background-color: #333; border-radius:1%;">
 			<div class="clearfix">
-				<h1 class="panel-title aw-titulo-panel">Confirmação</h1>
-				<a class="btn btn-link aw-link-panel"
-					href="/participante/evento">Voltar</a>
+			
+			<div style="position: center;">
+						<div style="width:100%; text-align:center;">
+							<div style="float:left;">
+								<a class="btn btn-link aw-link-panel" href="/participante/evento" style="display: inline;">Voltar</a>
+							</div>
+							
+							<div style="display: inline-block; margin:0 auto;">
+								<h4 style="color:#ffffff;">Confirmação</h4>
+							</div>
+							
+							<div style="float:right;">
+								<a class="btn btn-link aw-link-panel" href="/logout" style="display: inline;">Sair</a>
+							</div>
+						</div>
+					</div>
 			</div>
 		</div>
 
-		<div class="panel-body" >
+		<div class="panel-body">
 			<div th:inline="text">[[${mensagem}]]</div>
 		</div>
+	</div>
+	
+	</div>
 	</div>
 </section>
 </html>

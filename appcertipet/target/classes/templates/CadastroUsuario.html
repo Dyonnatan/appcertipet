@@ -27,7 +27,7 @@
 
 
 		<div class="cadastro" style="background-color: #ededed">
-			<a href="/"> <img id="certipet1" src="images/logo-certipet.png"
+			<a href="/"> <img id="certipet1" src="images/logo_certipet_color.svg"
 				alt="Logo Certipet" />
 			</a>
 			<h4 class="h4 text-center">Cadastro</h4>
@@ -52,7 +52,7 @@
 					</div>
 				</div>
 
-				<div class="form-group aw-required"
+				<div class="form-group"
 					th:classappend="${#fields.hasErrors('sexo')} ? has-error">
 					<label for="sexo" class="col-sm-2 control-label"><span>Sexo</span></label>
 					<div class="col-sm-4" id="sexo">
@@ -74,7 +74,7 @@
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('cpf')} ? has-error">
 					<label for="cpfrepetido" class="col-sm-2 control-label"><span>Repita o CPF</span></label>
-					<div class="form-inline col-sm-3">
+					<div class="col-sm-3">
 						<input type="text" class="form-control col-sm-4" id="cpfrepetido" aria-describedby="check" maxlength="11" required="required" onkeyup="checkcpf()"/>
 						<span id="check"> </span>
 					</div>
@@ -96,7 +96,7 @@
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('email')} ? has-error">
 					<label for="email" class="col-sm-2 control-label"><span>E-mail</span></label>
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						<input type="email" class="form-control" id="email"
 							th:field="*{usuario.email}" maxlength="70" required="required" onkeyup="checkem()"/>
 					</div>
@@ -104,8 +104,8 @@
 				
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('email')} ? has-error">
-					<label for="emailrepetir" class="col-sm-2 control-label"><span>Repita o E-mail</span></label>
-					<div class="col-sm-4 form-inline" aria-describedby="checkem">
+					<label for="emailrepetir" class="col-sm-2 control-label"><span>Repita o <br/>E-mail</span></label>
+					<div class="col-sm-3" aria-describedby="checkem">
 						<input type="email" class="form-control" id="emailrepetir" maxlength="70" required="required" onkeyup="checkem()"/>
 						<p id="checkem"> </p>
 					</div>
@@ -131,7 +131,7 @@
 						</div>
 					</div>
 
-					<div class="form-group aw-required"
+					<div class="form-group"
 						th:classappend="${#fields.hasErrors('instituicao')} ? has-error">
 						<label for="instituicao" class="col-sm-2 control-label"><span>Instituicao</span></label>
 						<div class="col-sm-8">
@@ -144,7 +144,7 @@
 						</div>
 					</div>
 
-					<div class="form-group aw-required"
+					<div class="form-group"
 						th:classappend="${#fields.hasErrors('curso')} ? has-error">
 						<label for="curso" class="col-sm-2 control-label"><span>Curso</span></label>
 						<div class="col-sm-8">

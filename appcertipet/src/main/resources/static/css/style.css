@@ -15,7 +15,7 @@ body {
 }
 
 .cadastro {
-	width: 80%;
+	width: 65%;
 	margin: 0 auto;
 	background: #fafafa;
 	margin: 35px auto;
@@ -211,6 +211,7 @@ ul li {
 	height: 65px;
 	padding: 5px 0px 0px 0px;
 	margin: 0 auto;
+	margin-bottom: 3%;
 	vertical-align: middle
 }
 
@@ -240,5 +241,5 @@ ul li {
 #emc {
 	position: relative;
 	display: inline-block;
-	top: 1.6%;
+	top: 1%;
 }
