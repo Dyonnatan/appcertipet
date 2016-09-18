@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutPages/LayoutPadrao">
+
+<head>
+
+<title>Validação de Certificado</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+	<div
+		class="wrapper panel panel-default col-sm-10 col-md-4 center-block"
+		style="float: none; margin: 35px auto; background: #ededed; width: 70%;">
+		<div class="panel-body center-block"
+			style="float: none; margin: 0 auto;">
+			<a href="/"> <img id="certipet1"
+				src="/images/logo_certipet_color.svg" alt="Logo Certipet" />
+			</a>
+
+
+			<div class="panel panel-default">
+				<div class="panel-heading"
+					style="background-color: #333; border-radius: 1%;">
+					<div class="clearfix">
+
+						<div style="position: center;">
+							<div style="width: 100%; text-align: center;">
+
+								<div style="display: inline-block; margin: 0 auto;">
+									<h4 style="color: #ffffff;">Validação de certificados
+										emitidos pelo Sistema CertiPET</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-body">
+					<div th:inline="text" th:if="${p != null}">
+						<h2>
+							Certificado Válido <span class="glyphicon glyphicon-ok"
+								style="color: green"></span>
+						</h2>
+						<br /> 
+						<p style="text-align: center;">
+						O certificado pertencente a
+						<span class="h4">[[${p.participacao.participante.nome}]]
+							[[${p.participacao.participante.sobrenome}]]</span>
+						do evento
+						<span class="h5">[[${p.participacao.evento.nome}]]</span>
+						realizado em <span class="h5">[[${p.participacao.evento.dataRealizacaoFormatada()}]]</span>
+						encontra-se em nossos sistemas e é válido.</p>
+					</div>
+					<div th:inline="text" th:if="${p == null}">
+						<h2>
+							Certificado Inválido <span class="glyphicon glyphicon-remove"
+								style="color: red"></span>
+						</h2><br/><p style="text-align: center;">
+						Este certificado não encontra-se em nossos sistemas</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+</html>

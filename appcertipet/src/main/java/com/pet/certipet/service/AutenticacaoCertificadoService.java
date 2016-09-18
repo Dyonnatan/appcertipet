@@ -26,7 +26,7 @@ public class AutenticacaoCertificadoService {
 	}
 	
 	public AutenticacaoCertificado buscar(Long id) {
-		return repo.findByParticipacao(id);
+		return repo.findByParticipacao(new Participacao(id));
 	}
 	
 	public String gerarHash(Participacao p) {
