@@ -21,8 +21,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.pet.certipet.model.Certificado;
 import com.pet.certipet.model.Evento;
 import com.pet.certipet.model.TipoEvento;
+import com.pet.certipet.model.TipoParticipante;
 import com.pet.certipet.service.CertificadoService;
 import com.pet.certipet.service.EventoService;
+import com.pet.certipet.service.TipoParticipanteService;
 import com.pet.certipet.service.filter.EventoFilter;
 
 @Controller
@@ -34,10 +36,10 @@ public class CadastroEventoController {
 
 	@Autowired
 	private EventoService eventoService;
-//	@Autowired
-//	private CertificadoDTOService certificadoDTOService;
 	@Autowired
 	private CertificadoService certificadoService;
+	@Autowired
+	private TipoParticipanteService categoriaPartService;
 
 	
 	@RequestMapping(value = "/manutencao", method = RequestMethod.GET)
@@ -46,6 +48,8 @@ public class CadastroEventoController {
 		// mv.addObject("tipos", Arrays.asList(TipoEvento.values()));
 		mv.addObject("evento", e);
 		mv.addObject("certifSelec", new Certificado());
+		List<TipoParticipante> tp = categoriaPartService.buscarTodosOrdenado();
+		mv.addObject("todascategoriasParticipantes", tp);
 		//mv.addObject(attributeName, attributeValue)
 		//System.out.println(a.getPrincipal());
 		System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
@@ -77,7 +81,6 @@ public class CadastroEventoController {
 			mv.addObject("mensagem", result);
 			return mv;
 		}
-System.out.println("oi");
 		try {
 			if (p.getCertView() != null && p.getCertView().getId() != null) {
 				System.out.println("Cert "+p.getCertView().getId()+" "+p.getCertView().getArquivo());

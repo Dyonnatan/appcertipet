@@ -28,6 +28,17 @@ public class Participacao {
 	private char pagamento;
 	private List<Resposta> respostas;
 
+	public Participacao() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	public Participacao(Long id) {
+		super();
+		this.id = id;
+	}
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
@@ -129,7 +140,7 @@ public class Participacao {
 
 	@Override
 	public String toString() {
-		return "Participacao [" + participante.getNome() + ", " + tipoParticipante + ", em " + evento.getNome()
+		return "Participacao [" +id+ participante.getNome() + ", " + tipoParticipante + ", em " + evento.getNome()
 				+ ", confirmacao=" + presenca + "]";
 	}
 

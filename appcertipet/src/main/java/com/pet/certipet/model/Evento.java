@@ -1,6 +1,7 @@
 package com.pet.certipet.model;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +45,8 @@ public class Evento {
 	private String thumbnailURL;
 	private boolean encerrarInscricao;
 	private Certificado certificado;
-	private List<TipoParticipante> tiposParticipantes;
+	private TipoParticipante categoriaParticPreferencial;
+	private List<TipoParticipante> categoriasParticipantes;
 	private List<Questionario> questoes;
 	private String organizadorCPF;
 
@@ -95,6 +97,11 @@ public class Evento {
 		}
 	}
 
+	public String dataRealizacaoFormatada() {
+		SimpleDateFormat s = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy");
+		return s.format(dataRealizacao);
+	}
+	
 	@Size(max = 2500, message = "A descrição não pode conter mais de 2500 caracteres")
 	@Column(length = 2501)
 	public String getDescricao() {
@@ -165,12 +172,24 @@ public class Evento {
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	public List<TipoParticipante> getTiposParticipantes() {
-		return tiposParticipantes;
+	public List<TipoParticipante> getCategoriasParticipantes() {
+		return categoriasParticipantes;
 	}
 	
-	public void setTiposParticipantes(List<TipoParticipante> tiposParticipantes) {
-		this.tiposParticipantes = tiposParticipantes;
+	public void setCategoriasParticipantes(List<TipoParticipante> categoriasParticipantes) {
+		this.categoriasParticipantes = categoriasParticipantes;
+	}
+	
+	public List<TipoParticipante> todasCategoriasParticipantes() {
+		categoriasParticipantes.add(0, categoriaParticPreferencial);
+		return categoriasParticipantes;
+	}
+	
+	public boolean todasCategoriasExibir() {
+		for (TipoParticipante t : categoriasParticipantes) {
+			if(t.isExibir()) return true;
+		}
+		return false;
 	}
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -181,6 +200,15 @@ public class Evento {
 
 	public void setQuestoes(List<Questionario> questoes) {
 		this.questoes = questoes;
+	}
+	
+	@ManyToOne
+	public TipoParticipante getCategoriaParticPreferencial() {
+		return categoriaParticPreferencial;
+	}
+	
+	public void setCategoriaParticPreferencial(TipoParticipante categoriaParticPreferencial) {
+		this.categoriaParticPreferencial = categoriaParticPreferencial;
 	}
 
 	@Override

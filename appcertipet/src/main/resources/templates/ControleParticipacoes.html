@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layoutPages/LayoutPadrao">
+	layout:decorator="layoutPages/LayoutPadraoDashboard">
 
 <head>
 <title>Participações</title>
@@ -11,10 +11,13 @@
 <section layout:fragment="conteudo">
 	<div layout:include="layoutPages/MensagemGeral"></div>
 
+
+	<script src="/js/jquery-2.1.4.min.js"></script>
+	<script src="/js/evento.js"></script>
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<div class="clearfix">
-				<h1 class="panel-title aw-titulo-panel">Inscritos</h1>
+				<h1 class="panel-title aw-titulo-panel">Confirmação de Presença</h1>
 				<a class="btn btn-link aw-link-panel" href="/dashboard">Tela
 					Inicial</a>
 			</div>
@@ -48,12 +51,12 @@
 								title="Confirmar" rel="tooltip" data-placement="top"
 								th:attr="data-codigo=${p.id}"
 								th:href="@{/dashboard/controle/{id}/PRESENTE/presenca(id=${p.id})}">
-									<span class="glyphicon glyphicon-check"></span>
+									<span class="glyphicon glyphicon-ok">Presente</span>
 							</a> <a class="btn btn-link btn-xs js-atualizar-status"
 								title="Confirmar" rel="tooltip" data-placement="top"
 								th:attr="data-codigo=${p.id}"
 								th:href="@{/dashboard/controle/{id}/AUSENTE/presenca(id=${p.id})}">
-									<span class="glyphicon glyphicon-check"></span>
+									<span class="glyphicon glyphicon-remove">Ausente</span>
 							</a></td>
 
 						</tr>

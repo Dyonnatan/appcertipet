@@ -28,6 +28,10 @@ public class ParticipacaoService {
 		return participacao.buscar(cpf, idEvento);
 	}
 	
+	public Participacao buscar(Long id) {	 
+		return participacao.findOne(id);
+	}
+	
 	public List<Participacao> todasParticipacoesConfirmadas(Long idEvento) {	 
 		return participacao.findarByEventoParticipantesValidos(idEvento);
 	}

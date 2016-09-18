@@ -3,6 +3,7 @@ package com.pet.certipet.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.fop.apps.FOUserAgent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -81,6 +82,12 @@ public class ControleParticipacaoController {
 	public ModelAndView edicao(@PathVariable("id") Long idEvento) {
 		List<Participacao> parts = participacaoService.todasParticipacoesConfirmadas(idEvento);
 		System.out.println(Arrays.asList(parts));
+		
+		for (int i = 0; i < parts.size(); i++) {
+			if(parts.get(i).getPresenca()==null)
+				parts.get(i).setPresenca(Presenca.INDEFINIDO);
+		}
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName(MANUTENCAO_EVENTO);
 		mv.addObject("participacoes", parts);
@@ -98,6 +105,13 @@ public class ControleParticipacaoController {
 	public @ResponseBody String receber(@PathVariable(value="id") Participacao p, @PathVariable(value="presente") Presenca presente) {
 		p.setPresenca(presente);
 		return participacaoService.setPresenca(p).getPresenca().toString();
+	}
+	
+	@RequestMapping(value = "/{id}/{presente}/presenca", method = RequestMethod.GET)
+	public String recebe(@PathVariable(value="id") Participacao p, @PathVariable(value="presente") Presenca presente) {
+		p.setPresenca(presente);
+		participacaoService.setPresenca(p).getPresenca().toString();
+		return "redirect:/dashboard/controle/"+p.getEvento().getId();
 	}
 	
 

@@ -18,6 +18,10 @@ public class TipoParticipanteService {
 		return tpRepo.findAll();
 	}
 	
+	public List<TipoParticipante> buscarTodosOrdenado() {
+		return tpRepo.findAllByOrderByIdDesc();
+	}
+	
 	public TipoParticipante salvar(TipoParticipante tp) {
 		return tpRepo.save(tp);
 	}

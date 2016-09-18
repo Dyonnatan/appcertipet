@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.pet.certipet.model.Evento;
 import com.pet.certipet.model.Participacao;
 import com.pet.certipet.model.Participante;
+import com.pet.certipet.model.Presenca;
 import com.pet.certipet.service.EventoService;
 import com.pet.certipet.service.ParticipacaoService;
 import com.pet.certipet.service.ParticipanteService;
@@ -86,7 +87,7 @@ public class ListaEventosInscricao {
 			return listarEventos(principal);
 		}
 		p.setParticipante(particip);
-
+		p.setPresenca(Presenca.AUSENTE);
 		if (participacaoService.salvar(p)) {
 			ModelAndView mv = new ModelAndView("ConfirmarInscricao");
 			mv.addObject("mensagem", "Inscrito com sucesso");

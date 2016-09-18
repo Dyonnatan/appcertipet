@@ -2,15 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layoutPages/LayoutPadrao"	
-    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	layout:decorator="layoutPages/LayoutPadraoDashboard"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
 <title>Evento</title>
 </head>
 <section layout:fragment="conteudo" class="conteudo">
 
-	<form class="form-horizontal" method="post" enctype="multipart/form-data"
+	<form class="form-horizontal" method="post"
+		enctype="multipart/form-data"
 		th:action="@{/dashboard/evento/manutencao}" th:object="${evento}">
 		<div class="alert alert-success"
 			th:if="${not #strings.isEmpty(mensagem)}">
@@ -32,11 +33,12 @@
 			</div>
 
 			<div class="panel-body">
-			
-			    <input type="hidden" th:field="*{id}"/>
+
+				<input type="hidden" th:field="*{id}" />
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('nome')} ? has-error">
-					<label for="nome" class="col-sm-2 control-label">Nome do evento</label>
+					<label for="nome" class="col-sm-2 control-label">Nome do
+						evento</label>
 					<div class="col-sm-8">
 						<input type="text" class="form-control" id="nome"
 							th:field="*{nome}" autofocus="autofocus" />
@@ -52,11 +54,14 @@
 						</select>
 					</div>
 				</div>
-				
+
 				<div class="form-group aw-required">
-					<label for="final_insc" class="col-sm-2 control-label">Finalizar Inscrições</label>
+					<label for="final_insc" class="col-sm-2 control-label">Finalizar
+						Inscrições</label>
 					<div class="col-sm-8">
-						<input type="checkbox" class="form-control" id="final_insc" th:field="*{encerrarInscricao}" th:checked="${evento.encerrarInscricao}"/>
+						<input type="checkbox" class="form-control" id="final_insc"
+							th:field="*{encerrarInscricao}"
+							th:checked="${evento.encerrarInscricao}" />
 					</div>
 				</div>
 
@@ -73,28 +78,10 @@
 					</div>
 				</div>
 
-				<div class="form-group2 aw-required"
-					th:classappend="${#fields.hasErrors('cargaHoraria')} ? has-error">
-					<label for="ch" class="col-sm-2 control-label">Carga
-						Horária</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="ch"
-							th:field="*{cargaHoraria}" />
-					</div>
-				</div>
-
-				<div class="form-group"
-					th:classappend="${#fields.hasErrors('valor')} ? has-error">
-					<label for="valor" class="col-sm-2 control-label">Valor</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="valor"
-							th:field="*{valor}" />
-					</div>
-				</div>
-				
 				<div class="form-group"
 					th:classappend="${#fields.hasErrors('thumbnailURL')} ? has-error">
-					<label for="thumbnailURL" class="col-sm-2 control-label">Url do thumbnail</label>
+					<label for="thumbnailURL" class="col-sm-2 control-label">Url
+						do thumbnail</label>
 					<div class="col-sm-3">
 						<input type="url" class="form-control" id="thumbnailURL"
 							th:field="*{thumbnailURL}" />
@@ -106,9 +93,8 @@
 					<label for="descricao" class="col-sm-2 control-label">Descrição
 						Completa</label>
 					<div class="col-sm-8" id="descricao">
-						<textarea rows="5" cols="40" maxlength="2500"
-							 class="form-control" name="desc_compl"
-							id="desc_compl" th:field="*{descricao}"></textarea>
+						<textarea rows="5" cols="40" maxlength="2500" class="form-control"
+							name="desc_compl" id="desc_compl" th:field="*{descricao}"></textarea>
 					</div>
 				</div>
 
@@ -127,36 +113,68 @@
 						<i>Upload</i>
 					</label>
 					<div class="col-sm-4">
-						<input type="file" accept="image/x-png, image/jpeg" class="form-control"
-							id="cert" name="file" th:field="*{mpf}"></input>	
-							<input type="text" readonly="readonly"
-							hidden="true" id="certname" th:field="*{certificado.nome}" />						
+						<input type="file" accept="image/x-png, image/jpeg"
+							class="form-control" id="cert" name="file" th:field="*{mpf}"></input>
+						<input type="text" readonly="readonly" hidden="true" id="certname"
+							th:field="*{certificado.nome}" />
 					</div>
 					<label for="list_cert" class="col-sm-2 control-label"><i>ou
 							selecionar</i></label>
 					<div class="col-sm-2">
-						<select class="form-control" name="list_cert" th:field="*{certView}">
-						<option th:if="evento.certificado!=null" th:value="${{evento.certificado.id}}"
+						<select class="form-control" name="list_cert"
+							th:field="*{certView}">
+							<option th:if="evento.certificado!=null"
+								th:value="${{evento.certificado.id}}"
 								th:text="${{evento.certificado.nome}}"></option>
 							<option th:each="tc : ${todosCertificados}" th:value="${tc.id}"
 								th:text="${tc.nome}"></option>
 						</select>
 					</div>
-			</div>
-					<div class="form-group">
-						<div class="col-sm-offset-3 col-sm-10">
-							<button type="submit" class="btn btn-primary">Salvar</button>
-						</div>
+				</div>
+
+				<div class="form-group" onload="certif">
+					<label for="cert" class="col-sm-2 control-label">Categorias
+						de Participante: </label>
+
+					<div class="col-sm-4">
+						<select class="form-control" name="list_cat"
+							th:field="*{categoriaParticPreferencial}">
+							<option th:if="${categoriaParticPreferencial != null}"
+								th:value="${categoriaParticPreferencial.id}" th:text="${categoriaParticPreferencial.nome}"></option>
+							<option th:each="cat : ${todascategoriasParticipantes}"
+								th:value="${cat.id}" th:text="${cat.nome}"></option>
+						</select>
 					</div>
-			
+					
+					<div class="col-sm-4">
+						<select class="form-control" name="list_cat"
+							th:field="*{categoriasParticipantes}" multiple="multiple"
+							size="4">
+							<option th:each="cat : ${todascategoriasParticipantes}"
+								th:value="${cat.id}" th:text="${cat.nome}"></option>
+						</select>
+					</div>
+
+					<div class="col-sm-4">
+						<a target="blank" href="/dashboard/tipoparticipante/manutencao">
+							Cadastrar nova categoria </a>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-10">
+						<button type="submit" class="btn btn-primary">Salvar</button>
+					</div>
+				</div>
+
 			</div>
 		</div>
 
 
 		<script src="/ckeditor/ckeditor.js"></script>
 		<script>
-  			CKEDITOR.replace("desc_compl"); 
- 		</script>
+			CKEDITOR.replace("desc_compl");
+		</script>
 
 		<script type="text/javascript">
 			//<![CDATA[
@@ -165,11 +183,11 @@
 
 			fileInput.addEventListener("change", function(e) {
 				var file = fileInput.files[0];
-					var reader = new FileReader();
+				var reader = new FileReader();
 
-					reader.onload = function(e) {
-						fileDisplayName.value = file.name;
-					}
+				reader.onload = function(e) {
+					fileDisplayName.value = file.name;
+				}
 			});
 			//]]>
 		</script>
@@ -178,7 +196,7 @@
 			"<span><b>O uso de JavaScript é necessário, por favor
 					ative-o ou use outro navegador</b></span>"
 		</noscript>
-		
+
 	</form>
 
 </section>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layoutPages/LayoutPadrao">
+	layout:decorator="/layoutPages/LayoutPadraoDashboard">
 
 <head>
 <title>Pesquisa de Eventos</title>
@@ -46,8 +46,7 @@
 						<th class="text-center col-md-2">Evento</th>
 						<th class="text-center col-md-2">Tipo</th>
 						<th class="text-right col-md-2">Realização</th>
-						<th class="text-center col-md-2">Carga Horária</th>
-						<th class="text-center col-md-2">Valor</th>
+						<th class="text-center col-md-2">Categorias</th>
 						<th class="text-center col-md-2">Certificado</th>
 						<th class="col-md-1"></th>
 					</tr>
@@ -59,9 +58,12 @@
 						<td class="text-center" th:text="${evento.tipo.tipo}"></td>
 						<td class="text-right"
 							th:text="${#dates.format(evento.dataRealizacao, 'dd/MM/yyyy')}"></td>
-						<td class="text-right" th:text="${evento.cargaHoraria}"></td>
-						<td class="text-right" th:text="${evento.valor}"></td>
-						<td class="text-right" th:text="${evento.certificado.id}"></td>
+						<td class="text-right">
+						<select  >
+						<option th:each="cat : ${evento.categoriasParticipantes}" th:text="${cat.nome}"></option>
+						</select>
+						</td>
+						<td class="text-right" th:text="${evento.certificado.nome}"></td>
 						<td class="text-center"><a class="btn btn-link btn-xs"
 							th:href="@{/dashboard/evento/{codigo}(codigo=${evento.id})}"
 							title="Editar" rel="tooltip" data-placement="top"> <span
@@ -72,7 +74,7 @@
 								<input type="hidden" name="id" th:value="${evento.id}" />
 								<button type="submit" id="submitButton"
 									class="btn btn-link btn-xs"
-									onclick="return confirm('Are you sure you want to commit delete and go back?')">
+									onclick="return confirm('Tem certeza que deseja deletar?')">
 									<span class="glyphicon glyphicon-remove"></span></button>
 							</form> 
  							<!-- <a class="btn btn-link btn-xs js-atualizar-status" th:if="${titulo.pendente}" -->
