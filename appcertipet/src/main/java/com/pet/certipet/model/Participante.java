@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -65,17 +65,8 @@ public class Participante {
 	
 	@NotBlank(message = "CPF é obrigatório!")
 	@Size(max = 11, message = "O CPF não pode conter mais de 11 caracteres")
-	@Column(length = 11, unique = true// , columnDefinition= ",ADD CONSTRAINT
-										// FK_participantes_usuarios FOREIGN KEY
-										// (cpf) REFERENCES usuarios(cpf);"
-	)
-	// @JoinColumn(table="usuarios", name="cpf",
-	// referencedColumnName="cpf",
-	// foreignKey = @ForeignKey(name="FK_COMPANY__ROUTE")
-	// //columnDefinition= "REFERENCES usuarios ( cpf ); "
-	// )
-	
-	
+	@Column(length = 11, unique = true)	
+	@CPF(message="CPF inválido. Utilize apenas números.")
 	public String getCpf() {
 		return cpf;
 	}

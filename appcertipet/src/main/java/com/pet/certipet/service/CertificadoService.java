@@ -2,10 +2,8 @@ package com.pet.certipet.service;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -18,7 +16,6 @@ import com.pet.certipet.model.CampoChave;
 import com.pet.certipet.model.Certificado;
 import com.pet.certipet.model.Evento;
 import com.pet.certipet.model.Participante;
-import com.pet.certipet.model.TipoEvento;
 import com.pet.certipet.model.TipoParticipante;
 import com.pet.certipet.repository.CertificadoRepo;
 

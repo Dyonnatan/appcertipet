@@ -1,7 +1,7 @@
 package com.pet.certipet.model;
 
 public enum Pagamento {
-	P('p',"Pago"), A('a',"Aguardando"), R('r',"Recusado"), C('c',"Cancelado");
+	P('P',"Pago"), A('A',"Aguardando"), R('R',"Recusado"), C('C',"Cancelado");
 	
 	String pagamento;
 	char pag;

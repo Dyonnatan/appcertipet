@@ -3,7 +3,6 @@ package com.pet.certipet.controller;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.fop.apps.FOUserAgent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -19,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pet.certipet.model.Evento;
+import com.pet.certipet.model.Pagamento;
 import com.pet.certipet.model.Participacao;
 import com.pet.certipet.model.Presenca;
 import com.pet.certipet.service.EventoService;
@@ -31,13 +31,13 @@ public class ControleParticipacaoController {
 
 	private static final String SEL_EVENTO = "PesquisaEventosDisponiveisControle";
 	private static final String MANUTENCAO_EVENTO = "ControleParticipacoes";
+	private static final String VALIDA_INSCRICAO = "ControleValidaInscricao";
 
 	@Autowired
 	private EventoService eventoService;
 	@Autowired
 	private ParticipacaoService participacaoService;
 
-	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView selecionarEvento() {
 		ModelAndView mv = new ModelAndView(SEL_EVENTO);
@@ -47,13 +47,12 @@ public class ControleParticipacaoController {
 		return mv;
 	}
 
-
-//    @PreAuthorize("hasRole('ADMINISTRADOR')")
+	// @PreAuthorize("hasRole('ADMINISTRADOR')")
 	@RequestMapping(value = "/manutencao", method = RequestMethod.POST)
-	public ModelAndView salvar(@Validated @ModelAttribute(value="evento") Evento p, Errors result ,
-	 RedirectAttributes attributes // @Requestparam @pathvariable
+	public ModelAndView salvar(@Validated @ModelAttribute(value = "evento") Evento p, Errors result,
+			RedirectAttributes attributes // @Requestparam @pathvariable
 	) {
-		
+
 		ModelAndView mv = new ModelAndView();
 		mv.clear();
 		mv.setViewName(MANUTENCAO_EVENTO);
@@ -63,57 +62,94 @@ public class ControleParticipacaoController {
 		return mv;
 	}
 
-//	@ModelAttribute("eventos")
-//	public List<Evento> listarEventos() {
-//		List<Evento> lista = eventoService.buscarTodos();
-//		return lista;
-//	}
-	
-//	@RequestMapping
-//	public ModelAndView pesquisar(@ModelAttribute("filtro") EventoFilter filtro) {
-//		List<Evento> todosTitulos = eventoService.filtrar(filtro);
-//		
-//		ModelAndView mv = new ModelAndView("PesquisaEventos");
-//		mv.addObject("titulos", todosTitulos);
-//		return mv;
-//	}
-	
+	@RequestMapping(value = "/{id}/validarinscricoes", method = RequestMethod.GET)
+	public ModelAndView validarincricao(@PathVariable("id") Long idEvento) {
+
+		List<Participacao> parts = participacaoService.todasParticipacoes(idEvento);
+
+		for (int i = 0; i < parts.size(); i++) {
+			if (parts.get(i).getPresenca() == null)
+				parts.get(i).setPresenca(Presenca.INDEFINIDO);
+		}
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName(VALIDA_INSCRICAO);
+		mv.addObject("participacoes", parts);
+		mv.addObject("pagamentos", Pagamento.values());
+		return mv;
+	}
+
+	// @ModelAttribute("eventos")
+	// public List<Evento> listarEventos() {
+	// List<Evento> lista = eventoService.buscarTodos();
+	// return lista;
+	// }
+
+	// @RequestMapping
+	// public ModelAndView pesquisar(@ModelAttribute("filtro") EventoFilter
+	// filtro) {
+	// List<Evento> todosTitulos = eventoService.filtrar(filtro);
+	//
+	// ModelAndView mv = new ModelAndView("PesquisaEventos");
+	// mv.addObject("titulos", todosTitulos);
+	// return mv;
+	// }
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ModelAndView edicao(@PathVariable("id") Long idEvento) {
 		List<Participacao> parts = participacaoService.todasParticipacoesConfirmadas(idEvento);
 		System.out.println(Arrays.asList(parts));
-		
+
 		for (int i = 0; i < parts.size(); i++) {
-			if(parts.get(i).getPresenca()==null)
+			if (parts.get(i).getPresenca() == null)
 				parts.get(i).setPresenca(Presenca.INDEFINIDO);
 		}
-		
+
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName(MANUTENCAO_EVENTO);
 		mv.addObject("participacoes", parts);
+		mv.addObject("pagamentos", Pagamento.values());
 		return mv;
 	}
+
+	@RequestMapping(value = "pagamento/{p}/{id}", method = RequestMethod.GET)
+	public String edicao(@PathVariable("id") Participacao p, @PathVariable("p") Pagamento pag) {
+		p.setPagamento(pag);
+		participacaoService.setagem(p);
+		return "redirect:/dashboard/controle/" + p.getEvento().getId()+"/validarinscricoes";
+	}
 	
-	@RequestMapping(value="/del", method = RequestMethod.POST)
+	@RequestMapping(value = "pagamento/todas/{id}", method = RequestMethod.GET)
+	public String pagartodas(@PathVariable("id") Long idEvento) {
+		List<Participacao>par= participacaoService.todasParticipacoes(idEvento);
+		for (Participacao p : par) {
+			p.setPagamento(Pagamento.P);
+		}
+		participacaoService.setagem(par);
+		return "redirect:/dashboard/controle/" + idEvento+"/validarinscricoes";
+	}
+
+	@RequestMapping(value = "/del", method = RequestMethod.POST)
 	public String exclui(@RequestParam Long id, RedirectAttributes attributes) {
 		eventoService.excluir(id);
-		attributes.addFlashAttribute("mensagem", "Evento "+id+" excluído com sucesso!");
+		attributes.addFlashAttribute("mensagem", "Evento " + id + " excluído com sucesso!");
 		return "redirect:/dashboard/evento";
 	}
-	
+
 	@RequestMapping(value = "/{id}/{presente}/presenca", method = RequestMethod.PUT)
-	public @ResponseBody String receber(@PathVariable(value="id") Participacao p, @PathVariable(value="presente") Presenca presente) {
+	public @ResponseBody String receber(@PathVariable(value = "id") Participacao p,
+			@PathVariable(value = "presente") Presenca presente) {
 		p.setPresenca(presente);
-		return participacaoService.setPresenca(p).getPresenca().toString();
+		return participacaoService.setagem(p).getPresenca().toString();
 	}
-	
+
 	@RequestMapping(value = "/{id}/{presente}/presenca", method = RequestMethod.GET)
-	public String recebe(@PathVariable(value="id") Participacao p, @PathVariable(value="presente") Presenca presente) {
+	public String recebe(@PathVariable(value = "id") Participacao p,
+			@PathVariable(value = "presente") Presenca presente) {
 		p.setPresenca(presente);
-		participacaoService.setPresenca(p).getPresenca().toString();
-		return "redirect:/dashboard/controle/"+p.getEvento().getId();
+		participacaoService.setagem(p).getPresenca().toString();
+		return "redirect:/dashboard/controle/" + p.getEvento().getId();
 	}
-	
 
 	// @RequestMapping(value = "/{codigo}/receber", method = RequestMethod.PUT)
 	// public @ResponseBody String receber(@PathVariable Long codigo) {

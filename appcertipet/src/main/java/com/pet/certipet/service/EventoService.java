@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pet.certipet.model.Evento;
-import com.pet.certipet.model.Presenca;
 import com.pet.certipet.repository.EventoRepo;
 import com.pet.certipet.service.filter.EventoFilter;
 

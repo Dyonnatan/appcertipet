@@ -46,18 +46,23 @@
 								th:classappend="${p.isPresente() ? 'label-success': 'label-danger'}"></span>
 							</td>
 
-							<td class="text-center"><a
-								class="btn btn-link btn-xs js-atualizar-status"
-								title="Confirmar Presente" rel="tooltip" data-placement="top"
-								th:attr="data-codigo=${p.id}"
-								th:href="@{/dashboard/controle/{id}/PRESENTE/presenca(id=${p.id})}">
-									<span class="glyphicon glyphicon-ok">Presente</span>
-							</a> <a class="btn btn-link btn-xs js-atualizar-status"
-								title="Confirmar Ausente" rel="tooltip" data-placement="top"
-								th:attr="data-codigo=${p.id}"
-								th:href="@{/dashboard/controle/{id}/AUSENTE/presenca(id=${p.id})}">
-									<span class="glyphicon glyphicon-remove">Ausente</span>
-							</a></td>
+							<td class="text-center">
+								<div class="col-sm-4">
+									<select id="selpag"
+										onchange="$('#confpag').attr('href',$('#selpag option:selected').attr('href')+$('#confpag').attr('datacodigo'))">
+										<option hidden="hidden" th:value="${p.pagamento}"
+											th:text="${p.pagamento.pagamento}"></option>
+										<option th:each="pag : ${pagamentos}"
+											th:value="${pag.getChar()}" th:text="${pag.pagamento}"
+											th:href="@{/dashboard/controle/pagamento/{pa}/(pa=${pag})}"></option>
+									</select> <a class="btn btn-link btn-xs" title="Pagamento" rel="tooltip"
+										id="confpag" data-placement="top" th:attr="datacodigo=${p.id}">
+										<span class="glyphicon glyphicon-check"></span>
+									</a>
+								</div>
+							</td>
+						</tr>
+						<tr>
 
 						</tr>
 						<tr>
@@ -66,6 +71,12 @@
 						</tr>
 					</tbody>
 				</table>
+			</div>
+			<div>
+				<a th:if="${not #lists.isEmpty(participacoes)}" class="btn btn-link btn-xs" title="Pagamento" rel="tooltip" onclick="return confirm('Tem certeza que deseja marcar todas inscrições como pagas?')"
+					id="confpag" data-placement="top" th:href="@{/dashboard/controle/pagamento/todas/{pa}/(pa=${participacoes[0].evento.id})}">
+					<span class="glyphicon small">Confirmar todas como pagas</span>
+				</a>
 			</div>
 		</div>
 

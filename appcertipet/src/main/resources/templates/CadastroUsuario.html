@@ -8,8 +8,13 @@
 <title>Cadastro</title>
 
 <style>
-.green{color: green;}
-.red{color: red;}
+.green {
+	color: green;
+}
+
+.red {
+	color: red;
+}
 </style>
 </head>
 <section layout:fragment="conteudo" class="conteudo">
@@ -27,8 +32,8 @@
 
 
 		<div class="cadastro" style="background-color: #ededed">
-			<a href="/"> <img id="certipet1" src="images/logo_certipet_color.svg"
-				alt="Logo Certipet" />
+			<a href="/"> <img id="certipet1"
+				src="images/logo_certipet_color.svg" alt="Logo Certipet" />
 			</a>
 			<h4 class="h4 text-center">Cadastro</h4>
 			<div class="panel-body">
@@ -37,16 +42,17 @@
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('nome')} ? has-error">
 					<label for="nome" class="col-sm-2 control-label"><span>Nome</span></label>
-					<div class="col-sm-6">
+					<div class="col-sm-8">
 						<input type="text" class="form-control" id="nome"
-							th:field="*{nome}" autofocus="autofocus" maxlength="45" required="required"/>
+							th:field="*{nome}" autofocus="autofocus" maxlength="45"
+							required="required" />
 					</div>
 				</div>
 
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('sobrenome')} ? has-error">
 					<label for="sobrenome" class="col-sm-2 control-label"><span>Sobrenome</span></label>
-					<div class="col-sm-6">
+					<div class="col-sm-8">
 						<input type="text" class="form-control" id="sobrenome"
 							th:field="*{sobrenome}" maxlength="80" required="required" />
 					</div>
@@ -55,7 +61,7 @@
 				<div class="form-group"
 					th:classappend="${#fields.hasErrors('sexo')} ? has-error">
 					<label for="sexo" class="col-sm-2 control-label"><span>Sexo</span></label>
-					<div class="col-sm-4" id="sexo">
+					<div class="col-sm-6" id="sexo">
 						<label th:each="sexo : ${sexos}" class="radio-inline"> <input
 							type="radio" th:value="${sexo}" th:field="*{sexo}" /> <span
 							th:text="${sexo.descricao}"></span>
@@ -66,17 +72,23 @@
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('cpf')} ? has-error">
 					<label for="cpf" class="col-sm-2 control-label"><span>CPF</span></label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="cpf" th:field="*{cpf}" maxlength="11" required="required" onkeyup="checkcpf()"/>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="cpf" th:field="*{cpf}"
+							maxlength="11" required="required" onkeyup="checkcpf()" />
 					</div>
 				</div>
-				
+
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('cpf')} ? has-error">
-					<label for="cpfrepetido" class="col-sm-2 control-label"><span>Repita o CPF</span></label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control col-sm-4" id="cpfrepetido" aria-describedby="check" maxlength="11" required="required" onkeyup="checkcpf()"/>
-						<span id="check"> </span>
+					<label for="cpfrepetido" class="col-sm-2 control-label"><span>Repita
+							o CPF</span></label>
+					<div class="col-sm-8">
+						<div class="input-group ">
+							<input type="text" class="form-control col-sm-4" id="cpfrepetido"
+								aria-describedby="check" maxlength="11" required="required"
+								onkeyup="checkcpf()" /> <span class="input-group-addon"><span
+								id="check"> </span></span>
+						</div>
 					</div>
 				</div>
 
@@ -84,37 +96,43 @@
 					th:classappend="${#fields.hasErrors('dataNascimento')} ? has-error">
 					<label for="dataNascimento" class="col-sm-2 control-label"><span>Data
 							de nascimento</span></label>
-					<div class="col-sm-3">
+					<div class="col-sm-8">
 						<input type="text" class="form-control" id="dataNascimento"
 							th:field="*{dataNascimento}" data-provide="datepicker"
 							data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
 							data-date-autoclose="true" data-date-today-highlight="true"
-							data-date-orientation="bottom" required="required"/>
+							data-date-orientation="bottom" required="required" />
 					</div>
 				</div>
 
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('email')} ? has-error">
 					<label for="email" class="col-sm-2 control-label"><span>E-mail</span></label>
-					<div class="col-sm-3">
+					<div class="col-sm-8">
 						<input type="email" class="form-control" id="email"
-							th:field="*{usuario.email}" maxlength="70" required="required" onkeyup="checkem()"/>
+							th:field="*{usuario.email}" maxlength="70" required="required"
+							onkeyup="checkem()" />
 					</div>
 				</div>
-				
+
 				<div class="form-group aw-required"
 					th:classappend="${#fields.hasErrors('email')} ? has-error">
-					<label for="emailrepetir" class="col-sm-2 control-label"><span>Repita o <br/>E-mail</span></label>
-					<div class="col-sm-3" aria-describedby="checkem">
-						<input type="email" class="form-control" id="emailrepetir" maxlength="70" required="required" onkeyup="checkem()"/>
-						<p id="checkem"> </p>
+					<label for="emailrepetir" class="col-sm-2 control-label"><span>Repita
+							o <br />E-mail
+					</span></label>
+					<div class="col-sm-8" aria-describedby="checkem">
+						<div class="input-group ">
+							<input type="email" class="form-control" id="emailrepetir"
+								maxlength="70" required="required" onkeyup="checkem()" /> <span
+								class="input-group-addon"><span id="checkem"> </span></span>
+						</div>
 					</div>
 				</div>
 
 				<div class="form-group"
 					th:classappend="${#fields.hasErrors('telefone')} ? has-error">
 					<label for="telefone" class="col-sm-2 control-label"><span>Telefone</span></label>
-					<div class="col-sm-3">
+					<div class="col-sm-8">
 						<input type="number" class="form-control" id="telefone"
 							th:field="*{telefone}" />
 					</div>
@@ -125,9 +143,9 @@
 					<div class="form-group"
 						th:classappend="${#fields.hasErrors('matricula')} ? has-error">
 						<label for="matricula" class="col-sm-2 control-label"><span>Matrícula</span></label>
-						<div class="col-sm-3">
+						<div class="col-sm-6">
 							<input type="text" class="form-control" id="matricula"
-								th:field="*{matricula}" maxlength="50"/>
+								th:field="*{matricula}" maxlength="50" />
 						</div>
 					</div>
 
@@ -157,37 +175,18 @@
 					</div>
 				</fieldset>
 
-<!-- 				<fieldset> -->
-<!-- 					<legend class="col-sm-offset-1 col-sm-10 small text-center"></legend> -->
-<!-- 					<div class="form-group aw-required" -->
-<!-- 						th:classappend="${#fields.hasErrors('usuario.senha')} ? has-error"> -->
-<!-- 						<label for="senhapet" class="col-sm-2 control-label"><span>Senha -->
-<!-- 								de Acesso</span></label> -->
-<!-- 						<div class="col-sm-8"> -->
-<!-- 							<input type="password" class="form-control" id="senhapet" -->
-<!-- 								th:field="*{usuario.senha}" /> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 					<div class="form-group aw-required"> -->
-<!-- 						<label for="senhapet" class="col-sm-2 control-label"><span>Confirme -->
-<!-- 								a senha</span></label> -->
-<!-- 						<div class="col-sm-8"> -->
-<!-- 							<input type="password" class="form-control" id="Confirmsenhapet" /> -->
-<!-- 							<small id="checkPasswordMatch" class="text-muted"> </small> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</fieldset> -->
-
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
-						<input type="submit" class="btn btn-primary" value="Cadastrar"></input>
+						<input type="submit" class="btn btn-primary cadastro" value="Cadastrar"
+							aria-describedby="helpBlock"></input>
+						<p id="helpBlock" class="form-text text-muted"><br/>Valores de cpf ou email não estão válidos.</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</form>
- 	
- 	<script src="/js/usuario.js"></script>
- 	
+
+	<script src="/js/usuario.js"></script>
+
 </section>
 </html>

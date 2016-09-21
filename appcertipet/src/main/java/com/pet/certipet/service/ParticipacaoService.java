@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pet.certipet.model.Evento;
 import com.pet.certipet.model.Participacao;
-import com.pet.certipet.model.Presenca;
 import com.pet.certipet.repository.ParticipacaoRepo;
 
 @Service
@@ -36,6 +36,12 @@ public class ParticipacaoService {
 		return participacao.findarByEventoParticipantesValidos(idEvento);
 	}
 	
+	public List<Participacao> todasParticipacoes(Long idEvento) {	
+		Evento e = new Evento();
+		e.setId(idEvento);
+		return participacao.findByEvento(e);
+	}
+	
 	public boolean salvar(Participacao p) {
 		return participacao.save(p) != null;
 	}
@@ -48,9 +54,15 @@ public class ParticipacaoService {
 		participacao.delete(idPartipacao);
 	}
 
-	public Participacao setPresenca(Participacao p) {
+	public Participacao setagem(Participacao p) {
 		
 		return participacao.save(p);
 	}
+
+	public void setagem(List<Participacao> par) {
+		
+		participacao.save(par);
+	}
+
 
 }

@@ -5,11 +5,11 @@
 
 	<groupId>com.pet</groupId>
 	<artifactId>certipet</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.3-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>appcertipet</name>
-	<description>Aplicacao para Gerenciamento e Emissao de Certificados PET-EMC</description>
+	<description>Aplicacao para Gerenciamento de Eventos e Emissao de Certificados PET-EMC</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -19,6 +19,7 @@
 	</parent>
 
 	<properties>
+	
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 	</properties>
@@ -68,11 +69,11 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>de.bripkens</groupId>
-			<artifactId>svg-export</artifactId>
-			<version>0.2</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>de.bripkens</groupId> -->
+<!-- 			<artifactId>svg-export</artifactId> -->
+<!-- 			<version>0.2</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc-portlet</artifactId>
@@ -114,11 +115,11 @@
 	</dependencies>
 
 	<repositories>
-		<repository>
-			<id>svn-export-repo</id>
-			<name>svn-export repository on GitHub</name>
-			<url>http://bripkens.github.com/svg-export/repository/</url>
-		</repository>
+<!-- 		<repository> -->
+<!-- 			<id>svn-export-repo</id> -->
+<!-- 			<name>svn-export repository on GitHub</name> -->
+<!-- 			<url>http://bripkens.github.com/svg-export/repository/</url> -->
+<!-- 		</repository> -->
 	</repositories>
 	<build>
 		<plugins>

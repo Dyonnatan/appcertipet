@@ -3,6 +3,7 @@ package com.pet.certipet.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -25,7 +26,7 @@ public class Participacao {
 	private Evento evento;
 	private TipoParticipante tipoParticipante;
 	private Presenca presenca;
-	private char pagamento;
+	private Pagamento pagamento;
 	private List<Resposta> respostas;
 
 	public Participacao() {
@@ -89,11 +90,13 @@ public class Participacao {
 		this.presenca = Presenca.PRESENTE;
 	}
 
-	public char getPagamento() {
+	@Enumerated(EnumType.STRING)
+	@Column(length=1)
+	public Pagamento getPagamento() {
 		return pagamento;
 	}
 
-	public void setPagamento(char pagou) {
+	public void setPagamento(Pagamento pagou) {
 		this.pagamento = pagou;
 	}
 	

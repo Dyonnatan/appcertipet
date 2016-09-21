@@ -1,5 +1,4 @@
 
-
 function checkcpf() {
 	var cpf = $("#cpf").val();
 	var cpf1 = $("#cpfrepetido").val();
@@ -8,12 +7,13 @@ function checkcpf() {
 
 	if (cpf == cpf1) {
 		$("#check").attr("class", "glyphicon glyphicon-ok green");
-		submit.attr("type", "submit");
-		aviso.attr("hidden", "hidden");
+		match2 = true;
+		checkaviso();
 	} else {
 		$("#check").attr("class", "glyphicon glyphicon-remove red");
 		submit.attr("type", "button");
-		aviso.attr("hidden", "false");
+		match2 = false;
+		checkaviso();
 	}
 }
 
@@ -25,11 +25,27 @@ function checkem() {
 
 	if (em == em1) {
 		$("#checkem").attr("class", "glyphicon glyphicon-ok green");
-		submit.attr("type", "submit");
-		aviso.attr("hidden", "hidden");
+		match1 = true;
+		checkaviso();
 	} else {
 		$("#checkem").attr("class", "glyphicon glyphicon-remove red");
 		submit.attr("type", "button");
-		aviso.attr("hidden", "false");
+		match1 = false;
+		checkaviso();
+	}
+}
+
+var match1 = false;
+var match2 = false;
+function checkaviso() {
+	aviso = $("#helpBlock");
+	submit = $(".cadastro");
+
+	if (match1 == true && match2 == true) {
+		submit.attr("type", "submit");
+		aviso.attr("hidden", "hidden");
+	} else {
+		submit.attr("type", "button");
+		aviso.removeAttr("hidden");
 	}
 }
