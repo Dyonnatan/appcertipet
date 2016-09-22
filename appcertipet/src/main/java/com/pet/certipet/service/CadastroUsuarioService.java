@@ -74,7 +74,6 @@ public class CadastroUsuarioService {
 	}
 
 	public Participante salvar(Participante p) throws Exception {
-		System.out.println(p.getUsuario().getSenha());
 		Usuario u = p.getUsuario();
 		u.setSenha(passwordEncoder.encode(p.getUsuario().getSenha()));
 		u = user.save(u);

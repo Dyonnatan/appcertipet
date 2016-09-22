@@ -18,8 +18,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Usuario getUserByCpf(String cpf) {
-		Usuario u = usuarioRepo.findByCpf(cpf);
-		return u;
-
+		return usuarioRepo.findByCpf(cpf);
 	}
 }

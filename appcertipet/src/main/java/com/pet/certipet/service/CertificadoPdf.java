@@ -40,12 +40,12 @@ import com.pet.certipet.model.TipoParticipante;
 public class CertificadoPdf {
 
 	private byte[] imagemBackground;
-	private float xConteudo = 110;
+	private float xConteudo = 80;
 	private float yConteudo = 180;
-	private float wConteudo = 530;
-	private float xData = 110;
+	private float wConteudo = 600;
+	private float xData = 80;
 	private float yData = 250;
-	private float wData = 530;
+	private float wData = 600;
 	private boolean hasData = true;
 	private float xAutentica = 0;
 	private float yAutentica = 5;
@@ -56,9 +56,9 @@ public class CertificadoPdf {
 	public CertificadoPdf() {
 		try {
 			PdfFont fonte = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
-			textStyle.setFont(fonte).setFontSize(18);
+			textStyle.setFont(fonte).setFontSize(16);
 			PdfFont fonte2 = PdfFontFactory.createFont(FontConstants.TIMES_BOLD);
-			fieldStyle.setFont(fonte2).setFontSize(18);
+			fieldStyle.setFont(fonte2).setFontSize(16);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -131,7 +131,7 @@ public class CertificadoPdf {
 	private String setData(Date realizacao) {
 		String data = "";
 		try {
-			SimpleDateFormat format = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy'.'", new Locale("pt", "br"));
+			SimpleDateFormat format = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("pt", "br"));
 			data = format.format(realizacao);
 		} catch (Exception e) {
 		}
@@ -361,9 +361,9 @@ public class CertificadoPdf {
 		String dataAtualStr = "";
 		if (hasData) {
 			if (portugues) {
-				dataAtualStr = "Goiânia, " + setData(new Date());
+				dataAtualStr = "Goiânia, " + setData(new Date())+".";
 			} else {
-				dataAtualStr = "Goiânia, " + setDate(new Date());
+				dataAtualStr = "Goiânia, " + setDate(new Date())+".";
 			}
 		}
 		Paragraph dataAtual = new Paragraph(dataAtualStr);

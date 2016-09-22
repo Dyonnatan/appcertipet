@@ -44,7 +44,6 @@ public class CustomSuccesHandler extends SimpleUrlAuthenticationSuccessHandler {
 
 		for (GrantedAuthority a : authorities) {
 			roles.add(a.getAuthority());
-			System.out.println(">>" + a.getAuthority());
 		}
 
 		if (isAdmin(roles)) {

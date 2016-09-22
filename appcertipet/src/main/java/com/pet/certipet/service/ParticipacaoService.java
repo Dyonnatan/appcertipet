@@ -64,5 +64,9 @@ public class ParticipacaoService {
 		participacao.save(par);
 	}
 
+	public List<Participacao> todasParticipacoesConfirmadasPorNome(Long idevento) {
+		return participacao.findarByEventoOrderByNome(idevento);
+	}
+
 
 }

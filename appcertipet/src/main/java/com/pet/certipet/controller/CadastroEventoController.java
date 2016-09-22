@@ -51,8 +51,8 @@ public class CadastroEventoController {
 		List<TipoParticipante> tp = categoriaPartService.buscarTodosOrdenado();
 		mv.addObject("todascategoriasParticipantes", tp);
 		//mv.addObject(attributeName, attributeValue)
-		//System.out.println(a.getPrincipal());
-		System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+		/*//System.out.println(a.getPrincipal());
+		System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());*/
 		return mv;
 	}
 //	public ModelAndView goCadastro(Evento e) {
@@ -74,7 +74,6 @@ public class CadastroEventoController {
 	 RedirectAttributes attributes // @Requestparam @pathvariable
 	) {
 		if (result.hasErrors()) {
-			System.out.println(result.getAllErrors());
 			ModelAndView mv = new ModelAndView(MANUTENCAO_EVENTO);
 			mv.addObject("evento", p);
 			mv.addObject("certifSelec", new Certificado());
@@ -83,14 +82,13 @@ public class CadastroEventoController {
 		}
 		try {
 			if (p.getCertView() != null && p.getCertView().getId() != null) {
-				System.out.println("Cert "+p.getCertView().getId()+" "+p.getCertView().getArquivo());
 				p.setCertificado(p.getCertView());
 			} else {
 				p.getCertificado().setData(new Date());
 //				p.getCertificado().setArquivo(file.getBytes());
 //				p.getCertificado().setNome(file.getName());
 				certificadoService.salvar(p.getCertificado());
-			}System.out.println(p.getId());
+			}
 			eventoService.salvar(p);
 		} catch (Exception e) {
 			// result.addError(new ObjectError("message", e.getMessage()));

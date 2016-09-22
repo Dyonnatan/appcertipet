@@ -29,4 +29,7 @@ public interface ParticipacaoRepo extends JpaRepository<Participacao, Long> {
 	String savePresenca(Long id, String p);
 
 	List<Participacao> findByEvento(Evento idEvento);
+
+	@Query(value = "select p from Participacao p where p.evento.id = ?1 and (p.pagamento = 'P' or p.pagamento= 'A') order by p.participante.nome asc")
+	List<Participacao> findarByEventoOrderByNome(Long idevento);
 }

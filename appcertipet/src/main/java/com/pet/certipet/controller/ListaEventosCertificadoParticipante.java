@@ -48,12 +48,12 @@ public class ListaEventosCertificadoParticipante {
 		String cpf = principal.getName();
 		List<Participacao> todasParticipacoes = participacaoService.filtrar(cpf);
 
-		System.out.println(Arrays.asList(todasParticipacoes.toArray()));
+//		System.out.println(Arrays.asList(todasParticipacoes.toArray()));
 		if (todasParticipacoes.size() == 1) {
 			ModelAndView m = new ModelAndView();
-			System.out.println(todasParticipacoes.get(0));
+//			System.out.println(todasParticipacoes.get(0));
 			return emissaoPDF(request, todasParticipacoes.get(0), principal);
-		}System.out.println(111);
+		}
 		ModelAndView mv = new ModelAndView(PESQUISA_CERTIFICADOS__VIEW);
 		mv.addObject("participacao", todasParticipacoes);
 		return mv;
@@ -75,10 +75,8 @@ public class ListaEventosCertificadoParticipante {
 		// part.getTipoParticipante());
 
 		String urlHash = "http://"+request.getLocalName()+"/autentica/"; 
-		System.out.println(112);
-		System.out.println(part.getId());
+		
 		AutenticacaoCertificado autenticacao = autenticServ.buscar(part.getId());
-		System.out.println(113);
 		if (autenticacao == null) {
 			String hash= autenticServ.gerarHash(part);
 			autenticacao = autenticServ.salvar(new AutenticacaoCertificado(hash, part));
@@ -99,7 +97,7 @@ public class ListaEventosCertificadoParticipante {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
-		String filename = "certificado.pdf";
+//		String filename = "certificado.pdf";
 		// headers.add("content-disposition", "inline;filename=" + filename);
 		// headers.setContentDispositionFormData("inline", filename);
 		// headers.setContentDispositionFormData(filename, filename);

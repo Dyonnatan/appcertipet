@@ -1,6 +1,5 @@
 package com.pet.certipet.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +31,7 @@ public class ControleParticipacaoController {
 	private static final String SEL_EVENTO = "PesquisaEventosDisponiveisControle";
 	private static final String MANUTENCAO_EVENTO = "ControleParticipacoes";
 	private static final String VALIDA_INSCRICAO = "ControleValidaInscricao";
+	private static final String IMPRIME_INSCRICAO = "ControleFormularioAssinatura";
 
 	@Autowired
 	private EventoService eventoService;
@@ -42,7 +42,7 @@ public class ControleParticipacaoController {
 	public ModelAndView selecionarEvento() {
 		ModelAndView mv = new ModelAndView(SEL_EVENTO);
 		// mv.addObject("tipos", Arrays.asList(TipoEvento.values()));
-		List<Evento> eventos = eventoService.buscarDisponiveis();
+		List<Evento> eventos = eventoService.buscarNaoRealizados();
 		mv.addObject("eventos", eventos);
 		return mv;
 	}
@@ -98,7 +98,6 @@ public class ControleParticipacaoController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ModelAndView edicao(@PathVariable("id") Long idEvento) {
 		List<Participacao> parts = participacaoService.todasParticipacoesConfirmadas(idEvento);
-		System.out.println(Arrays.asList(parts));
 
 		for (int i = 0; i < parts.size(); i++) {
 			if (parts.get(i).getPresenca() == null)
@@ -110,23 +109,35 @@ public class ControleParticipacaoController {
 		mv.addObject("participacoes", parts);
 		mv.addObject("pagamentos", Pagamento.values());
 		return mv;
+
+	}
+
+	@RequestMapping(value = "/{id}/imprimir", method = RequestMethod.GET)
+	public ModelAndView imprimir(@PathVariable("id") Evento evento) {
+		List<Participacao> parts = participacaoService.todasParticipacoesConfirmadasPorNome(evento.getId());
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName(IMPRIME_INSCRICAO);
+		mv.addObject("participacoes", parts);
+		mv.addObject("evento", evento);
+		return mv;
 	}
 
 	@RequestMapping(value = "pagamento/{p}/{id}", method = RequestMethod.GET)
 	public String edicao(@PathVariable("id") Participacao p, @PathVariable("p") Pagamento pag) {
 		p.setPagamento(pag);
 		participacaoService.setagem(p);
-		return "redirect:/dashboard/controle/" + p.getEvento().getId()+"/validarinscricoes";
+		return "redirect:/dashboard/controle/" + p.getEvento().getId() + "/validarinscricoes";
 	}
-	
+
 	@RequestMapping(value = "pagamento/todas/{id}", method = RequestMethod.GET)
 	public String pagartodas(@PathVariable("id") Long idEvento) {
-		List<Participacao>par= participacaoService.todasParticipacoes(idEvento);
+		List<Participacao> par = participacaoService.todasParticipacoes(idEvento);
 		for (Participacao p : par) {
 			p.setPagamento(Pagamento.P);
 		}
 		participacaoService.setagem(par);
-		return "redirect:/dashboard/controle/" + idEvento+"/validarinscricoes";
+		return "redirect:/dashboard/controle/" + idEvento + "/validarinscricoes";
 	}
 
 	@RequestMapping(value = "/del", method = RequestMethod.POST)

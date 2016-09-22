@@ -60,7 +60,6 @@ public class CadastroParticipanteAdmController {
 			p.setEmail(p.getUsuario().getEmail());
 			cadUserService.salvar(p);
 		} catch (Exception e) {
-			System.out.println(e);
 			result.addError(new ObjectError("message", "Não foi possível cadastrar. Verifique se já não está cadastrado."));
 			return goCadastro(p, result, attributes);
 		}

@@ -38,13 +38,23 @@
 				</div>
 
 				<div class="panel-body">
-						
+
 					<div>
-						<h2 style="text-align: center;">
-							Ops!   :|
-						</h2><br/><p style="text-align: center;">
-						A página que está tentando acessar é inválida.<br/> Continue em nosso sistema <a href="/">clicando aqui.</a></p>
+						<h2 style="text-align: center;">Ops! :|</h2>
+						<br />
+						<p style="text-align: center;">
+							A página que está tentando acessar é inválida.<br /> Continue em
+							nosso sistema <a href="/">clicando aqui.</a>
+						</p>
+
+						<p class="small text-center" th:if="${status}">
+							<br />
+							<b>Response Status:</b> <span th:text="${status}">status-code</span>
+							<span th:if="${error}" th:text="'('+${error}+')'">error
+								...</span>
+						</p>
 					</div>
+
 				</div>
 			</div>
 

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<title>CertiPET - Lista de Presença</title>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+<style type="text/css">
+.tabela {
+	border-collapse: collapse;
+}
+
+.borda {
+	border: 1px solid black;
+	border-bottom: 1px solid black;
+	border-top: 1px solid black;
+}
+
+.bw {
+	background: white;
+	color: black;
+}
+</style>
+</head>
+
+<body style="width: 842pt">
+
+	<script src="/js/jquery-2.1.4.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+
+	<div class="center-block justify" style="width: 800pt;">
+		<div class="col-md-2 col-xs-2 col-sm-2">
+			<img id="ufg" src="/images/logo_ufg.svg" alt="UFG"
+				style="width: 5em; height: 5em;" />
+		</div>
+
+		<div class="col-md-8 col-xs-8 col-sm-8">
+			<div class="h6 text-center">
+				Universidade Federal de Goiás - UFG<br /> Escola de Engenharia
+				Elétrica, Mecânica e de Computação - EMC<br /> Grupo PET-EMC
+				(Conexões de Saberes) - Goiânia - Goiás
+			</div>
+			<div class="small text-center">
+				Fone: (62) 3209-6427 | E-mail: petemcufg@gmail.com
+				<p class="text-center">CertiPET - 2016.</p>
+			</div>
+		</div>
+
+		<div class="col-md-2 col-xs-2 col-sm-2">
+			<img id="emc" src="/images/logo_certipet_ico.svg" alt="EMC"
+				style="width: 5em; height: 5em;" />
+		</div>
+	</div>
+
+	<table class="table">
+		<tr>
+			<td class="text-center" th:text="'Evento: '+ ${evento.nome}"></td>
+			<td class="text-center"
+				th:text="'Data Realização'+ ${evento.dataRealizacao}"></td>
+		</tr>
+		<tr class="text-center">
+			<td class="text-center" style="border-top: none"
+				th:text="' '+ ${evento.descricaoSimplificada}"></td>
+		</tr>
+	</table>
+
+	<div class="bw panel panel-default bw">
+		<div class="bw panel-heading bw" style="background: white;">
+			<h1 class="bw panel-title bw">Confirmação de Presença</h1>
+		</div>
+
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table class="table tabela borda">
+					<thead style="border: 1px solid black;">
+						<tr class="borda">
+							<th class="borda text-center col-md-2 borda"
+								style="border-bottom: 1px solid black;">CPF</th>
+							<th class="borda text-center col-md-4 borda"
+								style="border-bottom: 1px solid black;">NOME</th>
+							<th class="borda text-center col-md-4 borda"
+								style="border-bottom: 1px solid black;">ASSINATURA</th>
+						</tr>
+					</thead>
+					<tbody class="borda">
+						<tr th:each="p : ${participacoes}" class="borda">
+							<td class="text-center borda" th:text="${p.participante.cpf}"></td>
+							<td class="text-center borda"
+								th:text="${p.participante.nome} +' '+ ${p.participante.sobrenome}">Nome</td>
+							<td class="text-center borda">
+								<div class="col-sm-4 text-center"
+									style="padding-top: 1px; padding-bottom: 2px">
+									_______________________________________________________</div>
+							</td>
+						</tr>
+						<tr>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+	<div class="small text-center">
+		<p class="text-center">
+			<b>Gerado com CertiPET - 2016.</b>
+		</p>
+	</div>
+
+</body>
+<style type="text/css">
+* {
+	background: white;
+	color: black;
+}
+</style>
+</html>
+
+
+
+
+
+
+
+
+
+
+

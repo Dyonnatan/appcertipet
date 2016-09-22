@@ -42,7 +42,7 @@ public class TipoParticipante {
 		this.nome = nome;
 	}
 
-	@Size(max = 45, message = "A carga horaria não pode conter mais de 45 caracteres")
+	@Size(max = 45, message = "A carga horária não pode conter mais de 45 caracteres")
 	@Column(length = 45)
 	public String getCargaHoraria() {
 		return cargaHoraria;
