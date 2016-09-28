@@ -3,6 +3,7 @@ package com.pet.certipet.model;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -46,7 +47,7 @@ public class Evento {
 	private String thumbnailURL;
 	private boolean encerrarInscricao;
 	private Certificado certificado;
-	private TipoParticipante categoriaParticPreferencial;
+//	private TipoParticipante categoriaParticPreferencial;
 	private List<TipoParticipante> categoriasParticipantes;
 	private List<Questionario> questoes;
 	private String organizadorCPF;
@@ -84,7 +85,7 @@ public class Evento {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@NotNull(message = "Data de realização é obrigatória")
 	public Date getDataRealizacao() {
 		return dataRealizacao;
@@ -102,7 +103,7 @@ public class Evento {
 		SimpleDateFormat s = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy");
 		return s.format(dataRealizacao);
 	}
-	
+
 	@Size(max = 2500, message = "A descrição não pode conter mais de 2500 caracteres")
 	@Column(length = 2501)
 	public String getDescricao() {
@@ -138,16 +139,16 @@ public class Evento {
 		this.valor = valor;
 	}
 
-	@Lob 
-	@Column(length=1024)
+	@Lob
+	@Column(length = 1024)
 	public String getThumbnailURL() {
 		return thumbnailURL;
 	}
-	
+
 	public void setThumbnailURL(String thumbnailURL) {
 		this.thumbnailURL = thumbnailURL;
 	}
-	
+
 	public boolean isEncerrarInscricao() {
 		return encerrarInscricao;
 	}
@@ -155,12 +156,12 @@ public class Evento {
 	public void setEncerrarInscricao(boolean encerrarInscricao) {
 		this.encerrarInscricao = encerrarInscricao;
 	}
-	
+
 	@Column(length = 21)
 	public String getOrganizadorCPF() {
 		return organizadorCPF;
 	}
-	
+
 	public void setOrganizadorCPF(String organizadorCPF) {
 		this.organizadorCPF = organizadorCPF;
 	}
@@ -178,23 +179,28 @@ public class Evento {
 	public List<TipoParticipante> getCategoriasParticipantes() {
 		return categoriasParticipantes;
 	}
-	
+
 	public void setCategoriasParticipantes(List<TipoParticipante> categoriasParticipantes) {
 		this.categoriasParticipantes = categoriasParticipantes;
 	}
-	
-	public List<TipoParticipante> todasCategoriasParticipantes() {
-		categoriasParticipantes.add(0, categoriaParticPreferencial);
-		return categoriasParticipantes;
+
+
+	public List<TipoParticipante> todasCategoriasExibir() {
+		List<TipoParticipante> lista = new LinkedList<TipoParticipante>();
+		for (TipoParticipante cParticipante : getCategoriasParticipantes()) {
+			if(cParticipante.isExibir()) lista.add(cParticipante);
+		}
+		return lista;
 	}
-	
-	public boolean todasCategoriasExibir() {
-		for (TipoParticipante t : categoriasParticipantes) {
-			if(t.isExibir()) return true;
+
+	public boolean exibirAlgumaCategoria() {
+		for (TipoParticipante t : this.getCategoriasParticipantes()) {
+			if (t.isExibir())
+				return true;
 		}
 		return false;
 	}
-	
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "questionario_id")
 	public List<Questionario> getQuestoes() {
@@ -204,15 +210,15 @@ public class Evento {
 	public void setQuestoes(List<Questionario> questoes) {
 		this.questoes = questoes;
 	}
-	
-	@ManyToOne
-	public TipoParticipante getCategoriaParticPreferencial() {
-		return categoriaParticPreferencial;
-	}
-	
-	public void setCategoriaParticPreferencial(TipoParticipante categoriaParticPreferencial) {
-		this.categoriaParticPreferencial = categoriaParticPreferencial;
-	}
+
+//	@ManyToOne
+//	public TipoParticipante getCategoriaParticPreferencial() {
+//		return categoriaParticPreferencial;
+//	}
+//
+//	public void setCategoriaParticPreferencial(TipoParticipante categoriaParticPreferencial) {
+//		this.categoriaParticPreferencial = categoriaParticPreferencial;
+//	}
 
 	@Override
 	public int hashCode() {
@@ -240,21 +246,23 @@ public class Evento {
 	}
 
 	private Certificado certView;
+
 	@Transient
 	public Certificado getCertView() {
 		return certView;
 	}
-	
+
 	public void setCertView(Certificado certView) {
 		this.certView = certView;
 	}
-	
+
 	private MultipartFile mpf;
+
 	@Transient
 	public MultipartFile getMpf() {
 		return mpf;
 	}
-	
+
 	public void setMpf(MultipartFile mpf) throws IOException {
 		this.mpf = mpf;
 		this.certificado = new Certificado();

@@ -32,7 +32,12 @@ body {
 	text-shadow: #000 0px 1px 5px;
 }
 
-.navbar-inverse {
+.navbar-inversea {
+	color: #fff;
+	background: #333;
+}
+
+.inverse {
 	color: #000;
 	background: #333;
 }

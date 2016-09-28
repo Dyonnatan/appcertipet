@@ -19,9 +19,33 @@
 			<div class="clearfix">
 				<h1 class="panel-title aw-titulo-panel">Confirmação de Presença</h1>
 				<a class="btn btn-link aw-link-panel" href="/dashboard">Tela
-					Inicial</a>
-					<a class="btn btn-link aw-link-panel" th:href="imprimir">Imprimir Lista de Assinatura</a>
+					Inicial</a> <a class="btn btn-link aw-link-panel" th:href="imprimir">Imprimir
+					Lista de Assinatura</a>
 			</div>
+		</div>
+
+		<div class="table-responsive">
+		<table class="table"><tbody><tr><td>
+				<label for="nr_inscritos" class="pull-left">Nº de inscritos &emsp;</label>
+				<div id="nr_inscritos" class=" pull-left">
+					<p th:text="${nr_inscritos}" id="nr_inscritos" class="text-left">Não
+						contabilizados</p>
+			</div></td>
+			<td>
+				<label  for="nr_categorias" class=" pull-left">Pagamentos &emsp;</label>
+				<div id="nr_categorias" class=" pull-left" style="height: 3em; overflow: auto;">
+					<span class="aw-link-panel" th:each="n : ${nr_pagamentos}">
+						<span th:text="${n.key.pagamento}"></span>: <b
+						th:text="${n.value}"></b><br />
+					</span>
+			</div></td><td>
+				<label for="nr_categorias" class=" pull-left">Categorias &emsp;</label>
+				<div id="nr_categorias" class=" pull-left" style="height: 3em; overflow: auto;">
+					<span class="text-nr_inscritosmuted" th:each="n : ${nr_categorias}">
+						<span th:text="${n.key.nome}"></span>: <b th:text="${n.value}"></b><br />
+					</span>
+			</div></td></tr></tbody>
+			</table>
 		</div>
 
 		<div class="panel-body">
@@ -42,15 +66,21 @@
 								th:text="${p.participante.nome} +' '+ ${p.participante.sobrenome}">Nome</td>
 							<td class="text-center" th:text="${p.participante.cpf}"></td>
 
-							<td class="text-center" th:attr="data-role=${p.id}"><span
+							<td class="text-center inline" th:attr="data-role=${p.id}"><span
 								class="label" th:text="${p.presenca}"
 								th:classappend="${p.isPresente() ? 'label-success': 'label-danger'}"></span>
+								<span class="glyphicon small" th:text="${p.pagamento.pagamento}"></span>
 							</td>
 
+							<td class="text-center"><span class="label label-info"
+								th:text="${p.categoriaParticipante.nome}"></span></td>
+
+							<!-- onchange="$('#confpag').attr('href',$('#selpag option:selected').attr('href')+$('#confpag').attr('datacodigo'))" -->
+
 							<td class="text-center">
-								<div class="col-sm-4">
-									<select id="selpag"
-										onchange="$('#confpag').attr('href',$('#selpag option:selected').attr('href')+$('#confpag').attr('datacodigo'))">
+								<div class="col-sm-4"
+									onchange="$(this).children('#confpag').attr('href',$(this).find('#selpag option:selected').attr('href')+$(this).find('#confpag').attr('datacodigo'))">
+									<select id="selpag">
 										<option hidden="hidden" th:value="${p.pagamento}"
 											th:text="${p.pagamento.pagamento}"></option>
 										<option th:each="pag : ${pagamentos}"
@@ -74,8 +104,11 @@
 				</table>
 			</div>
 			<div>
-				<a th:if="${not #lists.isEmpty(participacoes)}" class="btn btn-link btn-xs" title="Pagamento" rel="tooltip" onclick="return confirm('Tem certeza que deseja marcar todas inscrições como pagas?')"
-					id="confpag" data-placement="top" th:href="@{/dashboard/controle/pagamento/todas/{pa}/(pa=${participacoes[0].evento.id})}">
+				<a th:if="${not #lists.isEmpty(participacoes)}"
+					class="btn btn-link btn-xs" title="Pagamento" rel="tooltip"
+					onclick="return confirm('Tem certeza que deseja marcar todas inscrições como pagas?')"
+					id="confpag" data-placement="top"
+					th:href="@{/dashboard/controle/pagamento/todas/{pa}/(pa=${participacoes[0].evento.id})}">
 					<span class="glyphicon small">Confirmar todas como pagas</span>
 				</a>
 			</div>

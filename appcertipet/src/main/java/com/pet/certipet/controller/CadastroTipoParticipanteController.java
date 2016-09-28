@@ -1,11 +1,9 @@
 package com.pet.certipet.controller;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -13,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.pet.certipet.model.AutenticacaoCertificado;
 import com.pet.certipet.model.Certificado;
 import com.pet.certipet.model.Evento;
 import com.pet.certipet.model.Participacao;
@@ -92,21 +88,21 @@ public class CadastroTipoParticipanteController {
 		TipoParticipante tp = new TipoParticipante();
 		tp.setCargaHoraria("20 horas");
 		tp.setValor("20 reais");
-		System.out.println(texto);
+//		System.out.println(texto);		
 		tp.setTextoCertificado(texto);
 		Participacao part = new Participacao();
 		part.setEvento(e);
 		part.setParticipante(p);
-		part.setTipoParticipante(tp);
+		part.setCategoriaParticipante(tp);
 
-		String urlHash = "http://www.certipet.emc.ufg.com/autentica/7cf5f1c5962e75133eee71e21954bfe1";
+		String urlHash = "http://www.pet.emc.ufg.com/eventos/autentica/7cf5f1c5962e75133eee71e21954bfe1";
 
 		java.io.ByteArrayOutputStream b = new java.io.ByteArrayOutputStream();
 
 		try {
 			CertificadoPdf cpdf = new CertificadoPdf();
 			b = cpdf.gerar("Certificado", certificado, cpdf.formatar(urlHash,
-					part.getParticipante(), part.getEvento(), part.getTipoParticipante()));
+					part.getParticipante(), part.getEvento(), part.getCategoriaParticipante()));
 		} catch (IOException ev) {
 			ev.printStackTrace();
 		}

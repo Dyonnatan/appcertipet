@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutPages/LayoutPadrao">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Evento</title>
+</head>
+
+<section layout:fragment="conteudo">
+	<div layout:include="layoutPages/MensagemGeral"></div>
+
+
+	<div
+		class="wrapper panel panel-default col-sm-10 col-md-4 center-block"
+		style="float: none; margin: 35px auto; background: #ededed; width: 70%;">
+		<div class="panel-body center-block"
+			style="float: none; margin: 0 auto;">
+			<a href="/"> <img id="certipet1"
+				src="/images/logo_certipet_color.svg" alt="Logo Certipet" />
+			</a>
+			<h4 class="h4 text-center" style="color: #333;">Evento</h4>
+
+
+			<div class="alert alert-success"
+				th:if="${not #strings.isEmpty(mensagem)}">
+				<span th:text="${mensagem}"></span>
+			</div>
+
+
+			<!-- 				<a th:if="${part.pagamento} == 'p'" class="btn btn-link btn-xs" -->
+			<!-- 					title="Pagamento Confirmado " rel="tooltip" data-placement="top"> -->
+			<!-- 					<span class="glyphicon glyphicon-ok"> </span> Inscrição Validada -->
+			<!-- 				</a> -->
+			<div class="panel panel-default">
+				<div class="panel-heading"
+					style="background-color: #333; color: #ffffff;">
+					<div class="clearfix">
+						<div style="position: center;">
+							<div style="width: 100%; text-align: center;">
+								<div style="float: left;">
+									<a class="btn btn-link aw-link-panel"
+										href="/participante/evento" style="display: inline;">Voltar</a>
+								</div>
+
+								<div style="display: inline-block; margin: 0 auto;">
+									<h3 th:text="${evento.nome}">Evento</h3>
+								</div>
+
+								<div style="float: right;">
+									<a class="btn btn-link aw-link-panel" href="/logout"
+										style="display: inline;">Sair</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="panel-body table-responsive">
+					<span th:utext="${evento.descricao}"></span>
+				</div>
+			</div>
+
+			<div class="panel-body col-sm-12">
+				<ul class="">
+					<li th:each="p : ${parts}"><span><b
+							th:text="${p.categoriaParticipante.nome}"></b><br />Situação: <b th:if="${p.pagamento.char} == 'P'"
+							class="text-center">Sua inscrição
+								foi confirmada com sucesso!</b> <b th:if="${p.pagamento.char} == 'R'"
+							class="text-center">Sua inscrição
+								não foi validada!</b> <b th:if="${p.pagamento.char} == 'C'"
+							class="text-center">Sua inscrição
+								não foi validada!</b> <br />Taxa de inscrição: <b class="small"
+							th:text="${p.pagamento.pagamento}"></b></span></li>
+				</ul>
+			</div>
+
+			<div th:if="${evento.encerrarInscricao}"
+				class="col-sm-offset-1 col-sm-11">
+				<h4 class="h4 alert alert-warning col-sm-11 text-center">Inscrições
+					encerradas!</h4>
+			</div>
+
+		</div>
+	</div>
+
+</section>
+</html>
+
+
+
+
+
+
+
+
+
+
+

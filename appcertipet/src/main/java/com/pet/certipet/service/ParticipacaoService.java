@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.pet.certipet.model.Evento;
 import com.pet.certipet.model.Participacao;
+import com.pet.certipet.model.Participante;
+import com.pet.certipet.model.TipoParticipante;
 import com.pet.certipet.repository.ParticipacaoRepo;
 
 @Service
@@ -24,8 +26,12 @@ public class ParticipacaoService {
 		return (i!=null);
 	}
 	
-	public Participacao buscar(String cpf, Long idEvento) {	 
+	public List<Participacao> buscar(String cpf, Long idEvento) {	 
 		return participacao.buscar(cpf, idEvento);
+	}
+	
+	public List<TipoParticipante> buscarCategoria(String cpf, Long idEvento) {	 
+		return participacao.buscarCategoria(cpf, idEvento);
 	}
 	
 	public Participacao buscar(Long id) {	 
@@ -42,12 +48,25 @@ public class ParticipacaoService {
 		return participacao.findByEvento(e);
 	}
 	
+	public List<Participacao> todasParticipacoesDistintasPorParticipante(Long idEvento) {	
+		Evento e = new Evento();
+		e.setId(idEvento);
+		return participacao.findDistinctParticipanteByEvento(e);
+	}
+	
 	public boolean salvar(Participacao p) {
 		return participacao.save(p) != null;
 	}
 
+	public boolean salvar(List<Participacao> p) {
+		return participacao.save(p) != null;
+	}
 	public void remover(Participacao p) {
 		participacao.delete(p);
+	}
+	
+	public void remover(Participante p, Evento e) {
+		participacao.deleteByParticipanteAndEvento(p, e);
 	}
 	
 	public void remover(Long idPartipacao) {

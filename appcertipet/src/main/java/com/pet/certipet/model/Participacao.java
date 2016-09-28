@@ -24,7 +24,7 @@ public class Participacao {
 	private Long id;
 	private Participante participante;
 	private Evento evento;
-	private TipoParticipante tipoParticipante;
+	private TipoParticipante categoriaParticipante;
 	private Presenca presenca;
 	private Pagamento pagamento;
 	private List<Resposta> respostas;
@@ -69,12 +69,12 @@ public class Participacao {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	public TipoParticipante getTipoParticipante() {
-		return tipoParticipante;
+	public TipoParticipante getCategoriaParticipante() {
+		return categoriaParticipante;
 	}
-
-	public void setTipoParticipante(TipoParticipante tipoParticipante) {
-		this.tipoParticipante = tipoParticipante;
+	
+	public void setCategoriaParticipante(TipoParticipante categoriaParticipante) {
+		this.categoriaParticipante = categoriaParticipante;
 	}
 
 	@Enumerated(EnumType.STRING)
@@ -143,7 +143,7 @@ public class Participacao {
 
 	@Override
 	public String toString() {
-		return "Participacao [" +id+ participante.getNome() + ", " + tipoParticipante + ", em " + evento.getNome()
+		return "Participacao [" +id+", participante "+ participante + ", cat " + categoriaParticipante + ", em evento " + evento
 				+ ", confirmacao=" + presenca + "]";
 	}
 

@@ -1,6 +1,14 @@
 package com.pet.certipet.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,12 +28,13 @@ import com.pet.certipet.model.Evento;
 import com.pet.certipet.model.Pagamento;
 import com.pet.certipet.model.Participacao;
 import com.pet.certipet.model.Presenca;
+import com.pet.certipet.model.TipoParticipante;
 import com.pet.certipet.service.EventoService;
 import com.pet.certipet.service.ParticipacaoService;
 
 @Controller
 @RequestMapping(value = "/dashboard/controle")
-@PreAuthorize("hasRole('ADMINISTRADOR')")
+@PreAuthorize("hasRole('ADMINISTRADOR') OR hasRole('ORGANIZADOR')")
 public class ControleParticipacaoController {
 
 	private static final String SEL_EVENTO = "PesquisaEventosDisponiveisControle";
@@ -66,17 +75,32 @@ public class ControleParticipacaoController {
 	public ModelAndView validarincricao(@PathVariable("id") Long idEvento) {
 
 		List<Participacao> parts = participacaoService.todasParticipacoes(idEvento);
-
 		for (int i = 0; i < parts.size(); i++) {
 			if (parts.get(i).getPresenca() == null)
 				parts.get(i).setPresenca(Presenca.INDEFINIDO);
 		}
 
+		Long nrInscritos = parts.stream().filter(distinctByKey(n -> n.getParticipante())).count();
+
+		Map<Pagamento, Long> nrPagamentos = parts.stream()
+				.collect(Collectors.groupingBy(p -> p.getPagamento(), Collectors.counting()));
+		
+		Map<TipoParticipante, Long> nrCategorias = parts.stream()
+				.collect(Collectors.groupingBy(p -> p.getCategoriaParticipante(), Collectors.counting()));
+
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName(VALIDA_INSCRICAO);
 		mv.addObject("participacoes", parts);
 		mv.addObject("pagamentos", Pagamento.values());
+		mv.addObject("nr_inscritos", nrInscritos);
+		mv.addObject("nr_pagamentos", nrPagamentos);
+		mv.addObject("nr_categorias", nrCategorias);
 		return mv;
+	}
+
+	private static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+		Map<Object, Boolean> seen = new ConcurrentHashMap<>();
+		return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
 	}
 
 	// @ModelAttribute("eventos")

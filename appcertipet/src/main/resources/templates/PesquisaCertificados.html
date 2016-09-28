@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorator="/layoutPages/LayoutPadraoDashboard">
+    layout:decorator="/layoutPages/LayoutPadrao">
     
 <head>
 	<meta charset="utf-8" />
@@ -50,8 +50,8 @@
 	   		<table class="table table-bordered table-striped">
 	   			<thead>
 	   				<tr>
-	   					<th class="text-center col-md-2">Evento</th>
-	   					<th class="text-center col-md-2">Data</th>
+	   					<th class="text-center col-md-4">Evento</th>
+	   					<th class="text-center col-md-3">Data</th>
 	   					<th class="text-center col-md-2">Gerar</th>
 	   				</tr>
 	   			</thead>
@@ -62,7 +62,7 @@
 	   					<td class="text-center">
 	   						<a class="btn btn-link btn-xs" th:href="@{/participante/certificados/{id}(id=${part.id})}" 
 	   								title="Baixar" rel="tooltip" data-placement="top">
-	   							<span class="glyphicon glyphicon-save-file"></span>
+	   							<span class="glyphicon glyphicon-save-file" th:text="${' '+part.categoriaParticipante.nome}"></span>
 	   						</a>
 	   					</td>
 	   				</tr>

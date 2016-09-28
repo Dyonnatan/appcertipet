@@ -25,7 +25,8 @@
 			<h4 class="h4 text-center" style="color: #333;">Evento</h4>
 
 			<form class="form-horizontal" method="post"
-				th:action="@{/participante/evento/inscricao}" th:object="${part}">
+				th:action="@{/participante/evento/inscricao}"
+				th:object="${oparticipacoes}">
 				<div class="alert alert-success"
 					th:if="${not #strings.isEmpty(mensagem)}">
 					<span th:text="${mensagem}"></span>
@@ -36,15 +37,17 @@
 						<span th:text="${detailedError.message}"></span>
 					</div>
 				</div>
-				<div th:if="${part.evento.encerrarInscricao}"
-					class="col-sm-offset-1 col-sm-11">
-					<h4 class="h4 alert alert-warning col-sm-11 text-center">Inscrições
+				<div th:if="${oparticipacoes.evento.encerrarInscricao}"
+					class="col-sm-offset-1 col-sm-11 ">
+					<h4 class="h4 alert alert-warning col-sm-11 text-center">Solicitações de inscrição estão
 						encerradas!</h4>
 				</div>
-				<a th:if="${part.pagamento} == 'p'" class="btn btn-link btn-xs"
-					title="Pagamento Confirmado " rel="tooltip" data-placement="top">
-					<span class="glyphicon glyphicon-ok"> </span> Inscrição Validada
-				</a>
+				<a th:unless="${#lists.isEmpty(oparticipacoes.categorias)}"
+					title="Aguardando confirmação" rel="tooltip" data-placement="top">
+					<span class="glyphicon glyphicon-alert"> </span> Processo de
+					inscrição em andamento
+				</a><b class="btn btn-xs text-right" style="float: right">Aguarde a
+					confirmação de sua inscrição</b>
 				<div class="panel panel-default">
 					<div class="panel-heading"
 						style="background-color: #333; color: #ffffff;">
@@ -56,8 +59,8 @@
 											href="/participante/evento" style="display: inline;">Voltar</a>
 									</div>
 
-									<div style="display: inline-block; margin: 0 auto;">
-										<h3 th:text="${part.evento.nome}">Evento</h3>
+									<div class="col-sm-11 " style="display: inline-block; margin: 0 auto;">
+										<h3 th:text="${oparticipacoes.evento.nome}">Evento</h3>
 									</div>
 
 									<div style="float: right;">
@@ -71,40 +74,57 @@
 					</div>
 
 					<div class="panel-body table-responsive">
-						<span th:utext="${part.evento.descricao}"></span>
+						<span th:utext="${oparticipacoes.evento.descricao}"></span>
 					</div>
 				</div>
 
-				<div class="panel-body col-sm-6">
-					<input type="hidden" class="form-control" id="tipo"
-						th:field="*{evento}" th:value="${evento}" /> <input type="hidden"
-						class="form-control" id="tipo" th:field="*{id}"
-						th:value="${part.id}" /> <select
-						style="-webkit-appearance: none; -moz-appearance: none; appearance: none; background: none; border: none"
-						class="form-control" th:field="*{tipoParticipante}">
-						<option hidden="hidden"
-							th:value="${part.evento.categoriaParticPreferencial.id}"
-							th:text="${#lists.isEmpty(part.evento.todasCategoriasExibir())}? 'Selecione sua categoria de participante:'"></option>
-						<option th:each="cat : ${part.evento.categoriasParticipantes}"
+				<input type="hidden" class="form-control" id="tipo"
+					th:field="*{evento}" th:value="${evento}" />
+				<div class="panel-body col-sm-6"
+					th:if="${#lists.isEmpty(oparticipacoes.categorias)}">
+					<select multiple="multiple" size="3"
+						th:if="${oparticipacoes.evento.exibirAlgumaCategoria()}"
+						class="form-control" th:field="*{categorias}">
+						<option
+							th:each="cat : ${oparticipacoes.evento.categoriasParticipantes}"
 							th:if="${cat.exibir}" th:value="${cat.id}" th:text="${cat.nome}"></option>
 					</select>
 				</div>
 
-				<div th:unless="${part.evento.encerrarInscricao}">
-					<button th:unless="${part.id} ne null" type="submit" class="submit"
-						name="action" value="inscrever">Inscrever</button>
-					<button
-						th:if="(${part.id} ne null) ? (${part.pagamento} ne 'p' and ${part.pagamento} ne 'r'):false"
+				<div class="panel-body col-sm-6"
+					th:unless="${#lists.isEmpty(oparticipacoes.categorias)}">
+					<select multiple="multiple" size="3" disabled="disabled"
+						class="form-control">
+						<option th:each="cat : ${oparticipacoes.categorias}"
+							th:if="${cat.exibir}" th:value="${cat.id}" th:text="${cat.nome}"></option>
+					</select>
+				</div>
+
+				<div th:unless="${oparticipacoes.evento.encerrarInscricao}">
+					<button th:if="${#lists.isEmpty(oparticipacoes.categorias)}"
+						type="submit" class="submit" name="action" value="inscrever">Inscrever</button>
+					<button th:unless="${#lists.isEmpty(oparticipacoes.categorias)}"
 						type="submit" class="submit" name="action" value="desinscrever">Cancelar
 						Inscrição</button>
 				</div>
-				<div class="col-sm-offset-1 col-sm-11">
-					<span th:if="${part.pagamento} == 'p'"
-						class="alert-success col-sm-11 text-center">Sua inscrição
-						foi confirmada com sucesso!</span> <span th:if="${part.pagamento} == 'r'"
-						class="alert-danger col-sm-11 text-center">Sua inscrição
-						não foi validada!</span>
+
+				<div th:if="${oparticipacoes.evento.encerrarInscricao}"
+					class="col-sm-offset-1 col-sm-11">
+					<p class="small col-sm-11 text-center"
+						th:unless="${#lists.isEmpty(oparticipacoes.categorias)}">Aguardando
+						confirmação: A sua vaga ainda não está confirmada, estamos
+						verificando os dados necessários para validar a inscrição. Não é
+						feito qualquer outro tipo de reserva de vaga a não ser pela ordem
+						de pedido realizada através do site. Qualquer dúvida contate a
+						organização do evento.</p>
 				</div>
+				<!-- 				<div class="col-sm-offset-1 col-sm-11"> -->
+				<!-- 					<span th:if="${part.pagamento} == 'p'" -->
+				<!-- 						class="alert-success col-sm-11 text-center">Sua inscrição -->
+				<!-- 						foi confirmada com sucesso!</span> <span th:if="${part.pagamento} == 'r'" -->
+				<!-- 						class="alert-danger col-sm-11 text-center">Sua inscrição -->
+				<!-- 						não foi validada!</span> -->
+				<!-- 				</div> -->
 
 			</form>
 

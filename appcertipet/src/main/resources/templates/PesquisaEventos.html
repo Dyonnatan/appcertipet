@@ -59,6 +59,7 @@
 						<td class="text-right"
 							th:text="${#dates.format(evento.dataRealizacao, 'dd/MM/yyyy')}"></td>
 						<td class="text-right">
+<!-- 						<span th:text="${evento.categoriaParticPreferencial.id} +' - '+ ${evento.categoriaParticPreferencial.nome}"></span> -->
 						<select  >
 						<option th:each="cat : ${evento.categoriasParticipantes}" th:text="${cat.nome}"></option>
 						</select>

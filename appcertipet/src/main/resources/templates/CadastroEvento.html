@@ -138,22 +138,6 @@
 
 					<div class="col-sm-4">
 						<select class="form-control" name="list_cat"
-							th:field="*{categoriaParticPreferencial}">
-							<option th:if="${categoriaParticPreferencial != null}"
-								th:value="${categoriaParticPreferencial.id}"
-								th:text="${categoriaParticPreferencial.nome}"></option>
-							<option disabled="disabled" value=""
-								th:if="${categoriaParticPreferencial != null}">──────────</option>
-							<option th:each="cats : *{categoriasParticipantes}"
-								th:value="${cats.id}" th:text="${cats.id} +' - '+ ${cats.nome}"></option>
-							<option disabled="disabled" value="">──────────</option>
-							<option th:each="cat : ${todascategoriasParticipantes}"
-								th:value="${cat.id}" th:text="${cat.id} +' - '+ ${cat.nome}"></option>
-						</select>
-					</div>
-
-					<div class="col-sm-4">
-						<select class="form-control" name="list_cat"
 							th:field="*{categoriasParticipantes}" multiple="multiple"
 							size="4">
 							<option th:each="cat : ${todascategoriasParticipantes}"

@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "certificadoimgs")
+@Table(name = "certificado")
 public class Certificado {
 
 	private Long id;
@@ -25,7 +25,7 @@ public class Certificado {
 	private byte[] arquivo;
 
 	public Certificado() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public Certificado(Long id, String nome, Date data) {

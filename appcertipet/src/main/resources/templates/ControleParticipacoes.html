@@ -5,7 +5,14 @@
 	layout:decorator="layoutPages/LayoutPadraoDashboard">
 
 <head>
-<title>Participações</title>
+<title>Credenciamento</title>
+<style type="text/css">
+.borda {
+	border: 1px solid white;
+	border-bottom: 1px solid black;
+	border-top: 1px solid black;
+}
+</style>
 </head>
 
 <section layout:fragment="conteudo">
@@ -17,36 +24,41 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<div class="clearfix">
-				<h1 class="panel-title aw-titulo-panel">Confirmação de Presença</h1>
-				<a class="btn btn-link aw-link-panel" href="/dashboard">Tela
+			<a class="btn btn-link aw-link-panel" style="position:relative;float: right" href="/dashboard">Tela
 					Inicial</a>
+			<h1 class="panel-title h1" th:unless="${#lists.isEmpty(participacoes)}" th:text="${participacoes[0].evento.nome}" >Evento</h1>
+				<h6 class="h6">Confirmação de Presença</h6>
+				
 			</div>
 		</div>
 
 		<div class="panel-body">
 			<div class="table-responsive">
-				<table class="table table-hover table-striped">
+				<table class="table table-hover table-striped table-borderede borda">
 					<thead>
 						<tr>
 							<th class="text-center col-md-1" style="display: none;">#</th>
 							<th class="text-center col-md-1">Nome</th>
 							<th class="text-center col-md-1">CPF</th>
 							<th class="text-center col-md-1"></th>
+							<th class="text-center col-md-1">Confirmação</th>
+							<th class="text-center col-md-1" title="Tipo de Participação"></th>
 						</tr>
 					</thead>
-					<tbody style="text-align: left;">
-						<tr th:each="p : ${participacoes}">
-							<td class="text-center" th:text="${p.id}" style="display: none;">0</td>
-							<td class="text-center"
+					<tbody style="text-align: left; border: none;">
+						<tr th:each="p : ${participacoes}"
+							th:classappend="${p.isPresente() ? 'success': ''}">
+							<td class="text-center borda" th:text="${p.id}" style="display: none;">0</td>
+							<td class="text-center borda"
 								th:text="${p.participante.nome} +' '+ ${p.participante.sobrenome}">Nome</td>
-							<td class="text-center" th:text="${p.participante.cpf}"></td>
+							<td class="text-center borda" th:text="${p.participante.cpf}"></td>
 
-							<td class="text-center" th:attr="data-role=${p.id}"><span
+							<td class="text-center borda" th:attr="data-role=${p.id}"><span
 								class="label" th:text="${p.presenca}"
 								th:classappend="${p.isPresente() ? 'label-success': 'label-danger'}"></span>
 							</td>
 
-							<td class="text-center"><a
+							<td class="text-center borda"><a
 								class="btn btn-link btn-xs js-atualizar-status"
 								title="Confirmar Presente" rel="tooltip" data-placement="top"
 								th:attr="data-codigo=${p.id}"
@@ -59,6 +71,9 @@
 									<span class="glyphicon glyphicon-remove">Ausente</span>
 							</a></td>
 
+							<td class="text-right borda" th:attr="data-role=${p.id}"><span
+								class="label label-info small"
+								th:text="${p.categoriaParticipante.nome}"></span></td>
 						</tr>
 						<tr>
 							<td colspan="6" th:if="${#lists.isEmpty(participacoes)}">Não
